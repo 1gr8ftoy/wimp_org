@@ -1,0 +1,7 @@
+parameters:
+#    b_conway_website.example.class: BConway\WebsiteBundle\Example
+
+services:
+#    b_conway_website.example:
+#        class: %b_conway_website.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

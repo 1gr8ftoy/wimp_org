@@ -1,0 +1,4 @@
+b_conway_website:
+    resource: "@BConwayWebsiteBundle/Resources/config/routing.yml"
+    prefix:   /
+
