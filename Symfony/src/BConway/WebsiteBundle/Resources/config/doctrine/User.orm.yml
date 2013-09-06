@@ -1,0 +1,44 @@
+BConway\WebsiteBundle\Entity\User:
+    type: entity
+    table: null
+    repositoryClass: BConway\WebsiteBundle\Entity\UserRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        signInCount:
+            type: integer
+            column: sign_in_count
+            nullable: TRUE
+        currentSignInAt:
+            type: datetime
+            column: current_sign_in_at
+            nullable: TRUE
+        lastSignInAt:
+            type: datetime
+            column: last_sign_in_at
+            nullable: TRUE
+        createdAt:
+            type: datetime
+            column: created_at
+            nullable: TRUE
+        updatedAt:
+            type: datetime
+            column: updated_at
+            nullable: TRUE
+    oneToMany:
+        lostPets:
+            targetEntity: \BConway\WebsiteBundle\Entity\LostPet
+            mappedBy: user
+            orderBy:
+                updatedAt: DESC
+            cascade: [all]
+        foundPets:
+            targetEntity: \BConway\WebsiteBundle\Entity\FoundPet
+            mappedBy: user
+            orderBy:
+                updatedAt: DESC
+            cascade: [all]
+    lifecycleCallbacks: {  }

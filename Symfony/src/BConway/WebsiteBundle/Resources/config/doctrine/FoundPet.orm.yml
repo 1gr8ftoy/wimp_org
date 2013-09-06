@@ -1,0 +1,81 @@
+BConway\WebsiteBundle\Entity\FoundPet:
+    type: entity
+    table: null
+    repositoryClass: BConway\WebsiteBundle\Entity\FoundPetRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        userId:
+            type: integer
+            column: user_id
+            nullable: TRUE
+        petType:
+            type: string
+            length: 255
+            column: pet_type
+        petName:
+            type: string
+            length: 255
+            column: pet_name
+            nullable: TRUE
+        petColors:
+            type: string
+            length: 255
+            column: pet_colors
+        petDescription:
+            type: text
+            column: pet_description
+        petLocationFoundCity:
+            type: string
+            length: 255
+            column: pet_location_found_city
+        petLocationFoundState:
+            type: string
+            length: 255
+            column: pet_location_found_state
+        contactName:
+            type: string
+            length: 255
+            column: contact_name
+        contactEmail:
+            type: string
+            length: 255
+            column: contact_email
+        contactPhone:
+            type: string
+            length: 255
+            column: contact_phone
+            nullable: TRUE
+        active:
+            type: boolean
+        createdAt:
+            type: datetime
+            column: created_at
+            nullable: TRUE
+        updatedAt:
+            type: datetime
+            column: updated_at
+            nullable: TRUE
+        petImage:
+            type: string
+            length: 255
+            column: pet_image
+            nullable: TRUE
+        petBreed:
+            type: string
+            length: 255
+            column: pet_breed
+            nullable: TRUE
+    manyToOne:
+        user:
+            targetEntity: \BConway\WebsiteBundle\Entity\User
+            inversedBy: foundPets
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+    lifecycleCallbacks:
+            prePersist: [ setCreatedAt, setUpdatedAt ]
+            preUpdate: [ setUpdatedAt ]
