@@ -1,6 +1,6 @@
 BConway\WebsiteBundle\Entity\User:
     type: entity
-    table: null
+    table: users
     repositoryClass: BConway\WebsiteBundle\Entity\UserRepository
     fields:
         id:

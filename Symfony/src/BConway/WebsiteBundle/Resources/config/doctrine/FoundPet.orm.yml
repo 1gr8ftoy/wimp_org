@@ -1,6 +1,6 @@
 BConway\WebsiteBundle\Entity\FoundPet:
     type: entity
-    table: null
+    table: found_pets
     repositoryClass: BConway\WebsiteBundle\Entity\FoundPetRepository
     fields:
         id:
