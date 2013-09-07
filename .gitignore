@@ -23,3 +23,6 @@ Symfony/app/config/parameters.yml
 
 # System files
 .DS_Store
+
+# HTML test report
+Symfony/test_report.html
