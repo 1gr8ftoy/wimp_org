@@ -3,16 +3,17 @@
 namespace BConway\WebsiteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * User
  */
-class User
+class User extends BaseUser
 {
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var integer
@@ -177,6 +178,8 @@ class User
      */
     public function __construct()
     {
+        parent::__construct();
+        
         $this->lostPets = new \Doctrine\Common\Collections\ArrayCollection();
         $this->foundPets = new \Doctrine\Common\Collections\ArrayCollection();
     }
