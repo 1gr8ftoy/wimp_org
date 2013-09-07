@@ -15,11 +15,6 @@ class FoundPet
     private $id;
 
     /**
-     * @var integer
-     */
-    private $userId;
-
-    /**
      * @var string
      */
     private $petType;
@@ -98,29 +93,6 @@ class FoundPet
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set userId
-     *
-     * @param integer $userId
-     * @return FoundPet
-     */
-    public function setUserId($userId)
-    {
-        $this->userId = $userId;
-    
-        return $this;
-    }
-
-    /**
-     * Get userId
-     *
-     * @return integer 
-     */
-    public function getUserId()
-    {
-        return $this->userId;
     }
 
     /**

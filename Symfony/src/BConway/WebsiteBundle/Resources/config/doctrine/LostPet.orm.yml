@@ -8,10 +8,6 @@ BConway\WebsiteBundle\Entity\LostPet:
             id: true
             generator:
                 strategy: AUTO
-        userId:
-            type: integer
-            column: user_id
-            nullable: TRUE
         petType:
             type: string
             length: 255
