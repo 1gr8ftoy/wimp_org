@@ -2,8 +2,8 @@ security:
     encoders:
         Symfony\Component\Security\Core\User\User:
             id: security.encoder.blowfish
-#        BConway\UserBundle\Entity\User:
-#            id: security.encoder.blowfish
+        BConway\WebsiteBundle\Entity\User:
+            id: security.encoder.blowfish
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
