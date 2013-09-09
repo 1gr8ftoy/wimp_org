@@ -412,10 +412,9 @@ class LostPet
     /**
      * Set createdAt
      *
-     * @param \DateTime $createdAt
      * @return LostPet
      */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt()
     {
         $this->createdAt = new \DateTime();
 
