@@ -41,4 +41,7 @@ BConway\WebsiteBundle\Entity\User:
             orderBy:
                 updatedAt: DESC
             cascade: [all]
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAt, setUpdatedAt ]
+        preUpdate: [ setUpdatedAt ]
+
