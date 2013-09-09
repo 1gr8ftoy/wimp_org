@@ -392,7 +392,7 @@ class LostPet
      * @param boolean $active
      * @return LostPet
      */
-    public function setActive($active)
+    public function setActive($active = true)
     {
         $this->active = $active;
     

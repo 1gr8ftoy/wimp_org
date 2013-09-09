@@ -308,7 +308,7 @@ class FoundPet
      * @param boolean $active
      * @return FoundPet
      */
-    public function setActive($active)
+    public function setActive($active = true)
     {
         $this->active = $active;
     

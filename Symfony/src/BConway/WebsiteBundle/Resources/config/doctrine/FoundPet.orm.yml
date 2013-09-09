@@ -73,5 +73,5 @@ BConway\WebsiteBundle\Entity\FoundPet:
                 name: user_id
                 referencedColumnName: id
     lifecycleCallbacks:
-            prePersist: [ setCreatedAt, setUpdatedAt ]
-            preUpdate: [ setUpdatedAt ]
+        prePersist: [ setCreatedAt, setUpdatedAt, setActive ]
+        preUpdate: [ setUpdatedAt ]
