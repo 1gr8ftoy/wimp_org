@@ -24,7 +24,8 @@
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "elnur/blowfish-password-encoder-bundle": "dev-master",
         "jms/security-extra-bundle": "dev-master",
-        "symfony/icu": "1.0.*"
+        "symfony/icu": "1.0.*",
+        "behat/common-contexts": "*"
     },
     "require-dev": {
         "behat/behat": "2.5.*@stable",
