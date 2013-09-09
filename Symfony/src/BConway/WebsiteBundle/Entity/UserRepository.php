@@ -12,4 +12,117 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserRepository extends EntityRepository
 {
+    public function findFoundDogs($user_id)
+    {
+        $builder = $this
+            ->getEntityManager()
+            ->createQueryBuilder();
+
+        return
+            $builder
+                ->select('f')
+                ->from('BConwayWebsiteBundle:FoundPet', 'f')
+                ->where('f.user = :user_id')
+                ->andWhere('f.petType = :pet_type')
+                ->setParameter('user_id', $user_id)
+                ->setParameter('pet_type', 'Dog')
+                ->orderBy('f.updatedAt', 'DESC')
+                ->getQuery()
+                ->execute();
+    }
+
+    public function findLostDogs($user_id)
+    {
+        $builder = $this
+            ->getEntityManager()
+            ->createQueryBuilder();
+
+        return
+            $builder
+                ->select('f')
+                ->from('BConwayWebsiteBundle:LostPet', 'f')
+                ->where('f.user = :user_id')
+                ->andWhere('f.petType = :pet_type')
+                ->setParameter('user_id', $user_id)
+                ->setParameter('pet_type', 'Dog')
+                ->orderBy('f.updatedAt', 'DESC')
+                ->getQuery()
+                ->execute();
+    }
+
+    public function findFoundCats($user_id)
+    {
+        $builder = $this
+            ->getEntityManager()
+            ->createQueryBuilder();
+
+        return
+            $builder
+                ->select('f')
+                ->from('BConwayWebsiteBundle:FoundPet', 'f')
+                ->where('f.user = :user_id')
+                ->andWhere('f.petType = :pet_type')
+                ->setParameter('user_id', $user_id)
+                ->setParameter('pet_type', 'Cat')
+                ->orderBy('f.updatedAt', 'DESC')
+                ->getQuery()
+                ->execute();
+    }
+
+    public function findLostCats($user_id)
+    {
+        $builder = $this
+            ->getEntityManager()
+            ->createQueryBuilder();
+
+        return
+            $builder
+                ->select('f')
+                ->from('BConwayWebsiteBundle:LostPet', 'f')
+                ->where('f.user = :user_id')
+                ->andWhere('f.petType = :pet_type')
+                ->setParameter('user_id', $user_id)
+                ->setParameter('pet_type', 'Cat')
+                ->orderBy('f.updatedAt', 'DESC')
+                ->getQuery()
+                ->execute();
+    }
+
+    public function findFoundOthers($user_id)
+    {
+        $builder = $this
+            ->getEntityManager()
+            ->createQueryBuilder();
+
+        return
+            $builder
+                ->select('f')
+                ->from('BConwayWebsiteBundle:FoundPet', 'f')
+                ->where('f.user = :user_id')
+                ->andWhere('f.petType = :pet_type')
+                ->setParameter('user_id', $user_id)
+                ->setParameter('pet_type', 'Other')
+                ->orderBy('f.updatedAt', 'DESC')
+                ->getQuery()
+                ->execute();
+    }
+
+    public function findLostOthers($user_id)
+    {
+        $builder = $this
+            ->getEntityManager()
+            ->createQueryBuilder();
+
+        return
+            $builder
+                ->select('f')
+                ->from('BConwayWebsiteBundle:LostPet', 'f')
+                ->where('f.user = :user_id')
+                ->andWhere('f.petType = :pet_type')
+                ->setParameter('user_id', $user_id)
+                ->setParameter('pet_type', 'Other')
+                ->orderBy('f.updatedAt', 'DESC')
+                ->getQuery()
+                ->execute();
+    }
 }
