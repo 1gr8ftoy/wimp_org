@@ -1,0 +1,265 @@
+html {
+  font-size: 62.5%;
+  overflow-y: scroll;
+  font-family: $main-font;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  /*border-left: solid 1px #778;
+border-right: solid 1px #778;*/
+  min-height: 100%;
+  line-height: 1.5em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+  /*font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;*/
+  /*text-decoration: underline;*/
+  font-style: italic;
+  line-height: 100%;
+  clear: both;
+}
+
+h1 {
+  font-size: 2.5em;
+  padding: .5em 0 .5em 0;
+}
+
+h2 {
+  font-size: 2.3em;
+  padding: .5em 0 .5em 0;
+}
+
+h3 {
+  font-size: 2.1em;
+  padding: .5em 0 .5em 0;
+}
+
+h4 {
+  font-size: 1.9em;
+  padding: .4em 0 .4em 0;
+}
+
+h5 {
+  font-size: 1.7em;
+  padding: .3em 0 .3em 0;
+}
+
+h6 {
+  font-size: 1.5em;
+  padding: .2em 0 .2em 0;
+}
+
+div + h6 {
+  margin-top: 1em;
+}
+
+p + p {
+  margin-top: 1em;
+}
+
+#{$all-text-inputs}, textarea {
+  width: $input-width;
+
+  @media screen and (max-width: $mobile-width) {
+    width: 100%;
+  }
+}
+
+select {
+  width: $input-width;
+  cursor: pointer;
+
+  @media screen and (max-width: $mobile-width) {
+    width: 100%;
+  }
+}
+
+textarea {
+  min-width: $input-width;
+  max-width: $input-width;
+  min-height: 100px;
+  max-height: 100px;
+  height: 100px;
+  resize: none;
+
+  @media screen and (max-width: $mobile-width) {
+    min-width: 100%;
+    max-width: 100%;
+    width: 100%
+  }
+}
+
+#{$all-text-inputs}, select, textarea {
+  border: 1px solid #A4ECFF;
+  padding: 5px 10px;
+  @include border-top-radius(10px);
+  @include border-bottom-radius(10px);
+  @include border-left-radius(10px);
+  @include border-right-radius(10px);
+  @include linear-gradient(#FFFFFF 0%, #F4F4F4 5%, #FFFFFF 50%);
+
+  &:hover {
+    border: 1px solid #79CBFF;
+  }
+
+  &:focus {
+    @include box-shadow(0 0 2px #79CBFF);
+  }
+}
+
+input[type="button"], input[type="submit"] {
+  border: 1px solid #A4ECFF;
+  width: auto;
+  padding: 5px 10px;
+  @include border-top-radius(10px);
+  @include border-bottom-radius(10px);
+  @include border-left-radius(10px);
+  @include border-right-radius(10px);
+  background-color: #D8D8D8;
+
+  &:hover {
+    border: 1px solid #79CBFF;
+    background-color: #C9C9C9;
+  }
+
+  &:active {
+    border: 1px solid #FF0000;
+    background-color: #A8A8A8;
+  }
+}
+
+a {
+  &:link {
+    font-size: 1em;
+    font-weight: bold;
+    color: blue;
+    text-decoration: none;
+  }
+
+  &:visited {
+    color: blue;
+    text-decoration: none;
+  }
+
+  &:hover {
+    color: #3C9AFC;
+    text-decoration: underline;
+  }
+
+  &:active {
+    color: blue;
+    text-decoration: none;
+  }
+}
+
+hr {
+  border: none;
+  border-top: 1px #CCCCCC solid;
+  height: 1px;
+}
+
+.fsPetDetails h5 {
+  display: block;
+  text-align: center;
+  margin-top: -.5em;
+}
+
+.fsContactInformation h5 {
+  display: block;
+  text-align: center;
+  margin-top: -.5em;
+}
+
+.fsLoginInformation h5 {
+  display: block;
+  text-align: center;
+  margin-top: -.5em;
+}
+
+div.input {
+  margin-top: 10px;
+  float: left;
+
+  @media screen and (max-width: $mobile-width) {
+    width: 100%;
+  }
+}
+
+div.label {
+  float: left;
+  width: 300px;
+  clear: left;
+  margin-top: 16px;
+}
+
+.ui-widget label {
+  font-size: 15px !important;
+}
+
+.ui-widget label + input {
+  font-size: 15px !important;
+  margin-top: 10px;
+  text-align: left;
+}
+
+.pet-report a:link {
+  font-size: 1em;
+  font-weight: normal;
+  color: blue;
+  text-decoration: none;
+}
+
+table {
+  margin-top: 1em;
+  width: 100%;
+  vertical-align: top;
+}
+
+table td {
+  padding: 5px 10px;
+  vertical-align: top;
+}
+
+table th {
+  padding: 0 10px;
+  vertical-align: bottom;
+}
+
+table tr {
+  vertical-align: top;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: normal;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
+}
+
+table tr:first-child {
+  text-align: left;
+  font-weight: bold;
+  font-style: italic;
+  border-bottom: 1px #000 solid;
+}
+
+dl.LinkList dt {
+  font-size: 1.7em;
+  line-height: 1.5em;
+}
+
+dl.LinkList dd + dt {
+  margin-top: 1em;
+}
+
+dl.LinkList dd {
+  font-size: 1.3em;
+  line-height: 1.5em;
+  margin-left: 20px;
+}
+
+dl.LinkList dd:before {
+  content: ">> "
+}

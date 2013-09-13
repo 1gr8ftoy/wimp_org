@@ -1,0 +1,57 @@
+#pet-home-map-header, #pet-last-seen-map-header, #pet-found-map-header, #pet-image-header {
+  float: right;
+  font-size: 1.2em;
+  font-weight: bold;
+  width: 320px;
+  position: relative;
+  clear: right;
+  margin-bottom: .5em;
+  margin-top: .5em;
+}
+
+#pet-home-map, #pet-last-seen-map, #pet-found-map {
+  float: right;
+  height: 320px;
+  width: 320px;
+  position: relative;
+  margin: 0 0 20px 20px;
+  background-color: #E5E3DF;
+  border: 1px solid #000;
+  clear: right;
+}
+
+#pet-image {
+  text-align: left;
+  width: 320px;
+  float: right;
+  position: relative;
+  margin: 0 0 20px 20px;
+  clear: right;
+}
+
+#error_explanation {
+  width: 100%;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+  h2 {
+    text-align: left;
+    font-weight: bold;
+    padding: 5px 5px 5px 15px;
+    font-size: 12px;
+    margin: -7px;
+    margin-bottom: 0px;
+    background-color: #c00;
+    color: #fff;
+  }
+  ul {
+    margin: 10px 10px 10px 20px;
+
+    li {
+      font-size: 12px;
+      list-style: square;
+    }
+  }
+}
