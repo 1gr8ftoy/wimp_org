@@ -1,3 +1,55 @@
 b_conway_website_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: BConwayWebsiteBundle:Default:index }
+    pattern:  /
+    defaults: { _controller: BConwayWebsiteBundle:Default:homepage }
+
+b_conway_website_contact_us:
+    pattern:  /contact
+    defaults: { _controller: BConwayWebsiteBundle:Default:contact }
+
+b_conway_website_browse_all_pets:
+    pattern:  /browse
+    defaults: { _controller: BConwayWebsiteBundle:Default:browse }
+
+b_conway_website_browse_lost_pets:
+    pattern:  /lost
+    defaults: { _controller: BConwayWebsiteBundle:LostPet:browse }
+
+b_conway_website_lost_pet_create:
+    pattern:  /lost/new
+    defaults: { _controller: BConwayWebsiteBundle:LostPet:create }
+
+b_conway_website_lost_pet_view:
+    pattern:  /lost/{id}
+    defaults: { _controller: BConwayWebsiteBundle:LostPet:view }
+
+b_conway_website_lost_pet_edit:
+    pattern:  /lost/{id}/edit
+    defaults: { _controller: BConwayWebsiteBundle:LostPet:edit }
+
+b_conway_website_lost_pet_delete:
+    pattern:  /lost/{id}/delete
+    defaults: { _controller: BConwayWebsiteBundle:LostPet:delete }
+
+b_conway_website_browse_found_pets:
+    pattern:  /found
+    defaults: { _controller: BConwayWebsiteBundle:FoundPet:browse }
+
+b_conway_website_found_pet_create:
+    pattern:  /found/new
+    defaults: { _controller: BConwayWebsiteBundle:FoundPet:create }
+
+b_conway_website_found_pet_view:
+    pattern:  /found/{id}
+    defaults: { _controller: BConwayWebsiteBundle:FoundPet:view }
+
+b_conway_website_found_pet_edit:
+    pattern:  /found/{id}/edit
+    defaults: { _controller: BConwayWebsiteBundle:FoundPet:edit }
+
+b_conway_website_found_pet_delete:
+    pattern:  /found/{id}/delete
+    defaults: { _controller: BConwayWebsiteBundle:FoundPet:delete }
+
+b_conway_website_user_edit_posts:
+    pattern:  /posts/edit
+    defaults: { _controller: BConwayWebsiteBundle:User:posts }
