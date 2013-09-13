@@ -5,3 +5,6 @@ services:
 #    b_conway_website.example:
 #        class: %b_conway_website.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
+    b_conway.website_bundle.image_cacher:
+        class: BConway\WebsiteBundle\Service\ImageCacher
+        arguments: [ @service_container ]
