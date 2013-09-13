@@ -80,4 +80,27 @@ fos_user:
 #            type: bconway_user_profile
     from_email:
         address:        %fos_user_mailer_fromaddress%
-        sender_name:    %fos_user_mailer_sendername%
+        sender_name:    %fos_user_mailer_sendername%liip_imagine:
+    driver:               gd
+    web_root:             %kernel.root_dir%/../web
+    data_root:            %kernel.root_dir%/../web
+    cache_mkdir_mode:     0777
+    cache_prefix:         /media/cache
+    cache:                web_path
+    cache_clearer:        true
+    data_loader:          filesystem
+    controller_action:    liip_imagine.controller:filterAction
+    formats:              [jpg]
+    filter_sets:
+        thumbnail:
+            format: jpg
+            filters:
+                thumbnail: { size: [100, 100], mode: inset }
+        medium:
+            format: jpg
+            filters:
+                thumbnail: { size: [320, 320], mode: inset }
+        large:
+            format: jpg
+            filters:
+                thumbnail: { size: [640, 640], mode: inset }
