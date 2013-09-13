@@ -1,0 +1,150 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    {% set params = app.request.query.all %}
+    <div style="lost-reports">
+        <h4 class="fsPetDetails" style="margin-bottom: 2em; text-align: center; padding: 10px !important;">Browsing lost pet reports</h4>
+
+        <button id="search_button" style="top: -23px;">Search/Filter</button>
+
+        {% if params.form is defined %}
+        <button id="reset_search" style="top: -23px;" onclick="parent.location='{{ path('b_conway_website_browse_lost_pets') }}'">Reset Search/Filter</button>
+        {% endif %}
+
+        <div class="reports-grid">
+            {% for pet in lostPets %}
+                {% if (loop.index - 1) is divisibleby(3) %}
+                    <div class="reports-grid-row" xmlns="http://www.w3.org/1999/html">
+                {% endif %}
+                <a href="{{ path('b_conway_website_lost_pet_view', {'id': pet.id}) }}" class="reports-grid-tile">
+                    {% if pet.petType is defined and pet.petType is not empty %}
+                        {% if (pet.petType|lower) in ['cat', 'dog'] %}
+                            <h6 class="center">Lost {{ pet.petType }}!</h6>
+                        {% else %}
+                            <h6 class="center">Lost!</h6>
+                        {% endif %}
+                    {% endif %}
+                    {% if pet.petImage is defined and pet.petImage is not empty %}
+                        <img src="{{ pet.petImage | imagine_filter('thumbnail') }}" class="thumbnail" alt="Lost pet image"/>
+                    {% endif %}
+                    {% if pet.petType is defined and pet.petType is not empty and not pet.petType|lower in ['cat', 'dog'] %}
+                        <dl class="report-entry clearfix">
+                            <dt>Pet type</dt>
+                            <dd>{{ pet.petType | capitalize }}</dd>
+                        </dl>
+                    {% endif %}
+                    {% if pet.petBreed is defined and pet.petBreed is not empty %}
+                        <dl class="report-entry clearfix">
+                            <dt>Breed</dt>
+                            <dd>{{ pet.petBreed | capitalize }}</dd>
+                        </dl>
+                    {% endif %}
+                    {% if pet.petName is defined and pet.petName is not empty %}
+                        <dl class="report-entry clearfix">
+                            <dt>Name</dt>
+                            <dd>{{ pet.petName | capitalize }}</dd>
+                        </dl>
+                    {% endif %}
+                    {% if pet.petColors is defined and pet.petColors is not empty %}
+                        <dl class="report-entry clearfix">
+                            <dt>Color(s)</dt>
+                            <dd>{{ pet.petColors | capitalize }}</dd>
+                        </dl>
+                    {% endif %}
+                    {% if pet.petHomeCity is defined and pet.petHomeCity is not empty and
+                        pet.petHomeState is defined and pet.petHomeState is not empty %}
+                        <dl class="report-entry clearfix">
+                            <dt>Home city</dt>
+                            <dd>{{ pet.petHomeCity }}, {{ pet.petHomeState }}</dd>
+                        </dl>
+                    {% endif %}
+                    {% if pet.petDescription is defined and pet.petDescription is not empty %}
+                        <dl class="report-entry clearfix">
+                            <dt>Description</dt>
+                            <dd>
+                                {% if pet.petDescription | length > 100 %}
+                                    {{ pet.petDescription[:97] }}...
+                                {% else %}
+                                    {{ pet.petDescription }}
+                                {% endif %}
+                            </dd>
+                        </dl>
+                    {% endif %}
+                    {% if pet.lastUpdatedAt is defined and pet.lastUpdatedAt.timestamp is defined %}
+                        <dl class="report-entry clearfix">
+                            <dt>Last updated</dt>
+                            <dd>{{ pet.lastUpdatedAt | date('m/d/Y') }}</dd>
+                        </dl>
+                    {% endif %}
+                </a>
+                {%  if loop.index is divisibleby(3) %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <div class="digg_pagination">
+            <div class="page_info">
+                {#<%= page_entries_info @lost_pets %>#}
+            </div>
+            {#<%= will_paginate @lost_pets, :container => true %>#}
+        </div>
+
+        <div id="search_dialog" title="Search lost pets" style="display: none;">
+            {{ form_start(searchForm) }}
+                <p>
+                    You may fill out as much or as little of this form as you want for your search.
+                </p>
+
+                <p style="color: red;">
+                    NOTE: If you and/or the poster misspell any of the words you are searching for, you will not find what you are
+                    looking for. You can still browse through each page to double check.
+                </p>
+
+                <p>
+                <div>
+                    {{ form_label(searchForm.searchPetType) }}
+                    <br/>
+                    {{ form_widget(searchForm.searchPetType) }}
+                </div>
+                <div style="margin-top: 10px;">
+                    {{ form_label(searchForm.searchPetBreed) }}
+                    <br/>
+                    {{ form_widget(searchForm.searchPetBreed) }}
+                </div>
+                <div style="margin-top: 10px;">
+                    {{ form_label(searchForm.searchPetHomeCity) }}
+                    <br/>
+                    {{ form_widget(searchForm.searchPetHomeCity) }}
+                </div>
+
+                <div style="margin-top: 10px;">
+                    {{ form_label(searchForm.searchPetHomeState) }}
+                    <br/>
+                    {{ form_widget(searchForm.searchPetHomeState) }}
+                </div>
+                </p>
+                <br/>
+                <span style="font-size: 14px; font-weight: bold;">Find by date of post</span>
+                <br/>
+                <br/>
+
+                <p>
+                <div style="margin-top: 10px;">
+                    {{ form_label(searchForm.searchStartDate) }}
+                    <br/>
+                    {{ form_widget(searchForm.searchStartDate) }}
+                    <br/>
+                </div>
+                <div style="margin-top: 10px;">
+                    {{ form_label(searchForm.searchEndDate) }}
+                    <br/>
+                    {{ form_widget(searchForm.searchEndDate) }}
+                    <br/>
+                </div>
+                {{ form_widget(searchForm.Search) }}
+                </p>
+            {{ form_end(searchForm) }}
+        </div>
+    </div>
+{% endblock %}

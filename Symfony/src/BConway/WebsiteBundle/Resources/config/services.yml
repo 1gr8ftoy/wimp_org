@@ -1,10 +1,17 @@
-parameters:
+#parameters:
 #    b_conway_website.example.class: BConway\WebsiteBundle\Example
 
 services:
-#    b_conway_website.example:
-#        class: %b_conway_website.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    b_conway.twig.b_conway_extension:
+        class: BConway\WebsiteBundle\Twig\BConwayExtension
+        tags:
+            - { name: twig.extension }
+    b_conway.website_bundle.image_remover_subscriber:
+        class: BConway\WebsiteBundle\EventListener\ImageRemoverSubscriber
+        arguments: [ @service_container ]
+        tags:
+            - { name: doctrine.event_subscriber }
+
     b_conway.website_bundle.image_cacher:
         class: BConway\WebsiteBundle\Service\ImageCacher
         arguments: [ @service_container ]

@@ -8,7 +8,9 @@ Symfony/*/cache/*
 Symfony/web/uploads/*
 Symfony/web/bundles/*
 Symfony/web/css/compiled/*
+Symfony/web/css/compiled/*
 Symfony/web/js/compiled/*
+Symfony/web/media/*
 Symfony/bin/*
 
 # Composer binary
@@ -26,3 +28,6 @@ Symfony/app/config/parameters.yml
 
 # HTML test report
 Symfony/test_report.html
+
+# Assets used for test scenarios
+test_assets/*

@@ -122,6 +122,8 @@ Feature: A user needs to be able to successfully navigate throughout the website
      Then I should see "Browsing found pet reports"
       And I should see 6 ".reports-grid .reports-tile" elements
 
+  # TODO: Scenario: User needs to be able to filter visible found pets
+
   Scenario: User needs to be able to send us a message via the contact page
     Given I am on the homepage
       And I follow "Contact us"

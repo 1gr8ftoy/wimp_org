@@ -1,0 +1,12 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <h4 class="fsPetDetails" style="margin-bottom: 2em; text-align: center; padding: 10px !important;">Choose a report type</h4>
+
+    <dl class="LinkList">
+        <dt><a href="{{ path('b_conway_website_browse_lost_pets') }}">View lost pets</a></dt>
+        <dd>Pets that have been reported missing</dd>
+        <dt><a href="{{ path('b_conway_website_browse_found_pets') }}">View found pets</a></dt>
+        <dd>Pets that people have found and reported</dd>
+    </dl>
+{% endblock %}

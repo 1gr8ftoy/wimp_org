@@ -32,8 +32,6 @@ class FeatureContext extends MinkContext //MinkContext if you want to test web
 {
     private $kernel;
     private $parameters;
-    private $_lost_pets;
-    private $_found_pets;
 
     /**
      * Initializes context with parameters from behat.yml.
@@ -243,10 +241,15 @@ class FeatureContext extends MinkContext //MinkContext if you want to test web
 
             // Assign user to lost pet entity
             $pet->setUser($user);
-        }
 
-        // Save changes to database
-        $manager->flush();
+            // Save changes to database
+            $manager->flush();
+
+            // "Upload" image if it exists in the array
+            if (array_key_exists('petImage', $row)) {
+                $this->attachFileToManualPost($manager, $pet, 'lost', $row['petImage']);
+            }
+        }
     }
 
     /**
@@ -280,12 +283,30 @@ class FeatureContext extends MinkContext //MinkContext if you want to test web
 
             // Assign user to lost pet entity
             $pet->setUser($user);
-        }
 
-        // Save changes to database
-        $manager->flush();
+            // Save changes to database
+            $manager->flush();
+
+            // "Upload" image if it exists in the array
+            if (array_key_exists('petImage', $row)) {
+                $this->attachFileToManualPost($manager, $pet, 'found', $row['petImage']);
+            }
+        }
     }
 
+    public function attachFileToManualPost($entityManager, $pet, $postType, $image)
+    {
+        $unique_filename = sha1(uniqid(mt_rand(), true)) . '.jpg';
+        $srcfile=$this->parameters['base_path'] . '/../test_assets/images/' . $image;
+        $dstfile=$this->parameters['base_path'] . '/web/uploads/' . $postType . '_pets/' . $pet->getId() . '/' . $unique_filename;
+        mkdir(dirname($dstfile), 0777, true);
+        if (copy($srcfile, $dstfile)) {
+            $pet->setPetImage('/uploads/' . $postType . '_pets/' . $pet->getId() . '/' . $unique_filename);
+
+            // Save changes to database
+            $entityManager->flush();
+        }
+    }
     /**
      * @Then /^I should have (\d+) lost "([^"]*)"s?$/
      */

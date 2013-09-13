@@ -1,13 +1,73 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}WhereIsMyPet.org - Connecting people to their lost pets{% endblock %}</title>
+    <meta name="keywords" content="{% block meta_keywords %}lost and found, lost, found, pet, pet ran away, lost dog, dog, cat, lost cat, found dog, found cat, dog ran away, cat ran away{% endblock %}"/>
+    <meta name="description" content="{% block meta_description %}We aim to connect every lost pet with their worried owner.{% endblock %}"/>
+    {% block stylesheets %}
+        {% stylesheets
+        'css/application.scss'
+        'css/cupertino/jquery-ui-1.10.3.custom.min.css'
+        output='css/compiled/main.css'
+        filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+    <script type="text/javascript">
+//        var _gaq = _gaq || [];
+//        _gaq.push(['_setAccount', 'UA-11332538-5']);
+//        _gaq.push(['_trackPageview']);
+//
+//        (function() {
+//            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+//            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+//            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+//        })();
+    </script>
+</head>
+<body>
+{% for type, messages in app.session.flashbag.all() %}
+    {% for message in messages %}
+        {% if type == 'error' %}
+            <div class="flash-error ui-state-error ui-corner-bottom">
+                {{ message }}
+            </div>
+        {% else %}
+            <div class="flash-notice ui-state-highlight ui-corner-bottom">
+                {{ message }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+<div id="wrapper">
+    {% include 'BConwayWebsiteBundle:Layout:_usernav.html.twig' %}
+    {% include 'BConwayWebsiteBundle:Layout:_header.html.twig' %}
+
+    <div id="content">
+        <div class="left-column">
+            {% include 'BConwayWebsiteBundle:Layout:_navigation.html.twig' %}
+        </div>
+
+        <div class="right-column">
+            {% block body %}{% endblock %}
+        </div>
+    </div>
+
+    <div id="footer">
+        {% include 'BConwayWebsiteBundle:Layout:_footer.html.twig' %}
+    </div>
+</div>
+{% block javascripts %}
+    {% javascripts
+    'js/jquery-1.10.2.min.js'
+    'js/jquery-ui-1.10.3.custom.min.js'
+    'js/*.js'
+    output='js/compiled/main.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+</body>
 </html>

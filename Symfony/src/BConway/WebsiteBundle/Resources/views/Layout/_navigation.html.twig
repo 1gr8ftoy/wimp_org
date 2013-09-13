@@ -1,0 +1,25 @@
+<ul>
+    <li class="ui-icon-pawprint"><a href="{{ path('b_conway_website_homepage') }}">Home</a></li>
+    <li class="ui-icon-pawprint"><a href="{{ path('b_conway_website_lost_pet_create') }}">Post your lost pet</a></li>
+    <li class="ui-icon-pawprint"><a href="{{ path('b_conway_website_found_pet_create') }}">Post a pet you found</a></li>
+    <li class="ui-icon-pawprint"><a href="{{ path('b_conway_website_browse_lost_pets') }}">View lost pets</a></li>
+    <li class="ui-icon-pawprint"><a href="{{ path('b_conway_website_browse_found_pets') }}">View found pets</a></li>
+    <li class="ui-icon-pawprint"><a href="{{ path('b_conway_website_contact_us') }}">Contact us</a></li>
+</ul>
+
+<ul>
+    <li><a href="http://forum.whereismypet.org/">Forum</a></li>
+</ul>
+
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+    <ul>
+        <li><a href="{{ path('fos_user_profile_edit') }}">{{ 'Edit my account'|trans }}</a></li>
+        <li><a href="{{ path('b_conway_website_user_edit_posts') }}">{{ 'Edit my posts'|trans }}</a></li>
+        <li><a href="{{ path('fos_user_security_logout') }}">{{ 'Logout'|trans }}</a></li>
+    </ul>
+{% else %}
+    <ul>
+        <li><a href="{{ path('fos_user_registration_register') }}">{{ 'Sign up'|trans }}</a></li>
+        <li><a href="{{ path('fos_user_security_login') }}">{{ 'Login'|trans }}</a></li>
+    </ul>
+{% endif %}

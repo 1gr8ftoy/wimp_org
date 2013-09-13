@@ -1,0 +1,38 @@
+# BConway/WebsiteBundle/Resources/config/validation.yml
+BConway\WebsiteBundle\Entity\LostPet:
+    properties:
+        petType:
+            - NotBlank:
+                message: You must specify your pet's species
+        petColors:
+            - NotBlank:
+                message: You must specify your pet's color(s)
+        petDescription:
+            - NotBlank:
+                message: You must describe your pet
+        petHomeCity:
+            - NotBlank:
+                message: You must specify your pet's home city
+        petHomeState:
+            - NotBlank:
+                message: You must specify your pet's home state
+        contactName:
+            - NotBlank:
+                message: You must specify a contact name
+        contactEmail:
+            - NotBlank:
+                message: You must specify a contact email address
+        petName:
+        petComesWhenCalled:
+        petLocationLastSeen:
+        petMicrochip:
+        contactPhone:
+        petImage:
+            - File:
+                maxSize: 2M
+                mimeTypes: [application/jpeg, application/png, application/gif]
+                mimeTypesMessage: Must be a valid jpg, png or gif file
+        petBreed:
+
+BConway\WebsiteBundle\Entity\FoundPet:
+    properties:

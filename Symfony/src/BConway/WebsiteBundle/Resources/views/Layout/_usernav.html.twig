@@ -1,0 +1,10 @@
+<div id="user_nav">
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        Logged in as <strong>{{ app.user.username }}</strong> ({{ app.user.email }}).
+        <a href="{{ path('fos_user_profile_edit') }}">{{ 'Edit account'|trans }}</a> |
+        <a href="{{ path('fos_user_security_logout') }}">{{ 'Logout'|trans }}</a>
+    {% else %}
+        <a href="{{ path('fos_user_registration_register') }}">{{ 'Sign up'|trans }}</a> |
+        <a href="{{ path('fos_user_security_login') }}">{{ 'Login'|trans }}</a>
+    {% endif %}
+</div>

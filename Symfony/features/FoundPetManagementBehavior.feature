@@ -9,6 +9,28 @@ Feature: FoundPet management
         | petType | petName | petColors | petDescription   | petLocationFoundCity | petLocationFoundState | petImage | contactName | contactEmail   | contactPhone   |
         | Dog     | Joe     | Black     | Spotted, one leg | New York             | NY                    | dog.jpg  | John Smith  | john@smith.com | (555) 511-2687 |
 
+  Scenario: User views lost pet post via edit page
+    Given I am logged in
+      And I am on the homepage
+      And I follow "Edit my posts"
+     When I click the "div.found-pets .reports-grid .reports-tile" element
+     Then I should see "Editing lost pet"
+     When I follow "View post"
+     Then the url should match "/found/\d+"
+      And I should see "Joe"
+
+  Scenario: User deletes a post via edit page
+    Given I am logged in
+      And I am on the homepage
+      And I follow "Edit my posts"
+     When I click the "div.found-pets .reports-grid .reports-tile" element
+     Then I should see "Editing lost pet"
+     When I follow "Delete post"
+      And I confirm the popup
+     Then I should be on "/posts/edit"
+      And I should see "Post deleted successfully"
+      And I should see 0 ".reports-grid .reports-tile" elements
+
   Scenario: User changes a found pet's contact name
     Given I am logged in
       And I am on the homepage

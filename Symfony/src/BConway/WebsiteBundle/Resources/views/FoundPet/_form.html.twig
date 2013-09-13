@@ -1,0 +1,136 @@
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+
+<fieldset class="fsPetDetails">
+    <h5 style="#636363">Pet Details</h5>
+    <div>
+        <div class="label">
+            <div id="found_pet_petType" class="radioset">
+                {{ form_label(form.petType) }}
+            </div>
+        </div>
+        <div class="input">
+            {{ form_widget(form.petType) }}
+        </div>
+    </div>
+    <div>
+        <div class="label">
+            {{ form_label(form.petName) }}
+        </div>
+        <div class="input">
+            {{ form_widget(form.petName) }}
+        </div>
+    </div>
+    <div>
+        <div class="label">
+            {{ form_label(form.petColors) }}
+        </div>
+        <div class="input">
+            {{ form_widget(form.petColors) }}
+        </div>
+    </div>
+    <div>
+        <div class="label">
+            {{ form_label(form.petDescription) }}
+        </div>
+        <div class="input">
+            {{ form_widget(form.petDescription) }}
+        </div>
+    </div>
+    <div>
+        <div class="label">
+            {{ form_label(form.petBreed) }}
+        </div>
+        <div class="input">
+            {{ form_widget(form.petBreed) }}
+        </div>
+    </div>
+    <div>
+        <div class="label">
+            {{ form_label(form.setPetLocationFoundCity) }}
+        </div>
+        <div class="input">
+            {{ form_widget(form.setPetLocationFoundCity) }}
+        </div>
+    </div>
+    <div>
+        <div class="label">
+            {{ form_label(form.setPetLocationFoundState) }}
+        </div>
+        <div class="input">
+            {{ form_widget(form.setPetLocationFoundState) }}
+        </div>
+    </div>
+    <div>
+        <div class="label">
+            {# TODO: Make sure that only the proper formats can be uploaded #}
+            <label class="required" for="found_pet_petImage">
+                Upload a picture (optional)<br/>
+                (JPEG, PNG or GIF)
+            </label>
+        </div>
+        <div class="input">
+            {{ form_widget(form.petImage) }}
+            {% if action is 'edit' and foundPet is defined and foundPet.petImage is defined and foundPet.petImage is not empty %}
+                <img src="{{ foundPet.petImage | imagine_filter('thumbnail') }}" style="border: 1px solid #000; margin-top: 10px; display: block; max-width: 100px; max-height: 100px;"/>
+            {% endif %}
+        </div>
+    </div>
+    {% if action is 'edit' and foundPet is defined and foundPet.petImage is defined and foundPet.petImage is not empty %}
+        <div>
+            <div class="label"></div>
+            <div class="input">
+                {{ form_widget(form.deletePetImage) }} {{ form_label(form.deletePetImage) }}
+            </div>
+        </div>
+    {% endif %}
+    <div>
+        <div class="label">
+            {{ form_label(form.petImage) }}
+        </div>
+        <div class="input">
+            {{ form_widget(form.petImage) }}
+            <!-- <%= image_tag(@found_pet.pet_image_url, :style => "border: 1px solid #000; margin-top: 10px; display: block; max-width: 100px; max-height: 100px;") if @found_pet.pet_image? %> -->
+        </div>
+    </div>
+</fieldset>
+<fieldset class="fsContactInformation">
+    <h5 style="color: #636363;">Contact Information</h5>
+
+    <div>
+        <div class="label">
+            {{ form_label(form.contactName) }}
+        </div>
+        <div class="input">
+            {{ form_widget(form.contactName) }}
+        </div>
+    </div>
+    <div>
+        <div class="label">
+            {{ form_label(form.contactEmail) }}
+        </div>
+        <div class="input">
+            {{ form_widget(form.contactEmail) }}
+        </div>
+    </div>
+    <div>
+        <div class="label">
+            {{ form_label(form.contactPhone) }}
+        </div>
+        <div class="input">
+            {{ form_widget(form.contactPhone) }}
+        </div>
+    </div>
+</fieldset>
+
+<div class="actions">
+    <div style="display: block; text-align: center; margin: 30px 0 20px 0;">
+        {% if action is defined and is 'edit' %}
+            {{ form_widget(form.save, {'label': 'Update post'}) }}
+        {% else %}
+            {{ form_widget(form.save, {'label': 'Create post'}) }}
+        {% endif %}
+    </div>
+</div>
+
+{{ form_end(form) }}

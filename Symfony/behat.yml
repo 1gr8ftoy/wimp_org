@@ -4,6 +4,8 @@ default:
         bootstrap: features/bootstrap
     context:
         class: BConway\WebsiteBundle\Features\Context\FeatureContext
+        parameters:
+            base_path: %behat.paths.base%
     formatter:
         name: pretty,html
         parameters:

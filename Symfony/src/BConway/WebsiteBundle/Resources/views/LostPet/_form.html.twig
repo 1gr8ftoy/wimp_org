@@ -1,0 +1,168 @@
+
+{{  form_start(form, {
+        'attr': {
+            'novalidate': 'novalidate',
+        }
+    })
+}}
+    {{ form_errors(form) }}
+
+<fieldset class="fsPetDetails">
+    <h5 style="color: #636363;">Pet Details</h5>
+    <div>
+        <div class="label">
+            {{ form_label(form.petType) }}
+        </div>
+        <div class="input">
+            <div id="lost_pet_petType" class="radioset">
+                {{ form_widget(form.petType) }}
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="label">
+            {{ form_label(form.petBreed) }}
+        </div>
+        <div class="input">
+            {{ form_widget(form.petBreed) }}
+        </div>
+    </div>
+    <div>
+        <div class="label">
+            {{ form_label(form.petName) }}
+        </div>
+        <div class="input">
+            {{ form_widget(form.petName) }}
+        </div>
+    </div>
+    <div>
+        <div class="label">
+            {{ form_label(form.petComesWhenCalled) }}
+        </div>
+        <div class="input">
+            <div id="lost_pet_petComesWhenCalled" class="radioset">
+                {{ form_widget(form.petComesWhenCalled) }}
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="label">
+            {{ form_label(form.petColors) }}
+        </div>
+        <div class="input">
+            {{ form_widget(form.petColors) }}
+        </div>
+    </div>
+    <div>
+        <div class="label">
+            {{ form_label(form.petDescription) }}
+        </div>
+        <div class="input">
+            {{ form_widget(form.petDescription) }}
+        </div>
+    </div>
+    <div>
+        <div class="label">
+            {{ form_label(form.petHomeCity) }}
+        </div>
+        <div class="input">
+            {{ form_widget(form.petHomeCity) }}
+        </div>
+    </div>
+    <div>
+        <div class="label">
+            {{ form_label(form.petHomeState) }}
+        </div>
+        <div class="input">
+            {{ form_widget(form.petHomeState) }}
+        </div>
+    </div>
+    <div>
+        <div class="label">
+            <label class="required" for="lost_pet_petLocationLastSeen">
+                Location last seen (optional)<br />
+                (e.g. "Mongomery Ave, Cleveland, Ohio" or<br />
+                "Montgomery Ave &amp; Main St in Cleveland, Ohio")
+            </label>
+        </div>
+        <div class="input">
+            {{ form_widget(form.petLocationLastSeen) }}
+        </div>
+    </div>
+    <div>
+        <div class="label">
+            {{ form_label(form.petMicrochip) }}
+        </div>
+        <div class="input">
+            {{ form_widget(form.petMicrochip) }}
+        </div>
+    </div>
+    <div>
+        <div class="label">
+            <label class="required" for="lost_pet_petImage">
+                Upload a picture (optional)<br/>
+                (JPEG, PNG or GIF)
+            </label>
+        </div>
+        <div class="input">
+            {{ form_widget(form.petImage) }}
+            {% if action == 'edit' and lostPet is defined and lostPet.petImage is defined and lostPet.petImage is not empty %}
+                <img src="{{ lostPet.petImage | imagine_filter('thumbnail') }}" style="border: 1px solid #000; margin-top: 10px; display: block; max-width: 100px; max-height: 100px;"/>
+            {% elseif action == 'create' and app.session.get('lostPetImage-cached') is defined and app.session.get('lostPetImage-cached') is not empty %}
+                <img src="{{ app.session.get('lostPetImage-cached') | imagine_filter('thumbnail') }}" style="border: 1px solid #000; margin-top: 10px; display: block; max-width: 100px; max-height: 100px;"/>
+            {% endif %}
+        </div>
+    </div>
+        {% set imageExists = (action == 'edit' and lostPet is defined and lostPet.petImage is defined and lostPet.petImage is not empty) %}
+        <div{% if not imageExists %} style="display: none;"{% endif %}>
+            <div class="label"></div>
+            <div class="input">
+                {{ form_widget(form.deletePetImage) }} {{ form_label(form.deletePetImage) }}
+            </div>
+        </div>
+</fieldset>
+
+<fieldset class="fsContactInformation">
+    <h5 style="color: #636363;">Contact Information</h5>
+    <div>
+        <div>
+            <div class="label">
+                {{ form_label(form.contactName) }}
+            </div>
+            <div class="input">
+                {{ form_widget(form.contactName) }}
+            </div>
+        </div>
+    </div>
+    <div>
+        <div>
+            <div class="label">
+                {{ form_label(form.contactEmail) }}
+            </div>
+            <div class="input">
+                {{ form_widget(form.contactEmail) }}
+            </div>
+        </div>
+    </div>
+    <div>
+        <div>
+            <div class="label">
+                {{ form_label(form.contactPhone) }}
+            </div>
+            <div class="input">
+                {{ form_widget(form.contactPhone) }}
+            </div>
+        </div>
+    </div>
+</fieldset>
+
+<div class="actions">
+    <div style="display: block; text-align: center; margin: 30px 0 20px 0;">
+        {% if action is defined and action == 'edit' %}
+            {{ form_widget(form.save, {'label': 'Update post'}) }}
+        {% else %}
+            {{ form_widget(form.save, {'label': 'Create post'}) }}
+        {% endif %}
+    </div>
+</div>
+{{ form_end(form) }}
