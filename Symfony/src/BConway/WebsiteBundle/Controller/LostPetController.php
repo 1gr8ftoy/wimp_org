@@ -200,5 +200,96 @@ class LostPetController extends Controller
         ));
     }
 
+    public function editAction($id, Request $request)
+    {
+        // Get user's PHP session
+        $session = $this
+            ->getRequest()
+            ->getSession();
+
+        // Get the LostPet repository
+        $em = $this->
+            getDoctrine()
+            ->getManager();
+
+        $lostPet = $em
+            ->getRepository('BConwayWebsiteBundle:LostPet')
+            ->findOneById($id);
+
+        $form = $this->createForm(new LostPetType(), $lostPet);
+        $form->handleRequest($request);
+
+        /**
+         * Delete image if checkbox was checked
+         */
+
+
+        /* @var \BConway\WebsiteBundle\Service\ImageCacher */
+        $imageCacher = $this->get('b_conway.website_bundle.image_cacher');
+
+        if ($form->get('deletePetImage')->getData()) {
+            // Delete file that was previously persisted for the post
+            $imageCacher->deletePersistedImage($lostPet);
+
+            // Delete any cached image and related data from the PHP session
+            $imageCacher->removeCachedImage($lostPet, true);
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Set message to user
+            $session
+                ->getFlashBag()
+                ->add('notice',
+                    'Post updated successfully'
+                );
+
+            if (!$form->get('deletePetImage')->getData()) {
+                // Handle attaching and moving uploaded or cached file
+                $imageCacher->uploadPetImage(false, $lostPet);
+            }
+
+            // Save changes to the DB
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('b_conway_website_lost_pet_view', array(
+                'id' => $id,
+            )));
+        } else {
+            if (!count($form->get('petImage')->getErrors())) {
+                // No validation errors were found for file field, process uploaded/cached image
+
+                if ($form->isSubmitted()) {
+                    if (!$form->get('deletePetImage')->getData()) {
+                        // Handle attaching and moving uploaded or cached file
+                        $imageCacher->uploadPetImage(true, $lostPet);
+                    }
+                } else {
+                    // Form was not submitted.  If there is a previously cached image, delete it.
+                    $imageCacher->removeCachedImage($lostPet, true);
+                }
+            }
+        }
+
+        if ($lostPet && $lostPet->getId()) {
+            return $this->render('BConwayWebsiteBundle:LostPet:edit.html.twig', array(
+                'lostPet' => $lostPet,
+                'form'    => $form->createView(),
+                'action'  => 'edit',
+            ));
+        } else {
+            // Get user's PHP session
+            $session = $this
+                ->getRequest()
+                ->getSession();
+
+            $session
+                ->getFlashBag()
+                ->add('notice',
+                    'No post found with id #' . $id
+                );
+
+            return $this->redirect($this->generateUrl('b_conway_website_browse_lost_pets'));
+        }
+    }
 
 }
