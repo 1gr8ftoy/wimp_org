@@ -7,7 +7,7 @@
     $(".ui-state-highlight").prepend("<span class=\"ui-icon ui-icon-info\" style=\"float: left; margin-right: 1em;\"></span>");
     $(".ui-state-error").prepend("<span class=\"ui-icon ui-icon-alert\" style=\"float: left; margin-right: 1em;\"></span><strong>Alert:</strong> ");
     $(".ui-state-error, .ui-state-highlight").wrapInner("<div style=\"display: inline-block;\" />");
-    return $("#search_dialog").dialog({
+    $("#search_dialog").dialog({
       autoOpen: false,
       autoResize: true,
       width: 350,
@@ -40,6 +40,7 @@
         return $("#form_searchStartDate").datepicker("option", "maxDate", selectedDate);
       }
     }));
+    return $("input[id*=deletePetImage]").removeAttr('checked');
   });
 
   this.getParameter = function(paramName) {

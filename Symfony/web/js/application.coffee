@@ -42,6 +42,9 @@ $(document).ready ->
       onClose: (selectedDate) ->
         $("#form_searchStartDate").datepicker("option", "maxDate", selectedDate)
 
+  # Clear any pet image removal checkbox
+  $("input[id*=deletePetImage]").removeAttr('checked')
+
 @getParameter = (paramName) ->
   searchString = window.location.search.substring(1)
   i = undefined
