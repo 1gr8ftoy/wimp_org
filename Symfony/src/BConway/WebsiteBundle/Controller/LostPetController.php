@@ -183,15 +183,19 @@ class LostPetController extends Controller
                 'id' => $lostPet->getId(),
             )));
         } else {
-            /* @var \BConway\WebsiteBundle\Service\ImageCacher */
-            $imageCacher = $this->get('b_conway.website_bundle.image_cacher');
+            if (!count($form->get('petImage')->getErrors())) {
+                // No validation errors were found for file field, process uploaded/cached image
 
-            if ($form->isSubmitted()) {
-                // Handle attaching and moving uploaded or cached file
-                $imageCacher->uploadPetImage(true, $lostPet);
-            } else {
-                // Form was not submitted.  If there is a previously cached image, delete it.
-                $imageCacher->removeCachedImage($lostPet, true);
+                /* @var \BConway\WebsiteBundle\Service\ImageCacher */
+                $imageCacher = $this->get('b_conway.website_bundle.image_cacher');
+
+                if ($form->isSubmitted()) {
+                    // Handle attaching and moving uploaded or cached file
+                    $imageCacher->uploadPetImage(true, $lostPet);
+                } else {
+                    // Form was not submitted.  If there is a previously cached image, delete it.
+                    $imageCacher->removeCachedImage($lostPet, true);
+                }
             }
         }
 
