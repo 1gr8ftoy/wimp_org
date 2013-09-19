@@ -139,3 +139,7 @@ jms_security_extra:
 
     util:
         secure_random: ~
+
+# Are you a human form validation
+ayahPublisherKey: %ayahPublisherKey%
+ayahScoringKey:  %ayahScoringKey%

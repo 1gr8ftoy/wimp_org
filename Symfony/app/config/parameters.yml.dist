@@ -21,3 +21,6 @@ parameters:
 
     assetic.ruby.bin:        ~
     assetic.filter.compass.bin:     ~
+
+    ayahPublisherKey: ~
+    ayahScoringKey:  ~
