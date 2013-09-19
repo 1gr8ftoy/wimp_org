@@ -200,6 +200,36 @@ class LostPetController extends Controller
         ));
     }
 
+    public function viewAction($id)
+    {
+        // Get the LostPet repository
+        $em = $this->
+            getDoctrine()
+            ->getManager()
+            ->getRepository('BConwayWebsiteBundle:LostPet');
+
+        $lostPet = $em->findOneById($id);
+
+        if ($lostPet && $lostPet->getId()) {
+            return $this->render('BConwayWebsiteBundle:LostPet:view.html.twig', array(
+                'lostPet' => $lostPet,
+            ));
+        } else {
+            // Get user's PHP session
+            $session = $this
+                ->getRequest()
+                ->getSession();
+
+            $session
+                ->getFlashBag()
+                ->add('notice',
+                    'No post found with id #' . $id
+                );
+
+            return $this->redirect($this->generateUrl('b_conway_website_browse_lost_pets'));
+        }
+    }
+
     public function editAction($id, Request $request)
     {
         // Get user's PHP session
