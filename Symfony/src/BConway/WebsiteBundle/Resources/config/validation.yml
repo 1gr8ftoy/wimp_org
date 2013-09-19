@@ -28,9 +28,10 @@ BConway\WebsiteBundle\Entity\LostPet:
         petMicrochip:
         contactPhone:
         petImage:
-            - File:
+            - Image:
                 maxSize: 2M
-                mimeTypes: [application/jpeg, application/png, application/gif]
+                mimeTypes: [image/jpeg, image/png, image/gif]
+                maxSizeMessage: The file is too large. Allowed maximum size is 2MB.
                 mimeTypesMessage: Must be a valid jpg, png or gif file
         petBreed:
 
