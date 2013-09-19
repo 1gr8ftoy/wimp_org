@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\FileBag;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class LostPetController extends Controller
 {
@@ -322,4 +323,22 @@ class LostPetController extends Controller
         }
     }
 
+    public function deleteAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $lostPet = $em->getRepository('BConwayWebsiteBundle:LostPet')->findOneById($id);
+
+        if ($lostPet) {
+            if ($lostPet->getUser()->getId() === $this->getUser()->getId()) {
+                $em->remove($lostPet);
+                $em->flush();
+                return $this->redirect($this->generateUrl('b_conway_website_browse_lost_pets'));
+            } else {
+                throw new AccessDeniedHttpException();
+            }
+        } else {
+            return $this->createNotFoundException('No post found with id #' . $id);
+        }
+    }
 }
