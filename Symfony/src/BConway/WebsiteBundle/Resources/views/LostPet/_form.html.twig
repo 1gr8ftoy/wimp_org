@@ -11,70 +11,174 @@
     <h5 style="color: #636363;">Pet Details</h5>
     <div>
         <div class="label">
+            {% if form.petType.vars.errors | length %}
+                <div class="field_with_errors">
+            {% endif %}
             {{ form_label(form.petType) }}
+            {% if form.petType.vars.errors | length %}
+                </div>
+            {% endif %}
         </div>
         <div class="input">
             <div id="lost_pet_petType" class="radioset">
                 {{ form_widget(form.petType) }}
+                {% if form.petType.vars.errors | length %}
+                    <div class="field_with_errors_error_list">
+                {% endif %}
+                        {{ form_errors(form.petType) }}
+                {% if form.petType.vars.errors | length %}
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
     <div>
         <div class="label">
+            {% if form.petBreed.vars.errors | length %}
+                <div class="field_with_errors">
+            {% endif %}
             {{ form_label(form.petBreed) }}
+            {% if form.petBreed.vars.errors | length %}
+                </div>
+            {% endif %}
         </div>
         <div class="input">
             {{ form_widget(form.petBreed) }}
+            {% if form.petBreed.vars.errors | length %}
+                <div class="field_with_errors_error_list">
+            {% endif %}
+            {{ form_errors(form.petBreed) }}
+            {% if form.petBreed.vars.errors | length %}
+                </div>
+            {% endif %}
         </div>
     </div>
     <div>
         <div class="label">
+            {% if form.petName.vars.errors | length %}
+                <div class="field_with_errors">
+            {% endif %}
             {{ form_label(form.petName) }}
+            {% if form.petName.vars.errors | length %}
+                </div>
+            {% endif %}
         </div>
         <div class="input">
             {{ form_widget(form.petName) }}
+            {% if form.petName.vars.errors | length %}
+                <div class="field_with_errors_error_list">
+            {% endif %}
+            {{ form_errors(form.petName) }}
+            {% if form.petName.vars.errors | length %}
+                </div>
+            {% endif %}
         </div>
     </div>
     <div>
         <div class="label">
+            {% if form.petComesWhenCalled.vars.errors | length %}
+                <div class="field_with_errors">
+            {% endif %}
             {{ form_label(form.petComesWhenCalled) }}
+            {% if form.petComesWhenCalled.vars.errors | length %}
+                </div>
+            {% endif %}
         </div>
         <div class="input">
             <div id="lost_pet_petComesWhenCalled" class="radioset">
                 {{ form_widget(form.petComesWhenCalled) }}
+                {% if form.petComesWhenCalled.vars.errors | length %}
+                    <div class="field_with_errors_error_list">
+                {% endif %}
+                {{ form_errors(form.petComesWhenCalled) }}
+                {% if form.petComesWhenCalled.vars.errors | length %}
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
     <div>
         <div class="label">
+            {% if form.petColors.vars.errors | length %}
+                <div class="field_with_errors">
+            {% endif %}
             {{ form_label(form.petColors) }}
+            {% if form.petColors.vars.errors | length %}
+                </div>
+            {% endif %}
         </div>
         <div class="input">
             {{ form_widget(form.petColors) }}
+            {% if form.petColors.vars.errors | length %}
+                <div class="field_with_errors_error_list">
+            {% endif %}
+            {{ form_errors(form.petColors) }}
+            {% if form.petColors.vars.errors | length %}
+                </div>
+            {% endif %}
         </div>
     </div>
     <div>
         <div class="label">
+            {% if form.petDescription.vars.errors | length %}
+                <div class="field_with_errors">
+            {% endif %}
             {{ form_label(form.petDescription) }}
+            {% if form.petDescription.vars.errors | length %}
+                </div>
+            {% endif %}
         </div>
         <div class="input">
             {{ form_widget(form.petDescription) }}
+            {% if form.petDescription.vars.errors | length %}
+                <div class="field_with_errors_error_list">
+            {% endif %}
+            {{ form_errors(form.petDescription) }}
+            {% if form.petDescription.vars.errors | length %}
+                </div>
+            {% endif %}
         </div>
     </div>
     <div>
         <div class="label">
+            {% if form.petHomeCity.vars.errors | length %}
+                <div class="field_with_errors">
+            {% endif %}
             {{ form_label(form.petHomeCity) }}
+            {% if form.petHomeCity.vars.errors | length %}
+                </div>
+            {% endif %}
         </div>
         <div class="input">
             {{ form_widget(form.petHomeCity) }}
+            {% if form.petHomeCity.vars.errors | length %}
+                <div class="field_with_errors_error_list">
+            {% endif %}
+            {{ form_errors(form.petHomeCity) }}
+            {% if form.petHomeCity.vars.errors | length %}
+                </div>
+            {% endif %}
         </div>
     </div>
     <div>
         <div class="label">
+            {% if form.petHomeState.vars.errors | length %}
+                <div class="field_with_errors">
+            {% endif %}
             {{ form_label(form.petHomeState) }}
+            {% if form.petHomeState.vars.errors | length %}
+                </div>
+            {% endif %}
         </div>
         <div class="input">
             {{ form_widget(form.petHomeState) }}
+            {% if form.petHomeState.vars.errors | length %}
+                <div class="field_with_errors_error_list">
+            {% endif %}
+            {{ form_errors(form.petHomeState) }}
+            {% if form.petHomeState.vars.errors | length %}
+                </div>
+            {% endif %}
         </div>
     </div>
     <div>
@@ -87,14 +191,34 @@
         </div>
         <div class="input">
             {{ form_widget(form.petLocationLastSeen) }}
+            {% if form.petLocationLastSeen.vars.errors | length %}
+                <div class="field_with_errors_error_list">
+            {% endif %}
+            {{ form_errors(form.petLocationLastSeen) }}
+            {% if form.petLocationLastSeen.vars.errors | length %}
+                </div>
+            {% endif %}
         </div>
     </div>
     <div>
         <div class="label">
+            {% if form.petMicrochip.vars.errors | length %}
+                <div class="field_with_errors">
+            {% endif %}
             {{ form_label(form.petMicrochip) }}
+            {% if form.petMicrochip.vars.errors | length %}
+                </div>
+            {% endif %}
         </div>
         <div class="input">
             {{ form_widget(form.petMicrochip) }}
+            {% if form.petMicrochip.vars.errors | length %}
+                <div class="field_with_errors_error_list">
+            {% endif %}
+            {{ form_errors(form.petMicrochip) }}
+            {% if form.petMicrochip.vars.errors | length %}
+                </div>
+            {% endif %}
         </div>
     </div>
     <div>
@@ -105,16 +229,27 @@
             </label>
         </div>
         <div class="input">
-            {{ form_widget(form.petImage) }}
-            {% if action == 'edit' and lostPet is defined and lostPet.petImage is defined and lostPet.petImage is not empty %}
-                <img src="{{ lostPet.petImage | imagine_filter('thumbnail') }}" style="border: 1px solid #000; margin-top: 10px; display: block; max-width: 100px; max-height: 100px;"/>
-            {% elseif action == 'create' and app.session.get('lostPetImage-cached') is defined and app.session.get('lostPetImage-cached') is not empty %}
+            {{ form_widget(form.petImage) }} <br />
+            {% if form.petImage.vars.errors | length %}
+                <div class="field_with_errors_error_list">
+            {% endif %}
+            {{ form_errors(form.petImage) }}
+            {% if form.petImage.vars.errors | length %}
+                </div>
+            {% endif %}
+            {% if app.session.get('lostPetImage-cached') is defined and app.session.get('lostPetImage-cached') is not empty %}
+                {% set imageExists = true %}
                 <img src="{{ app.session.get('lostPetImage-cached') | imagine_filter('thumbnail') }}" style="border: 1px solid #000; margin-top: 10px; display: block; max-width: 100px; max-height: 100px;"/>
+            {% elseif lostPet is defined and lostPet.petImage is defined and lostPet.petImage is not empty %}
+                {% set imageExists = true %}
+                <img src="{{ lostPet.petImage | imagine_filter('thumbnail') }}" style="border: 1px solid #000; margin-top: 10px; display: block; max-width: 100px; max-height: 100px;"/>
+            {% else %}
+
             {% endif %}
         </div>
     </div>
-        {% set imageExists = (action == 'edit' and lostPet is defined and lostPet.petImage is defined and lostPet.petImage is not empty) %}
-        <div{% if not imageExists %} style="display: none;"{% endif %}>
+        {#{% set imageExists = (action == 'edit' and lostPet is defined and lostPet.petImage is defined and lostPet.petImage is not empty) %}#}
+        <div{% if not imageExists is defined %} style="display: none;"{% endif %}>
             <div class="label"></div>
             <div class="input">
                 {{ form_widget(form.deletePetImage) }} {{ form_label(form.deletePetImage) }}
@@ -127,30 +262,69 @@
     <div>
         <div>
             <div class="label">
+                {% if form.contactName.vars.errors | length %}
+                    <div class="field_with_errors">
+                {% endif %}
                 {{ form_label(form.contactName) }}
+                {% if form.contactName.vars.errors | length %}
+                    </div>
+                {% endif %}
             </div>
             <div class="input">
                 {{ form_widget(form.contactName) }}
+                {% if form.contactName.vars.errors | length %}
+                    <div class="field_with_errors_error_list">
+                {% endif %}
+                {{ form_errors(form.contactName) }}
+                {% if form.contactName.vars.errors | length %}
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
     <div>
         <div>
             <div class="label">
+                {% if form.contactEmail.vars.errors | length %}
+                    <div class="field_with_errors">
+                {% endif %}
                 {{ form_label(form.contactEmail) }}
+                {% if form.contactEmail.vars.errors | length %}
+                    </div>
+                {% endif %}
             </div>
             <div class="input">
                 {{ form_widget(form.contactEmail) }}
+                {% if form.contactEmail.vars.errors | length %}
+                    <div class="field_with_errors_error_list">
+                {% endif %}
+                {{ form_errors(form.contactEmail) }}
+                {% if form.contactEmail.vars.errors | length %}
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
     <div>
         <div>
             <div class="label">
+                {% if form.contactPhone.vars.errors | length %}
+                    <div class="field_with_errors">
+                {% endif %}
                 {{ form_label(form.contactPhone) }}
+                {% if form.contactPhone.vars.errors | length %}
+                    </div>
+                {% endif %}
             </div>
             <div class="input">
                 {{ form_widget(form.contactPhone) }}
+                {% if form.contactPhone.vars.errors | length %}
+                    <div class="field_with_errors_error_list">
+                {% endif %}
+                {{ form_errors(form.contactPhone) }}
+                {% if form.contactPhone.vars.errors | length %}
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
