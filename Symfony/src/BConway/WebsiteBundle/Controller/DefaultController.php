@@ -10,5 +10,9 @@ class DefaultController extends Controller
     {
         return $this->render('BConwayWebsiteBundle:Default:homepage.html.twig');
     }
+    public function browseAction()
+    {
+        return $this->render('BConwayWebsiteBundle:Default:browse.html.twig');
+    }
     }
 }
