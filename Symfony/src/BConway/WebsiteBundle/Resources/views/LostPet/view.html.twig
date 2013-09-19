@@ -1,167 +1,169 @@
 {% extends '::base.html.twig' %}
 
-<div class="pet-report">
-    <div class="pet-label">
-        {% if lostPet.petType is defined and lostPet.petType in ['cat', 'dog'] %}
-            <h5>Lost {{ lostPet.petType | capitalize }}{{ ': ' ~ lostPet.petName if lostPet.petName is defined and lostPet.petName | length > 0 }}</h5>
-        {% else %}
-            <h5>Lost pet{{  ': ' ~ lostPet.petName if lostPet.petName is defined and lostPet.petName | length > 0 }}</h5>
-        {% endif %}
+{% block body %}
+    <div class="pet-report">
+        <div class="pet-label">
+            {% if lostPet.petType is defined and lostPet.petType in ['cat', 'dog'] %}
+                <h5>Lost {{ lostPet.petType | capitalize }}{% if lostPet.petName is defined and lostPet.petName is not empty %}{{ ': ' ~ lostPet.petName }}{% endif %}</h5>
+            {% else %}
+                <h5>Lost pet{% if lostPet.petName is defined and lostPet.petName is not empty %}{{  ': ' ~ lostPet.petName }}{% endif %}</h5>
+            {% endif %}
 
-        {% if is_granted('IS_AUTHENTICATED_FULLY' and lostPet.id is app.user.id) %}
-            <p>
-                [<a href="{{ path('b_conway_website_lost_pet_edit', {'id': lostPet.id}) }}">Edit post</a>]
-                [<a href="{{ path('b_conway_website_lost_pet_delete', {'id': lostPet.id}) }}"
-                    onClick="return confirm('Are you sure?');">Delete post</a>]
-            </p>
-        {% endif %}
-        <p>&nbsp;</p>
-        {% if lostPet.petBreed is defined and lostPet.petBreed | length > 0 %}
-            <div class="report-entry clearfix">
-                <div class="label">Breed</div>
-                <div class="text">{{ lostPet.petBreed }}</div>
-            </div>
-        {% endif %}
-        {% if lostPet.petName is defined and lostPet.petName | length > 0 %}
-            <div class="report-entry clearfix">
-                <div class="label">Name</div>
-                <div class="text">{{ lostPet.petName }}</div>
-            </div>
-        {% endif %}
-        {% if lostPet.petComesWhenCalled is defined %}
-            <div class="report-entry clearfix">
-                <div class="label">Comes when called</div>
-                <div class="text">{{ lostPet.petComesWhenCalled ? 'Yes' : 'No' }}</div>
-            </div>
-        {% endif %}
-        {% if lostPet.petColors is defined and lostPet.petColors | length > 0 %}
-            <div class="report-entry clearfix">
-                <div class="label">Color(s)</div>
-                <div class="text">{{ lostPet.petColors }}</div>
-            </div>
-        {% endif %}
-        {% if lostPet.petDescription is defined and lostPet.petDescription | length > 0 %}
-            <div class="report-entry clearfix">
-                <div class="label">Description / What happened</div>
-                <div class="text">{{ lostPet.petDescription }}</div>
-            </div>
-        {% endif %}
-        {% if lostPet.petHomeCity is defined and lostPet.petHomeCity | length > 0 and lostPet.petHomeState is defined and lostPet.petHomeState | length > 0 %}
-            <div class="report-entry clearfix">
-                <div class="label">Pet's home city</div>
-                <div class="text">{{ lostPet.petHomeCity ~ ', ' ~ lostPet.petHomeState }}</div>
-            </div>
-        {% endif %}
-        {% if lostPet.petLocationLastSeen is defined and lostPet.petLocationLastSeen | length > 0 %}
-            <div class="report-entry clearfix">
-                <div class="label">Location last seen</div>
-                <div class="text">{{ lostPet.petLocationLastSeen }}</div>
-            </div>
-        {% endif %}
-        {% if lostPet.petMicrochip is defined and lostPet.petMicrochip | length > 0 %}
-            <div class="report-entry clearfix">
-                <div class="label">License / Microchip details</div>
-                <div class="text">{{ lostPet.petMicrochip }}</div>
-            </div>
-        {% endif %}
-    </div>
-
-    <div class="contact-label">
-        {% if lostPet.contactName is defined and lostPet.contactName | length > 0 %}
-            <div class="report-entry clearfix">
-                <div class="label">Contact name</div>
-                <div class="text">{{ lostPet.contactName }}</div>
-            </div>
-        {% endif %}
-        {% if lostPet.contactEmail is defined and lostPet.contactEmail | length > 0 %}
-            <div class="report-entry clearfix">
-                <div class="label">Contact email</div>
-                <div class="text">{{ lostPet.contactEmail }}</div>
-            </div>
-        {% endif %}
-        {% if lostPet.contactPhone is defined and lostPet.contactPhone | length > 0 %}
-            <div class="report-entry clearfix">
-                <div class="label">Contact phone number</div>
-                <div class="text">{{ lostPet.contactPhone }}</div>
-            </div>
-        {% endif %}
-    </div>
-</div>
-<div class="pet-report-image-maps">
-    {% lostPet.petImage is defined and lostPet.petImage | length > 0 %}
-        <div id="pet-image-header">Picture of the pet that was lost</div>
-        <div id="pet-image">
-            <img src="{{ lostPet.petImage | imagine_filter('medium') }}" alt="Picture of pet that was lost" title="Picture of pet that was lost" style="max-width: 320px; max-height: 320px; border: 1px solid #000;"/>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') and lostPet.user.id == app.user.id %}
+                <p>
+                    [<a href="{{ path('b_conway_website_lost_pet_edit', {'id': lostPet.id}) }}">Edit post</a>]
+                    [<a href="{{ path('b_conway_website_lost_pet_delete', {'id': lostPet.id}) }}"
+                        onClick="return confirm('Are you sure?');">Delete post</a>]
+                </p>
+            {% endif %}
+            <p>&nbsp;</p>
+            {% if lostPet.petBreed is defined and lostPet.petBreed is not empty %}
+                <div class="report-entry clearfix">
+                    <div class="label">Breed</div>
+                    <div class="text">{{ lostPet.petBreed }}</div>
+                </div>
+            {% endif %}
+            {% if lostPet.petName is defined and lostPet.petName is not empty %}
+                <div class="report-entry clearfix">
+                    <div class="label">Name</div>
+                    <div class="text">{{ lostPet.petName }}</div>
+                </div>
+            {% endif %}
+            {% if lostPet.petComesWhenCalled is defined and lostPet.petComesWhenCalled is not null %}
+                <div class="report-entry clearfix">
+                    <div class="label">Comes when called</div>
+                    <div class="text">{{ lostPet.petComesWhenCalled ? 'Yes' : 'No' }}</div>
+                </div>
+            {% endif %}
+            {% if lostPet.petColors is defined and lostPet.petColors is not empty %}
+                <div class="report-entry clearfix">
+                    <div class="label">Color(s)</div>
+                    <div class="text">{{ lostPet.petColors }}</div>
+                </div>
+            {% endif %}
+            {% if lostPet.petDescription is defined and lostPet.petDescription is not empty %}
+                <div class="report-entry clearfix">
+                    <div class="label">Description / What happened</div>
+                    <div class="text">{{ lostPet.petDescription }}</div>
+                </div>
+            {% endif %}
+            {% if lostPet.petHomeCity is defined and lostPet.petHomeCity is not empty and lostPet.petHomeState is defined and lostPet.petHomeState is not empty %}
+                <div class="report-entry clearfix">
+                    <div class="label">Pet's home city</div>
+                    <div class="text">{{ lostPet.petHomeCity ~ ', ' ~ lostPet.petHomeState }}</div>
+                </div>
+            {% endif %}
+            {% if lostPet.petLocationLastSeen is defined and lostPet.petLocationLastSeen is not empty %}
+                <div class="report-entry clearfix">
+                    <div class="label">Location last seen</div>
+                    <div class="text">{{ lostPet.petLocationLastSeen }}</div>
+                </div>
+            {% endif %}
+            {% if lostPet.petMicrochip is defined and lostPet.petMicrochip is not empty %}
+                <div class="report-entry clearfix">
+                    <div class="label">License / Microchip details</div>
+                    <div class="text">{{ lostPet.petMicrochip }}</div>
+                </div>
+            {% endif %}
         </div>
+
+        <div class="contact-label">
+            {% if lostPet.contactName is defined and lostPet.contactName is not empty %}
+                <div class="report-entry clearfix">
+                    <div class="label">Contact name</div>
+                    <div class="text">{{ lostPet.contactName }}</div>
+                </div>
+            {% endif %}
+            {% if lostPet.contactEmail is defined and lostPet.contactEmail is not empty %}
+                <div class="report-entry clearfix">
+                    <div class="label">Contact email</div>
+                    <div class="text"><a href="{{ lostPet.contactEmail | encodeEmail }}">Contact via Email</a></div>
+                </div>
+            {% endif %}
+            {% if lostPet.contactPhone is defined and lostPet.contactPhone is not empty %}
+                <div class="report-entry clearfix">
+                    <div class="label">Contact phone number</div>
+                    <div class="text">{{ lostPet.contactPhone }}</div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="pet-report-image-maps">
+        {% if lostPet.petImage is defined and lostPet.petImage is not empty %}
+            <div id="pet-image-header">Picture of the pet that was lost</div>
+            <div id="pet-image">
+                <img src="{{ lostPet.petImage | imagine_filter('medium') }}" alt="Picture of pet that was lost" title="Picture of pet that was lost" style="max-width: 320px; max-height: 320px; border: 1px solid #000;"/>
+            </div>
+        {% endif %}
+        {% if lostPet.petHomeCity is defined and lostPet.petHomeCity is not empty %}
+            <div id="pet-home-map-header">Home city</div>
+            <div id="pet-home-map"></div>
+        {% endif %}
+        {% if lostPet.petLocationLastSeen is defined and lostPet.petLocationLastSeen is not empty %}
+            <div id="pet-last-seen-map-header">Last seen location</div>
+            <div id="pet-last-seen-map"></div>
+        {% endif %}
+    </div>
+    {% if app.environment == 'prod' %}
+        <script type="text/javascript"
+                src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAo_Erk_lNDtMsxsvz3YHmsuWsK-G5kjSg&sensor=false"></script>
+    {% else %}
+        <script type="text/javascript"
+                src="http://maps.googleapis.com/maps/api/js?&sensor=false"></script>
     {% endif %}
-    {% if lostPet.petHomeCity is defined and lostPet.petHomeCity | length > 0 %}
-        <div id="pet-home-map-header">Home city</div>
-        <div id="pet-home-map"></div>
-    {% endif %}
-    {% if lostPet.petLocationLastSeen is defined and lostPet.petLocationLastSeen | length > 0 %}
-        <div id="pet-last-seen-map-header">Last seen location</div>
-        <div id="pet-last-seen-map"></div>
-    {% endif %}
-</div>
-{% if app.environment is 'prod' %}
-    <script type="text/javascript"
-            src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAo_Erk_lNDtMsxsvz3YHmsuWsK-G5kjSg&sensor=false"></script>
-{% else %}
-    <script type="text/javascript"
-            src="http://maps.googleapis.com/maps/api/js?&sensor=false"></script>
-{% endif %}
-<script type="text/javascript">
-    {% if lostPet.petHomeCity is defined and lostPet.petHomeCity | length > 0 and lostPet.petHomeState is defined and lostPet.petHomeState | length > 0 %}
-        if ($("#pet-home-map").length) {
-            var myOptions = {
-                zoom:15,
-                mapTypeId:google.maps.MapTypeId.ROADMAP
-            }
-
-            var mapHome = new google.maps.Map(document.getElementById("pet-home-map"), myOptions);
-
-            geocoder = new google.maps.Geocoder();
-
-            var addressHome = '{{ lostPet.petHomeCity ~ ', ' ~ lostPet.petHomeState}}';
-
-            geocoder.geocode({ 'address':addressHome}, function (results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    mapHome.setCenter(results[0].geometry.location);
-                    var marker = new google.maps.Marker({
-                        map:mapHome,
-                        position:results[0].geometry.location
-                    });
-                } else {
-                    $('#pet-home-map').html('<img src="{{ asset('/images/map-unavailable.gif') }}" alt="Map unavailable" />');
+    <script type="text/javascript">
+        {% if lostPet.petHomeCity is defined and lostPet.petHomeCity is not empty and lostPet.petHomeState is defined and lostPet.petHomeState is not empty %}
+            if ($("#pet-home-map").length) {
+                var myOptions = {
+                    zoom:15,
+                    mapTypeId:google.maps.MapTypeId.ROADMAP
                 }
-            });
-        }
-    {% endif %}
 
-    {% if lostPet.petLocationLastSeen is defined and lostPet.petLocationLastSeen | length > 0 %}
-        if ($("#pet-last-seen-map").length) {
-            var myOptions = {
-                zoom:15,
-                mapTypeId:google.maps.MapTypeId.ROADMAP
+                var mapHome = new google.maps.Map(document.getElementById("pet-home-map"), myOptions);
+
+                geocoder = new google.maps.Geocoder();
+
+                var addressHome = '{{ lostPet.petHomeCity ~ ', ' ~ lostPet.petHomeState}}';
+
+                geocoder.geocode({ 'address':addressHome}, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        mapHome.setCenter(results[0].geometry.location);
+                        var marker = new google.maps.Marker({
+                            map:mapHome,
+                            position:results[0].geometry.location
+                        });
+                    } else {
+                        $('#pet-home-map').html('<img src="{{ asset('/images/map-unavailable.gif') }}" alt="Map unavailable" />');
+                    }
+                });
             }
+        {% endif %}
 
-            var mapLastSeen = new google.maps.Map(document.getElementById("pet-last-seen-map"), myOptions);
-
-            geocoder = new google.maps.Geocoder();
-
-            var addressLastSeen = '{{ lostPet.petLocationLastSeen }}';
-
-            geocoder.geocode({ 'address':addressLastSeen}, function (results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    mapLastSeen.setCenter(results[0].geometry.location);
-                    var marker = new google.maps.Marker({
-                        map:mapLastSeen,
-                        position:results[0].geometry.location
-                    });
-                } else {
-                    $('#pet-last-seen-map').html('<img src="{{ asset('/images/map-unavailable.gif') }}" alt="Map unavailable" />');
+        {% if lostPet.petLocationLastSeen is defined and lostPet.petLocationLastSeen is not empty %}
+            if ($("#pet-last-seen-map").length) {
+                var myOptions = {
+                    zoom:15,
+                    mapTypeId:google.maps.MapTypeId.ROADMAP
                 }
-            });
-        }
-    {% endif %}
-</script>
+
+                var mapLastSeen = new google.maps.Map(document.getElementById("pet-last-seen-map"), myOptions);
+
+                geocoder = new google.maps.Geocoder();
+
+                var addressLastSeen = '{{ lostPet.petLocationLastSeen }}';
+
+                geocoder.geocode({ 'address':addressLastSeen}, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        mapLastSeen.setCenter(results[0].geometry.location);
+                        var marker = new google.maps.Marker({
+                            map:mapLastSeen,
+                            position:results[0].geometry.location
+                        });
+                    } else {
+                        $('#pet-last-seen-map').html('<img src="{{ asset('/images/map-unavailable.gif') }}" alt="Map unavailable" />');
+                    }
+                });
+            }
+        {% endif %}
+    </script>
+{% endblock %}
