@@ -182,6 +182,7 @@ hr {
 div.input {
   margin-top: 10px;
   float: left;
+  max-width: 300px;
 
   @media screen and (max-width: $mobile-width) {
     width: 100%;
