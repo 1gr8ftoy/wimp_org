@@ -24,13 +24,16 @@ class AppKernel extends Kernel
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new BConway\WebsiteBundle\BConwayWebsiteBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
-            new blackknight467\AYAHBundle\AYAHBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+        }
+
+        if ($this->getEnvironment() != 'test') {
+            $bundles[] = new blackknight467\AYAHBundle\AYAHBundle();
         }
 
         return $bundles;
