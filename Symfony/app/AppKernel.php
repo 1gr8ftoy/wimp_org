@@ -24,6 +24,7 @@ class AppKernel extends Kernel
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new BConway\WebsiteBundle\BConwayWebsiteBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
+            new blackknight467\AYAHBundle\AYAHBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

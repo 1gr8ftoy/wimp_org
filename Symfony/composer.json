@@ -26,7 +26,8 @@
         "jms/security-extra-bundle": "dev-master",
         "symfony/icu": "1.0.*",
         "behat/common-contexts": "*",
-        "liip/imagine-bundle": "dev-master"
+        "liip/imagine-bundle": "dev-master",
+        "blackknight467/ayah-bundle": "dev-master"
     },
     "require-dev": {
         "behat/behat": "2.5.*@stable",

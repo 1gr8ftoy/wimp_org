@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "227f68688890835d4d46cd80585090b6",
+    "hash": "b45a06e261c5a6ff4d6cd9aa6b17e76f",
     "packages": [
         {
             "name": "behat/behat",
@@ -200,6 +200,61 @@
                 "parser"
             ],
             "time": "2013-03-02 10:38:40"
+        },
+        {
+            "name": "blackknight467/ayah-bundle",
+            "version": "dev-master",
+            "target-dir": "blackknight467/AYAHBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/blackknight467/AYAHBundle.git",
+                "reference": "d194544eee8abe8619763f457ba1299822ed2661"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/blackknight467/AYAHBundle/zipball/d194544eee8abe8619763f457ba1299822ed2661",
+                "reference": "d194544eee8abe8619763f457ba1299822ed2661",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "symfony/framework-bundle": ">=2.1,<2.3-dev"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "blackknight467\\AYAHBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Derick Felsman",
+                    "email": "derickfelsman@gmail.com"
+                }
+            ],
+            "description": "Are you a human bundle for use with Symfony 2.  This bundle adds the 'ayah' form type.  Simple and easy to use.  Lets leave the captcha behind",
+            "homepage": "http://github.com/blackknight467/AYAHBundle",
+            "keywords": [
+                "Symfony2",
+                "a",
+                "are",
+                "are you a human",
+                "areyouahuman",
+                "ayah",
+                "bundle",
+                "captcha",
+                "human",
+                "security",
+                "symfony",
+                "you"
+            ],
+            "time": "2013-05-23 23:36:36"
         },
         {
             "name": "doctrine/annotations",
@@ -790,12 +845,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/migrations.git",
-                "reference": "ced3b419252af47f29d6680f9ec74df00ee0c58e"
+                "reference": "99475d79841dc00a63fe7dd051f8fb1ba03bf1a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/migrations/zipball/ced3b419252af47f29d6680f9ec74df00ee0c58e",
-                "reference": "ced3b419252af47f29d6680f9ec74df00ee0c58e",
+                "url": "https://api.github.com/repos/doctrine/migrations/zipball/99475d79841dc00a63fe7dd051f8fb1ba03bf1a8",
+                "reference": "99475d79841dc00a63fe7dd051f8fb1ba03bf1a8",
                 "shasum": ""
             },
             "require": {
@@ -836,7 +891,7 @@
                 "database",
                 "migrations"
             ],
-            "time": "2013-06-27 19:46:00"
+            "time": "2013-09-13 02:44:30"
         },
         {
             "name": "doctrine/orm",
@@ -965,12 +1020,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "1b8ffdb45c5323e68f602375c723016fb02f0138"
+                "reference": "85ef11b6d68e640d306574b87302c9f335b80ef2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/1b8ffdb45c5323e68f602375c723016fb02f0138",
-                "reference": "1b8ffdb45c5323e68f602375c723016fb02f0138",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/85ef11b6d68e640d306574b87302c9f335b80ef2",
+                "reference": "85ef11b6d68e640d306574b87302c9f335b80ef2",
                 "shasum": ""
             },
             "require": {
@@ -1025,7 +1080,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2013-09-12 19:27:14"
+            "time": "2013-09-19 10:03:47"
         },
         {
             "name": "imagine/imagine",
@@ -1372,16 +1427,16 @@
         },
         {
             "name": "jms/metadata",
-            "version": "1.4.1",
+            "version": "1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/metadata.git",
-                "reference": "0af8423dc23dfeed1592426106d2ffbc69f68057"
+                "reference": "246d7096801ce29b5aea30a1abf0277ccfb9f055"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/metadata/zipball/0af8423dc23dfeed1592426106d2ffbc69f68057",
-                "reference": "0af8423dc23dfeed1592426106d2ffbc69f68057",
+                "url": "https://api.github.com/repos/schmittjoh/metadata/zipball/246d7096801ce29b5aea30a1abf0277ccfb9f055",
+                "reference": "246d7096801ce29b5aea30a1abf0277ccfb9f055",
                 "shasum": ""
             },
             "require": {
@@ -1420,7 +1475,7 @@
                 "xml",
                 "yaml"
             ],
-            "time": "2013-08-27 18:10:33"
+            "time": "2013-09-13 09:05:44"
         },
         {
             "name": "jms/parser-lib",
@@ -1606,12 +1661,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/LiipImagineBundle.git",
-                "reference": "60021fe59c2cb79cbae54ca176127db49ce5215d"
+                "reference": "5f0794821a27468870e6f4a93657fa95ea2986ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/60021fe59c2cb79cbae54ca176127db49ce5215d",
-                "reference": "60021fe59c2cb79cbae54ca176127db49ce5215d",
+                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/5f0794821a27468870e6f4a93657fa95ea2986ae",
+                "reference": "5f0794821a27468870e6f4a93657fa95ea2986ae",
                 "shasum": ""
             },
             "require": {
@@ -1651,7 +1706,7 @@
                 "image",
                 "imagine"
             ],
-            "time": "2013-09-10 15:12:45"
+            "time": "2013-09-18 09:51:58"
         },
         {
             "name": "monolog/monolog",
@@ -3132,6 +3187,7 @@
         "elnur/blowfish-password-encoder-bundle": 20,
         "jms/security-extra-bundle": 20,
         "liip/imagine-bundle": 20,
+        "blackknight467/ayah-bundle": 20,
         "behat/behat": 0,
         "behat/mink": 0
     },
