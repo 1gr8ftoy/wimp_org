@@ -22,6 +22,10 @@ class DefaultController extends Controller
     {
         $form = $this->createForm(new ContactType());
 
+        if ($this->container->get('kernel')->getEnvironment() != 'test') {
+            $form->add('ayah', 'ayah');
+        }
+
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
 

@@ -102,6 +102,9 @@
 
 <div class="actions">
     <div style ="display: block; text-align: center; margin: 30px 0 20px 0;">
+        {% if app.environment != 'test' %}
+            {{ form_widget(form.ayah) }}
+        {% endif %}
         {{ form_widget(form.send) }}
     </div>
 </div>
