@@ -4,11 +4,26 @@ namespace BConway\WebsiteBundle\Twig;
 
 class BConwayExtension extends \Twig_Extension
 {
+    public function getFilters()
+    {
+        return array(
+            new \Twig_SimpleFilter('encodeEmail', array($this, 'encodedMailToFilter'), array('is_safe' => array('html')))
+        );
+
+    }
+
     public function getFunctions()
     {
         return array(
             new \Twig_SimpleFunction('stateSelect', array($this, 'stateSelectFunction'))
         );
+    }
+
+    public function encodedMailToFilter($emailAddress)
+    {
+        $output = '';
+        for ($i = 0; $i < strlen($emailAddress); $i++) { $output .= '&#'.ord($emailAddress[$i]).';'; }
+        return 'mailto:' . $output;
     }
 
     public function stateSelectFunction($selectedState = true, $showFullStateName = null)
