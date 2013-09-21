@@ -37,3 +37,32 @@ BConway\WebsiteBundle\Entity\LostPet:
 
 BConway\WebsiteBundle\Entity\FoundPet:
     properties:
+        petType:
+            - NotBlank:
+                message: You must specify the pet's species
+        petName:
+        petColors:
+            - NotBlank:
+                message: You must specify the pet's color(s)
+        petDescription:
+        petBreed:
+        petLocationFoundCity:
+            - NotBlank:
+                message: You must specify the city where you found the pet
+        petLocationFoundState:
+            - NotBlank:
+                message: You must specify the state where you found the pet
+        petImage:
+            - Image:
+                maxSize: 2M
+                mimeTypes: [image/jpeg, image/png, image/gif]
+                maxSizeMessage: The file is too large. Allowed maximum size is 2MB.
+                mimeTypesMessage: Must be a valid jpg, png or gif file
+        deletePetImage:
+        contactName:
+            - NotBlank:
+                message: You must specify a contact name
+        contactEmail:
+            - NotBlank:
+                message: You must specify a contact email address
+        contactPhone:
