@@ -15,3 +15,21 @@ services:
     b_conway.website_bundle.image_cacher:
         class: BConway\WebsiteBundle\Service\ImageCacher
         arguments: [ @service_container ]
+
+    bconway_user.profile.password_resetting:
+        class: BConway\WebsiteBundle\EventListener\PasswordResettingListener
+        arguments: [ @router ]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    bconway_user.profile.password_changing:
+        class: BConway\WebsiteBundle\EventListener\PasswordChangeListener
+        arguments: [ @router ]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    bconway_user.profile.profile_editing:
+        class: BConway\WebsiteBundle\EventListener\ProfileEditListener
+        arguments: [ @router ]
+        tags:
+            - { name: kernel.event_subscriber }
