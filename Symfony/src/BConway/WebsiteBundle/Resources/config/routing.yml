@@ -53,3 +53,7 @@ b_conway_website_found_pet_delete:
 b_conway_website_user_edit_posts:
     pattern:  /posts/edit
     defaults: { _controller: BConwayWebsiteBundle:User:posts }
+
+b_conway_website_user_delete:
+    pattern:  /user/delete
+    defaults: { _controller: BConwayWebsiteBundle:User:delete }
