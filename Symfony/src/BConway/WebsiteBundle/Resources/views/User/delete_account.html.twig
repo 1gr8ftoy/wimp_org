@@ -1,0 +1,35 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <h2 style="padding-top: 40px;">Delete account</h2>
+    <p style="color: red;">WARNING: This will also delete any posts that you have on our website</p>
+    {{ form_start(form) }}
+        <div>
+            <div class="label">
+                {% if form.currentPassword.vars.errors | length %}
+                    <div class="field_with_errors">
+                {% endif %}
+                {{ form_label(form.currentPassword) }}
+                {% if form.currentPassword.vars.errors | length %}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="input">
+                {{ form_widget(form.currentPassword) }}
+                {% if form.currentPassword.vars.errors | length %}
+                    <div class="field_with_errors_error_list">
+                {% endif %}
+                {{ form_errors(form.currentPassword) }}
+                {% if form.currentPassword.vars.errors | length %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="actions">
+            <div class="label"></div>
+            <div class="input">
+                {{ form_widget(form.deleteAccount) }}
+            </div>
+        </div>
+    {{ form_end(form) }}
+{% endblock %}
