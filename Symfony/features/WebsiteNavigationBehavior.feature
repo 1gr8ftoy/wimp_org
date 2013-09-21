@@ -27,7 +27,7 @@ Feature: A user needs to be able to successfully navigate throughout the website
       And I post the following lost pets:
         | petType | petBreed | petName  | petComesWhenCalled | petColors | petDescription   | petHomeCity | petHomeState | petLocationLastSeen | petMicrochip  | petImage | contactName | contactEmail   | contactPhone   |
         | Dog     | Yorkie   | Joe      | Yes                | Black     | Spotted, one leg | New York    | NY           | New York, NY        | a4st8728g2    | dog.jpg  | John Smith  | john@smith.com | (555) 511-2522 |
-        | Cat     | Calico   | Garfield | No                 | Yellow    | Tabby            | Omaha       | NB           | Omaha, NB           | io7g08gyo97   | cat.jpg  | Cat Lover   | cat@lover.org  | (555) 511-6556 |
+        | Cat     | Calico   | Garfield | No                 | Yellow    | Tabby            | Omaha       | NE           | Omaha, NB           | io7g08gyo97   | cat.jpg  | Cat Lover   | cat@lover.org  | (555) 511-6556 |
         | Other   | Macaw    | Roger    | No                 | Red/Blue  | Macaw            | Corona      | CA           | Corona, CA          | 2woy28yv927et | bird.jpg | Janet Smith | bird@lover.org | (555) 511-2662 |
       And I follow "Edit my posts"
      Then I should see 3 "div.lost-pets .reports-grid .reports-tile" elements
@@ -38,7 +38,7 @@ Feature: A user needs to be able to successfully navigate throughout the website
     And I post the following found pets:
       | petType | petName | petColors | petDescription   | petLocationFoundCity | petLocationFoundState | petImage | contactName | contactEmail   | contactPhone   |
       | Dog     | Joe     | Black     | Spotted, one leg | New York             | NY                    | cat.jpg  | John Smith  | john@smith.com | (555) 511-2687 |
-      | Cat     | Calico  | Yellow    | Tabby            | Omaha                | NB                    | cat.jpg  | Cat Lover   | cat@lover.org  | (555) 511-7653 |
+      | Cat     | Calico  | Yellow    | Tabby            | Omaha                | NE                    | cat.jpg  | Cat Lover   | cat@lover.org  | (555) 511-7653 |
       | Other   | Macaw   | Red/Blue  | Macaw            | Corona               | CA                    | bird.jpg | Janet Smith | bird@lover.org | (555) 511-9853 |
     And I follow "Edit my posts"
     Then I should see 3 "div.found-pets .reports-grid .reports-tile" elements
@@ -49,7 +49,7 @@ Feature: A user needs to be able to successfully navigate throughout the website
       And I post the following found pets:
         | petType | petName | petColors | petDescription   | petLocationFoundCity | petLocationFoundState | petImage | contactName | contactEmail   | contactPhone   |
         | Dog     | Joe     | Black     | Spotted, one leg | New York             | NY                    | dog.jpg  | John Smith  | john@smith.com | (555) 511-2687 |
-        | Cat     | Calico  | Yellow    | Tabby            | Omaha                | NB                    | cat.jpg  | Cat Lover   | cat@lover.org  | (555) 511-7653 |
+        | Cat     | Calico  | Yellow    | Tabby            | Omaha                | NE                    | cat.jpg  | Cat Lover   | cat@lover.org  | (555) 511-7653 |
         | Other   | Macaw   | Red/Blue  | Macaw            | Corona               | CA                    | bird.jpg | Janet Smith | bird@lover.org | (555) 511-9853 |
       And I follow "Edit my posts"
      Then I should see 3 "div.found-pets .reports-grid .reports-tile" elements
@@ -60,7 +60,7 @@ Feature: A user needs to be able to successfully navigate throughout the website
       And I post the following found pets:
         | petType | petName | petColors | petDescription   | petLocationFoundCity | petLocationFoundState | petImage | contactName | contactEmail   | contactPhone   |
         | Dog     | Joe     | Black     | Spotted, one leg | New York             | NY                    | dog.jpg  | John Smith  | john@smith.com | (555) 511-2687 |
-        | Cat     | Calico  | Yellow    | Tabby            | Omaha                | NB                    | cat.jpg  | Cat Lover   | cat@lover.org  | (555) 511-7653 |
+        | Cat     | Calico  | Yellow    | Tabby            | Omaha                | NE                    | cat.jpg  | Cat Lover   | cat@lover.org  | (555) 511-7653 |
         | Other   | Macaw   | Red/Blue  | Macaw            | Corona               | CA                    | bird.jpg | Janet Smith | bird@lover.org | (555) 511-9853 |
       And I follow "Edit my posts"
      Then I should see 3 "div.found-pets .reports-grid .reports-tile" elements

@@ -9,7 +9,7 @@ Feature: User/FoundPet relationship
     Given I have the following found pets:
       | petType | petColors | petDescription   | petLocationFoundCity | petLocationFoundState | petImage | contactName | contactEmail   |
       | Dog     | Black     | Spotted, one leg | New York             | NY                    | dog.jpg  | John Smith  | john@smith.com |
-      | Cat     | Yellow    | Tabby            | Omaha                | NB                    | cat.jpg  | Cat Lover   | cat@lover.org  |
+      | Cat     | Yellow    | Tabby            | Omaha                | NE                    | cat.jpg  | Cat Lover   | cat@lover.org  |
       | Other   | Red/Blue  | Macaw            | Corona               | CA                    | bird.jpg | Janet Smith | bird@lover.org |
 
      Then I should have 1 found "Dog"
@@ -22,9 +22,9 @@ Feature: User/FoundPet relationship
       | Dog     | Black       | Spotted, one leg | New York             | NY                    | dog.jpg  | John Smith  | john@smith.com |
       | Dog     | Brown       | Barks funny      | Manhattan            | NY                    | dog.jpg  | John Smith  | john@smith.com |
       | Dog     | Red         | Stands up        | Long Island          | NY                    | dog.jpg  | John Smith  | john@smith.com |
-      | Cat     | Yellow      | Tabby            | Omaha                | NB                    | cat.jpg  | Cat Lover   | cat@lover.org  |
-      | Cat     | Black/White | Kitten           | Lincoln              | NB                    | cat.jpg  | Cat Lover   | cat@lover.org  |
-      | Cat     | White       | Very skittish    | Omaha                | NB                    | cat.jpg  | Cat Lover   | cat@lover.org  |
+      | Cat     | Yellow      | Tabby            | Omaha                | NE                    | cat.jpg  | Cat Lover   | cat@lover.org  |
+      | Cat     | Black/White | Kitten           | Lincoln              | NE                    | cat.jpg  | Cat Lover   | cat@lover.org  |
+      | Cat     | White       | Very skittish    | Omaha                | NE                    | cat.jpg  | Cat Lover   | cat@lover.org  |
       | Other   | Red/Blue    | Macaw            | Corona               | CA                    | bird.jpg | Janet Smith | bird@lover.org |
       | Other   | Green       | Sulcata Tortoise | Riverside            | CA                    | bird.jpg | Janet Smith | bird@lover.org |
       | Other   | Greem       | Monitor          | Fresno               | CA                    | bird.jpg | Janet Smith | bird@lover.org |
