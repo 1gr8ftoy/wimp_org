@@ -1,0 +1,105 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<h2>Sign up</h2>
+<p class="alert-div">
+    This site requires users to login before they can post pets.  This allows us to make sure that only the proper
+    person can edit and/or delete a post.  We will never send you spam or sell your personal information.  Thank you for
+    your understanding and co-operation.
+</p>
+<p> </p>
+
+{{ form_errors(form) }}
+<form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+    {{ form_start(form) }}
+    <div>
+        <div class="label">
+            {% if form.username.vars.errors | length %}
+                <div class="field_with_errors">
+            {% endif %}
+            {{ form_label(form.username) }}
+            {% if form.username.vars.errors | length %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="input">
+            {{ form_widget(form.username) }}
+            {% if form.username.vars.errors | length %}
+                <div class="field_with_errors_error_list">
+            {% endif %}
+            {{ form_errors(form.username) }}
+            {% if form.username.vars.errors | length %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div>
+        <div class="label">
+            {% if form.email.vars.errors | length %}
+                <div class="field_with_errors">
+            {% endif %}
+            {{ form_label(form.email) }}
+            {% if form.email.vars.errors | length %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="input">
+            {{ form_widget(form.email) }}
+            {% if form.email.vars.errors | length %}
+                <div class="field_with_errors_error_list">
+            {% endif %}
+            {{ form_errors(form.email) }}
+            {% if form.email.vars.errors | length %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div>
+        <div class="label">
+            {% if form.plainPassword.first.vars.errors | length %}
+                <div class="field_with_errors">
+            {% endif %}
+            {{ form_label(form.plainPassword.first) }}
+            {% if form.plainPassword.first.vars.errors | length %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="input">
+            {{ form_widget(form.plainPassword.first) }}
+            {% if form.plainPassword.first.vars.errors | length %}
+                <div class="field_with_errors_error_list">
+            {% endif %}
+            {{ form_errors(form.plainPassword.first) }}
+            {% if form.plainPassword.first.vars.errors | length %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div>
+        <div class="label">
+            {% if form.plainPassword.second.vars.errors | length %}
+                <div class="field_with_errors">
+            {% endif %}
+            {{ form_label(form.plainPassword.second) }}
+            {% if form.plainPassword.second.vars.errors | length %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="input">
+            {{ form_widget(form.plainPassword.second) }}
+            {% if form.plainPassword.second.vars.errors | length %}
+                <div class="field_with_errors_error_list">
+            {% endif %}
+            {{ form_errors(form.plainPassword.second) }}
+            {% if form.plainPassword.second.vars.errors | length %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="actions">
+        <div class="label"></div>
+        <div class="input">
+            <input type="submit" value="{{ 'registration.submit'|trans }}" />
+        </div>
+    </div>
+    {{ form_end(form) }}
+</form>

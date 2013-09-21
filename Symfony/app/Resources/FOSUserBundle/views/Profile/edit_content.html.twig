@@ -1,0 +1,94 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<h2>Edit Account</h2>
+
+<form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit">
+    {{ form_start(form) }}
+
+    <div>
+        <div class="label">
+            {% if form.username.vars.errors | length %}
+                <div class="field_with_errors">
+            {% endif %}
+            {{ form_label(form.username) }}
+            {% if form.username.vars.errors | length %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="input">
+            {{ form_widget(form.username) }}
+            {% if form.username.vars.errors | length %}
+                <div class="field_with_errors_error_list">
+            {% endif %}
+            {{ form_errors(form.username) }}
+            {% if form.username.vars.errors | length %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div>
+        <div class="label">
+            {% if form.email.vars.errors | length %}
+                <div class="field_with_errors">
+            {% endif %}
+            {{ form_label(form.email) }}
+            {% if form.email.vars.errors | length %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="input">
+            {{ form_widget(form.email) }}
+            {% if form.email.vars.errors | length %}
+                <div class="field_with_errors_error_list">
+            {% endif %}
+            {{ form_errors(form.email) }}
+            {% if form.email.vars.errors | length %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div>
+        <div class="label">
+            {% if form.current_password.vars.errors | length %}
+                <div class="field_with_errors">
+            {% endif %}
+            {{ form_label(form.current_password) }}<br /><span style="font-size: 0.8em;"><i>(needed to confirm changes)</i></span>
+            {% if form.current_password.vars.errors | length %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="input">
+            {{ form_widget(form.current_password) }}
+            {% if form.current_password.vars.errors | length %}
+                <div class="field_with_errors_error_list">
+            {% endif %}
+            {{ form_errors(form.current_password) }}
+            {% if form.current_password.vars.errors | length %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div>
+        <div class="label">
+            <a href="{{ path('fos_user_change_password') }}" class="button">Change password</a>
+        </div>
+        <div class="input">
+
+            <input type="submit" value="{{ 'profile.edit.submit'|trans }}" />
+        </div>
+    </div>
+
+    {{ form_end(form) }}
+</form>
+
+<h3 style="padding-top: 40px;">Delete account</h3>
+<p style="color: red;">WARNING: This will also delete any posts that you have on our website</p>
+<div>
+    <div class="label">
+        <a href="{{ path('b_conway_website_user_delete') }}">Delete my account</a>
+    </div>
+</div>
+

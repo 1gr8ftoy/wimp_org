@@ -1,0 +1,9 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+    <h2>Sign up</h2>
+    <p>{{ 'registration.check_email'|trans({'%email%': user.email}) }}</p>
+    <p>If you do not see the email, please check your junk/spam box.</p>
+{% endblock fos_user_content %}

@@ -1,0 +1,61 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+    <h2>Login</h2>
+    <p class="alert-div">
+        This site requires users to login before they can post pets.  This allows us to make sure that only the proper
+        person can edit and/or delete a post.  We will never send you spam or sell your personal information.  Thank you for
+        your understanding and co-operation.
+    </p>
+    <p> </p>
+
+    {% if error %}
+        <h6>{{ error|trans }}</h6>
+    {% endif %}
+
+
+    <form action="{{ path("fos_user_security_check") }}" method="post">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+        <div>
+            <div class="label">
+                <label for="username">{{ 'security.login.username'|trans }}</label>
+            </div>
+            <div class="input">
+                <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+            </div>
+        </div>
+
+        <div>
+            <div class="label">
+                <label for="password">{{ 'security.login.password'|trans }}</label>
+            </div>
+            <div class="input">
+                <input type="password" id="password" name="_password" required="required" />
+            </div>
+        </div>
+
+        <div>
+            <div class="label"></div>
+            <div class="input">
+                <input type="checkbox" id="remember_me" name="_remember_me" value="on" /> <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+            </div>
+        </div>
+
+        <div class="actions">
+            <div class="label"></div>
+            <div class="input">
+                <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+            </div>
+        </div>
+    </form>
+    <div>
+        <div class="label"></div>
+        <div class="input">
+            <a href="{{ path('fos_user_resetting_request') }}">Forgot your password?</a><br />
+            <a href="{{ path('fos_user_registration_register') }}">Not registered? Sign up now</a>
+        </div>
+    </div>
+{% endblock fos_user_content %}
