@@ -12,4 +12,66 @@ use Doctrine\ORM\EntityRepository;
  */
 class FoundPetRepository extends EntityRepository
 {
+    public function findPets($filters = array())
+    {
+        $page = (array_key_exists('page', $filters) && is_numeric($filters['page'])) ? $filters['page'] : 1;
+        $items_per_page = (array_key_exists('perpage', $filters) && is_numeric($filters['perpage'])) ? $filters['perpage'] : 9;
+
+        $builder = $this
+            ->getEntityManager()
+            ->createQueryBuilder();
+
+        $builder
+            ->select('fp')
+            ->from('BConwayWebsiteBundle:FoundPet', 'fp')
+            ->setMaxResults($items_per_page)
+            ->setFirstResult(($page - 1) * $items_per_page)
+            ->orderBy('fp.updatedAt', 'DESC')
+            ->where('fp.active = TRUE');
+
+        if (array_key_exists('searchPetType', $filters) && $filters['searchPetType'] && $filters['searchPetType'] != 'All') {
+            $builder->andWhere('fp.petType LIKE :pet_type')
+                ->setParameter('pet_type', $filters['searchPetType']);
+        }
+
+        if (array_key_exists('searchPetBreed', $filters) && $filters['searchPetBreed']) {
+            $builder->andWhere('fp.petBreed LIKE :pet_breed')
+                ->setParameter('pet_breed', '%' . $filters['searchPetBreed'] . '%');
+        }
+
+        if (array_key_exists('searchPetLocationFoundCity', $filters) && $filters['searchPetLocationFoundCity']) {
+            $builder->andWhere('fp.petLocationFoundCity LIKE %:location_found_city')
+                ->setParameter('location_found_city', $filters['searchPetLocationFoundCity']);
+        }
+
+        if (array_key_exists('searchPetLocationFoundState', $filters) && $filters['searchPetLocationFoundState'] && $filters['searchPetLocationFoundState'] != 'All') {
+            $builder->andWhere('fp.petLocationFoundState LIKE :location_found_state')
+                ->setParameter('location_found_state', $filters['searchPetLocationFoundState']);
+        }
+
+        if (array_key_exists('searchStartDate', $filters)
+            && preg_match('/^\d{2}\/\d{2}\/\d{4}$/', $filters['searchStartDate'])
+            && array_key_exists('searchEndDate', $filters)
+            && preg_match('/^\d{2}\/\d{2}\/\d{4}$/', $filters['searchEndDate'])
+        ) {
+            // Create \DateTime objects from given dates
+            $start_date = \DateTime::createFromFormat("d/m/Y H:i:s", ($filters['searchStartDate'] . ' 00:00:00'));
+            $end_date = \DateTime::createFromFormat("d/m/Y H:i:s", ($filters['searchEndDate'] . ' 23:59:59'));
+
+            if (is_a($start_date, 'DateTime') && is_a($end_date, 'DateTime')) {
+                $builder
+                    ->andWhere('fp.updatedAt BETWEEN :start_date AND :end_date')
+                    ->setParameter('start_date', $start_date)
+                    ->setParameter('end_date', $end_date);
+            }
+        }
+
+        $query = $builder->getQuery();
+
+        try {
+            return $query->getArrayResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 }
