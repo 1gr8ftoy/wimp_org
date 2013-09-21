@@ -3,8 +3,8 @@
 {% block body %}
     <div class="pet-report">
         <div class="pet-label">
-            {% if lostPet.petType is defined and lostPet.petType in ['cat', 'dog'] %}
-                <h5>Lost {{ lostPet.petType | capitalize }}{% if lostPet.petName is defined and lostPet.petName is not empty %}{{ ': ' ~ lostPet.petName }}{% endif %}</h5>
+            {% if lostPet.petType is defined and (lostPet.petType | lower) in ['cat', 'dog'] %}
+                <h5>Lost {{ lostPet.petType | lower }}{% if lostPet.petName is defined and lostPet.petName is not empty %}{{ ': ' ~ lostPet.petName }}{% endif %}</h5>
             {% else %}
                 <h5>Lost pet{% if lostPet.petName is defined and lostPet.petName is not empty %}{{  ': ' ~ lostPet.petName }}{% endif %}</h5>
             {% endif %}
@@ -50,7 +50,7 @@
             {% if lostPet.petHomeCity is defined and lostPet.petHomeCity is not empty and lostPet.petHomeState is defined and lostPet.petHomeState is not empty %}
                 <div class="report-entry clearfix">
                     <div class="label">Pet's home city</div>
-                    <div class="text">{{ lostPet.petHomeCity ~ ', ' ~ lostPet.petHomeState }}</div>
+                    <div class="text">{{ lostPet.petHomeCity }}, {{ lostPet.petHomeState }}</div>
                 </div>
             {% endif %}
             {% if lostPet.petLocationLastSeen is defined and lostPet.petLocationLastSeen is not empty %}
@@ -86,6 +86,10 @@
                     <div class="text">{{ lostPet.contactPhone }}</div>
                 </div>
             {% endif %}
+            <div class="report-entry clearfix">
+                <div class="label">Last updated</div>
+                <div class="text">{{ lostPet.UpdatedAt | date('l, F d, Y \\a\\t g:i a T') }}</div>
+            </div>
         </div>
     </div>
     <div class="pet-report-image-maps">
@@ -123,7 +127,7 @@
 
                 geocoder = new google.maps.Geocoder();
 
-                var addressHome = '{{ lostPet.petHomeCity ~ ', ' ~ lostPet.petHomeState}}';
+                var addressHome = '{{ lostPet.petHomeCity }}, {{ lostPet.petHomeState}}';
 
                 geocoder.geocode({ 'address':addressHome}, function (results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
