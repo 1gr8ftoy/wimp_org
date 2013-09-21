@@ -21,9 +21,12 @@ class BConwayExtension extends \Twig_Extension
 
     public function encodedMailToFilter($emailAddress)
     {
-        $output = '';
-        for ($i = 0; $i < strlen($emailAddress); $i++) { $output .= '&#'.ord($emailAddress[$i]).';'; }
-        return 'mailto:' . $output;
+        // Convert to hexadecimal to battle spam bots
+        $return = '';
+        for($i = 0; $i < strlen($emailAddress); $i++) {
+            $return .= '&#x'.bin2hex(substr($emailAddress, $i, 1)).';';
+        }
+        return 'mailto:' . $return;
     }
 
     public function stateSelectFunction($selectedState = true, $showFullStateName = null)
