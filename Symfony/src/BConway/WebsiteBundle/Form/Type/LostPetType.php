@@ -43,7 +43,7 @@ class LostPetType extends AbstractType
         ))
         ->add('petHomeState', 'choice', array(
             'choices' => array(
-                'empty_value' => 'Choose a state',
+                null => 'Choose a state',
                 'AL'          => 'Alabama',
                 'AK'          => 'Alaska',
                 'AZ'          => 'Arizona',
@@ -120,7 +120,7 @@ class LostPetType extends AbstractType
         ->add('petImage', 'file', array(
             'label' => 'Upload a picture (optional)<br/>
                         (JPEG, PNG or GIF)',
-            'data_class' => null
+            'data_class' => null,
         ))
         ->add('deletePetImage', 'checkbox', array(
             'label' => 'Delete picture',
