@@ -1,0 +1,125 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div class="pet-report">
+        <div class="pet-label">
+            {% if foundPet.petType is defined and (foundPet.petType | lower) in ['cat', 'dog'] %}
+                <h5>Found {{ foundPet.petType | lower }}{% if foundPet.petName is defined and foundPet.petName is not empty %}{{ ': ' ~ foundPet.petName }}{% endif %}</h5>
+            {% else %}
+                <h5>Found pet{% if foundPet.petName is defined and foundPet.petName is not empty %}: {{ foundPet.petName }}{% endif %}</h5>
+            {% endif %}
+            {% if is_granted('IS_AUTHENTICATED_FULLY') and foundPet.user.id == app.user.id %}
+                <p>
+                    [<a href="{{ path('b_conway_website_found_pet_edit', {'id': foundPet.id}) }}">Edit post</a>]
+                    [<a href="{{ path('b_conway_website_found_pet_delete', {'id': foundPet.id}) }}"
+                        onClick="return confirm('Are you sure?');">Delete post</a>]
+                </p>
+            {% endif %}
+            <p>&nbsp;</p>
+            {% if foundPet.petName is defined and foundPet.petName is not empty %}
+                <div class="report-entry clearfix">
+                    <div class="label">Name</div>
+                    <div class="text">{{ foundPet.petName | capitalize }}</div>
+                </div>
+            {% endif %}
+            {% if foundPet.petColors is defined and foundPet.petColors is not empty %}
+                <div class="report-entry clearfix">
+                    <div class="label">Color(s)</div>
+                    <div class="text">{{ foundPet.petColors | capitalize }}</div>
+                </div>
+            {% endif %}
+            {% if foundPet.petDescription is defined and foundPet.petDescription is not empty %}
+                <div class="report-entry clearfix">
+                    <div class="label">Description</div>
+                    <div class="text">{{ foundPet.petDescription | capitalize }}</div>
+                </div>
+            {% endif %}
+            {% if foundPet.petLocationFoundCity is defined and foundPet.petLocationFoundCity is not empty
+               and foundPet.petLocationFoundState is defined and foundPet.petLocationFoundState is not empty %}
+                <div class="report-entry clearfix">
+                    <div class="label">Location found</div>
+                    <div class="text">{{ foundPet.petLocationFoundCity }}, {{ foundPet.petLocationFoundState }}</div>
+                </div>
+            {% endif %}
+        </div>
+        <div class="pet-report">
+            <div class="contact-label">
+                {% if foundPet.contactName is defined and foundPet.contactName is not empty %}
+                    <div class="report-entry clearfix">
+                        <div class="label">Contact name</div>
+                        <div class="text">{{ foundPet.contactName }}</div>
+                    </div>
+                {% endif %}
+                {% if foundPet.contactEmail is defined and foundPet.contactEmail is not empty %}
+                    <div class="report-entry clearfix">
+                        <div class="label">Contact email</div>
+                        <div class="text"><a href="{{ foundPet.contactEmail | encodeEmail }}">Contact via Email</a></div>
+                    </div>
+                {% endif %}
+                {% if foundPet.contactPhone is defined and foundPet.contactPhone is not empty %}
+                    <div class="report-entry clearfix">
+                        <div class="label">Contact phone number</div>
+                        <div class="text">{{ foundPet.contactPhone }}</div>
+                    </div>
+                {% endif %}
+                <div class="report-entry clearfix">
+                    <div class="label">Last updated</div>
+                    <div class="text">{{ foundPet.UpdatedAt | date('l, F d, Y \\a\\t g:i a T') }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pet-report-image-maps">
+        {% if foundPet.petImage is defined and foundPet.petImage is not empty %}
+            <div id="pet-image-header">Picture of the pet that was found</div>
+            <div id="pet-image">
+                <img src="{{ foundPet.petImage | imagine_filter('medium') }}" alt="Picture of pet that was found" title="Picture of pet that was found" style="max-width: 320px; max-height: 320px; border: 1px solid #000;" />
+            </div>
+        {% endif %}
+        {% if foundPet.petLocationFoundCity is defined and foundPet.petLocationFoundCity is not empty %}
+            <div id="pet-found-map-header">Location found</div>
+            <div id="pet-found-map"></div>
+        {% endif %}
+    </div>
+
+    {% if app.environment == 'prod' %}
+        <script type="text/javascript"
+                src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAo_Erk_lNDtMsxsvz3YHmsuWsK-G5kjSg&sensor=false">
+        </script>
+    {% else %}
+        <script type="text/javascript"
+                src="http://maps.googleapis.com/maps/api/js?&sensor=false">
+        </script>
+    {% endif %}
+
+    <script type="text/javascript">
+        {% if foundPet.petLocationFoundCity is defined and foundPet.petLocationFoundCity is not empty
+               and foundPet.petLocationFoundState is defined and foundPet.petLocationFoundState is not empty %}
+
+        if ($("#pet-found-map").length) {
+            var myOptions = {
+                zoom:15,
+                mapTypeId:google.maps.MapTypeId.ROADMAP
+            }
+
+            var mapFound = new google.maps.Map(document.getElementById("pet-found-map"), myOptions);
+
+            geocoder = new google.maps.Geocoder();
+
+            var addressFound = '{{ foundPet.petLocationFoundCity }}, {{ foundPet.petLocationFoundState }}'
+
+            geocoder.geocode({ 'address':addressFound}, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    mapFound.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({
+                        map:mapFound,
+                        position:results[0].geometry.location
+                    });
+                } else {
+                    $('#pet-home-map').html('<img src="/img/map-unavailable.gif" alt="Map unavailable" />');
+                }
+            });
+        }
+        {% endif %}
+    </script>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <h3 style="margin-bottom: 5px; padding-bottom: 0px">Editing found pet</h3>
+    <p style="margin-bottom: 15px;">
+        [<a href="{{ path('b_conway_website_found_pet_view', {'id': foundPet.id}) }}">View post</a>]
+        [<a href="{{ path('b_conway_website_found_pet_delete', {'id': foundPet.id}) }}"
+            onClick="return confirm('Are you sure?');">Delete post</a>]
+    </p>
+
+    {% include 'BConwayWebsiteBundle:FoundPet:_form.html.twig' with {'action': 'edit'} %}
+{% endblock %}
