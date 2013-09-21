@@ -251,6 +251,8 @@ class LostPetController extends Controller
             ->getRepository('BConwayWebsiteBundle:LostPet')
             ->findOneById($id);
 
+        $previousPetImage = $lostPet->getPetImage();
+
         $form = $this->createForm(new LostPetType(), $lostPet);
         $form->handleRequest($request);
 
@@ -258,13 +260,16 @@ class LostPetController extends Controller
          * Delete image if checkbox was checked
          */
 
-
         /* @var \BConway\WebsiteBundle\Service\ImageCacher */
         $imageCacher = $this->get('b_conway.website_bundle.image_cacher');
 
         if ($form->get('deletePetImage')->getData()) {
             // Delete file that was previously persisted for the post
             $imageCacher->deletePersistedImage($lostPet);
+
+            // Unset variable containing previous image path, if this is not done
+            // the no-longer-valid value may be placed back in the db after deleting the image
+            unset($previousPetImage);
 
             // Delete any cached image and related data from the PHP session
             $imageCacher->removeCachedImage($lostPet, true);
@@ -278,9 +283,12 @@ class LostPetController extends Controller
                     'Post updated successfully'
                 );
 
-            if (!$form->get('deletePetImage')->getData()) {
+            if (!$form->get('deletePetImage')->getData()
+                    && !is_null($form->get('deletePetImage')->getData())) {
                 // Handle attaching and moving uploaded or cached file
                 $imageCacher->uploadPetImage(false, $lostPet);
+            } elseif (isset($previousPetImage) && strlen($previousPetImage) > 0) {
+                $lostPet->setPetImage($previousPetImage);
             }
 
             // Save changes to the DB
