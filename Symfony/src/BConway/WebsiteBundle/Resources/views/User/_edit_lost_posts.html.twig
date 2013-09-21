@@ -1,0 +1,69 @@
+<h6 style="margin-bottom: 20px;">Lost pets (click to edit)</h6>
+
+{% if lostPets is defined and lostPets | length %}
+    <div class="reports-grid">
+        {% for pet in lostPets %}
+            {% if (loop.index - 1) is divisibleby(3) %}
+                <div class="reports-grid-row">
+            {% endif %}
+                <a class="reports-grid-tile" href="{{ path('b_conway_website_lost_pet_edit', { 'id': pet.id }) }}">
+                    {% if pet.petType is defined and pet.petType is not empty %}
+                        {% if (pet.petType|lower) in ['cat', 'dog'] %}
+                            <h6 class="center">Lost {{ pet.petType | lower }}!</h6>
+                        {% else %}
+                            <h6 class="center">Lost!</h6>
+                        {% endif %}
+                    {% endif %}
+                    {% if pet.petImage is defined and pet.petImage is not empty %}
+                        <img src="{{ pet.petImage | imagine_filter('thumbnail') }}" class="thumbnail" alt="Lost pet image"/>
+                    {% endif %}
+                    {% if pet.petType is defined and pet.petType is not empty and not pet.petType|lower in ['cat', 'dog'] %}
+                        <dl class="report-entry clearfix">
+                            <dt>Pet Type</dt>
+                            <dd>{{ pet.PetType | capitalize }}</dd>
+                        </dl>
+                    {% endif %}
+                    {% if pet.petName is defined and pet.petName is not empty %}
+                        <dl class="report-entry clearfix">
+                            <dt>Name</dt>
+                            <dd>{{ pet.petName | capitalize }}</dd>
+                        </dl>
+                    {% endif %}
+                    {% if pet.petColors is defined and pet.petColors is not empty %}
+                        <dl class="report-entry clearfix">
+                            <dt>Color(s)</dt>
+                            <dd>{{ pet.petColors | capitalize }}</dd>
+                        </dl>
+                    {% endif %}
+                    {% if pet.petHomeCity is defined and pet.petHomeCity is not empty
+                        and pet.petHomeState is defined and pet.petHomeState is not empty %}
+                        <dl class="report-entry clearfix">
+                            <dt>Home city</dt>
+                            <dd>{{ pet.petHomeCity ~ ', ' ~ pet.petHomeState }}</dd>
+                        </dl>
+                    {% endif %}
+                    {% if pet.petDescription is defined and pet.petDescription is not empty %}
+                        <dl class="report-entry clearfix">
+                            <dt>Description</dt>
+                            <dd>
+                                {% if pet.petDescription | length > 200 %}
+                                    {{ pet.petDescription[:197] }}...
+                                {% else %}
+                                    {{ pet.petDescription }}
+                                {% endif %}
+                            </dd>
+                        </dl>
+                    {% endif %}
+                    <dl class="report-entry clearfix">
+                        <dt>Last updated</dt>
+                        <dd>{{ pet.updatedAt | date('m/d/Y') }}</dd>
+                    </dl>
+                </a>
+            {% if loop.index is divisibleby(3) %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% else %}
+    <p>You have not reported any pets lost yet</p>
+{% endif %}

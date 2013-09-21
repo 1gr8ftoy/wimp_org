@@ -1,0 +1,73 @@
+<h6 style="margin-bottom: 20px">Found pets (click to edit)</h6>
+
+{% if foundPets is defined and foundPets | length %}
+    <div class="reports-grid">
+        {% for pet in foundPets %}
+            {% if (loop.index - 1) is divisibleby(3) %}
+                <div class="reports-grid-row">
+            {% endif %}
+
+            <a class="reports-grid-tile" href="{{ path('b_conway_website_found_pet_edit', { 'id': pet.id }) }}">
+                {% if pet.petType is defined and pet.petType is not empty %}
+                    {% if (pet.petType|lower) in ['cat', 'dog'] %}
+                        <h6 class="center">Found {{ pet.petType | lower }}!</h6>
+                    {% else %}
+                        <h6 class="center">Found!</h6>
+                    {% endif %}
+                {% endif %}
+                {% if pet.petImage is defined and pet.petImage is not empty %}
+                    <img src="{{ pet.petImage | imagine_filter('thumbnail') }}" class="thumbnail" alt="Found pet image"/>
+                {% endif %}
+                {% if pet.petType is defined and pet.petType is not empty and not pet.petType|lower in ['cat', 'dog'] %}
+                    <dl class="report-entry clearfix">
+                        <dt>Pet Type</dt>
+                        <dd>{{ pet.PetType | capitalize }}</dd>
+                    </dl>
+                {% endif %}
+                {% if pet.petColors is defined and pet.petColors is not empty %}
+                    <dl class="report-entry clearfix">
+                        <dt>Color(s)</dt>
+                        <dd>{{ pet.PetColors | capitalize }}</dd>
+                    </dl>
+                {% endif %}
+                {% if pet.petColors is defined and pet.petColors is not empty %}
+                    <dl class="report-entry clearfix">
+                        <dt>Color(s)</dt>
+                        <dd>{{ pet.PetColors | capitalize }}</dd>
+                    </dl>
+                {% endif %}
+                {% if pet.petLocationFoundCity is defined and pet.petLocationFoundCity is not empty and
+                pet.petLocationFoundState is defined and pet.petLocationFoundState is not empty %}
+                    <dl class="report-entry clearfix">
+                        <dt>Location found</dt>
+                        <dd>{{ pet.petLocationFoundCity }}, {{ pet.petLocationFoundState }}</dd>
+                    </dl>
+                {% endif %}
+                {% if pet.petDescription is defined and pet.petDescription is not empty %}
+                    <dl class="report-entry clearfix">
+                        <dt>Description</dt>
+                        <dd>
+                            {% if pet.petDescription | length > 200 %}
+                                {{ pet.petDescription[:197] }}...
+                            {% else %}
+                                {{ pet.petDescription }}
+                            {% endif %}
+                        </dd>
+                    </dl>
+                {% endif %}
+                <dl class="report-entry clearfix">
+                    <dt>Last updated</dt>
+                    <dd>
+                        {{ pet.updatedAt | date('m/d/Y') }}
+                    </dd>
+                </dl>
+
+            </a>
+            {% if loop.index is divisibleby(3) %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% else %}
+    <p>You have not reported any pets found yet</p>
+{% endif %}

@@ -1,0 +1,13 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <h4 class="fsPetDetails" style="text-align: center; padding: 10px !important;">Your reports</h4>
+
+    <p style="margin-top: 2em; line-height: 1.5em; font-size: 1.2em;">
+        {% include 'BConwayWebsiteBundle:User:_edit_lost_posts.html.twig' %}
+    </p>
+
+    <p style="margin-top: 2em; line-height: 1.5em; font-size: 1.2em;">
+        {% include 'BConwayWebsiteBundle:User:_edit_found_posts.html.twig' %}
+    </p>
+{% endblock %}
