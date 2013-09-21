@@ -14,7 +14,7 @@
         <div class="reports-grid">
             {% for pet in lostPets %}
                 {% if (loop.index - 1) is divisibleby(3) %}
-                    <div class="reports-grid-row" xmlns="http://www.w3.org/1999/html">
+                    <div class="reports-grid-row">
                 {% endif %}
                 <a href="{{ path('b_conway_website_lost_pet_view', {'id': pet.id}) }}" class="reports-grid-tile">
                     {% if pet.petType is defined and pet.petType is not empty %}
