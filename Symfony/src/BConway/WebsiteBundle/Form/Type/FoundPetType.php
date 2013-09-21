@@ -12,9 +12,9 @@ class FoundPetType extends AbstractType
     $builder
         ->add('petType', 'choice', array(
             'choices' => array(
-                'dog'   => 'Dog',
-                'cat'   => 'Cat',
-                'other' => 'Other'
+                'Dog'   => 'Dog',
+                'Cat'   => 'Cat',
+                'Other' => 'Other'
             ),
             'expanded' => true,
             'multiple' => false,
@@ -32,14 +32,14 @@ class FoundPetType extends AbstractType
         ->add('petBreed', 'text', array(
             'label' => 'Breed (used for searching)'
         ))
-        ->add('setPetLocationFoundCity', 'text', array(
+        ->add('petLocationFoundCity', 'text', array(
             'label' => 'Location found (Street/City)<br />
                         (e.g. "Mongomery Ave, Cleveland" or<br />
                         "Montgomery Ave & Main St in Cleveland") '
         ))
-        ->add('setPetLocationFoundState', 'choice', array(
+        ->add('petLocationFoundState', 'choice', array(
             'choices' => array(
-                'empty_value' => 'Choose a state',
+                null => 'Choose a state',
                 'AL'          => 'Alabama',
                 'AK'          => 'Alaska',
                 'AZ'          => 'Arizona',
@@ -98,7 +98,8 @@ class FoundPetType extends AbstractType
         ))
         ->add('petImage', 'file', array(
             'label' => 'Upload a picture (optional)<br/>
-                        (JPEG, PNG or GIF)'
+                        (JPEG, PNG or GIF)',
+            'data_class' => null
         ))
         ->add('deletePetImage', 'checkbox', array(
             'label' => 'Delete picture',
