@@ -22,12 +22,14 @@ default:
                 env: test
                 debug: true
         Behat\MinkExtension\Extension:
+            show_auto: true
+            show_cmd: firefox %s
             base_url: 'http://whereismypet.dev/app_test.php/'
             default_session: goutte
             zombie: ~
             goutte: ~
             selenium2:
-                capabilities: { "browser": "firefox", "browserVersion": "23"}
+                capabilities: { "browser": "firefox" }
 
 annotations:
     paths:
