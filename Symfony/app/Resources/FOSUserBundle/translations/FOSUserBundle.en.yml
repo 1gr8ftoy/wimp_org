@@ -7,9 +7,9 @@ group:
     new:
         submit: Create group
     flash:
-        updated: The group has been updated
-        created: The group has been created
-        deleted: The group has been deleted
+        updated: Group updated successfully
+        created: Group created successfully
+        deleted: Group deleted successfully
 
 # Security
 "Bad credentials": Invalid username or password
@@ -29,13 +29,13 @@ profile:
     edit:
         submit: Save changes
     flash:
-        updated: Profile changes saved successfully
+        updated: Profile updated successfully
 
 # Password change
 change_password:
     submit: Change password
     flash:
-        success: The password has been changed
+        success: Password changed successfully
 
 # Registration
 registration:
@@ -66,7 +66,7 @@ resetting:
     reset:
         submit: Change password
     flash:
-        success: The password has been reset successfully
+        success: Password reset successfully
     email:
         subject: Reset Password
         message: |
