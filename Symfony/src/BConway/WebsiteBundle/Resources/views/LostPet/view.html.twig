@@ -108,66 +108,68 @@
             <div id="pet-last-seen-map"></div>
         {% endif %}
     </div>
-    {% if app.environment == 'prod' %}
-        <script type="text/javascript"
-                src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAo_Erk_lNDtMsxsvz3YHmsuWsK-G5kjSg&sensor=false"></script>
-    {% else %}
-        <script type="text/javascript"
-                src="http://maps.googleapis.com/maps/api/js?&sensor=false"></script>
+    {% if app.environment != 'test' %}
+        {% if app.environment == 'prod' %}
+            <script type="text/javascript"
+                    src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAo_Erk_lNDtMsxsvz3YHmsuWsK-G5kjSg&sensor=false"></script>
+        {% else %}
+            <script type="text/javascript"
+                    src="http://maps.googleapis.com/maps/api/js?&sensor=false"></script>
+        {% endif %}
+        <script type="text/javascript">
+            {% if lostPet.petHomeCity is defined and lostPet.petHomeCity is not empty and lostPet.petHomeState is defined and lostPet.petHomeState is not empty %}
+                if ($("#pet-home-map").length) {
+                    var myOptions = {
+                        zoom:15,
+                        mapTypeId:google.maps.MapTypeId.ROADMAP
+                    }
+
+                    var mapHome = new google.maps.Map(document.getElementById("pet-home-map"), myOptions);
+
+                    geocoder = new google.maps.Geocoder();
+
+                    var addressHome = '{{ lostPet.petHomeCity }}, {{ lostPet.petHomeState}}';
+
+                    geocoder.geocode({ 'address':addressHome}, function (results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            mapHome.setCenter(results[0].geometry.location);
+                            var marker = new google.maps.Marker({
+                                map:mapHome,
+                                position:results[0].geometry.location
+                            });
+                        } else {
+                            $('#pet-home-map').html('<img src="{{ asset('/images/map-unavailable.gif') }}" alt="Map unavailable" />');
+                        }
+                    });
+                }
+            {% endif %}
+
+            {% if lostPet.petLocationLastSeen is defined and lostPet.petLocationLastSeen is not empty %}
+                if ($("#pet-last-seen-map").length) {
+                    var myOptions = {
+                        zoom:15,
+                        mapTypeId:google.maps.MapTypeId.ROADMAP
+                    }
+
+                    var mapLastSeen = new google.maps.Map(document.getElementById("pet-last-seen-map"), myOptions);
+
+                    geocoder = new google.maps.Geocoder();
+
+                    var addressLastSeen = '{{ lostPet.petLocationLastSeen }}';
+
+                    geocoder.geocode({ 'address':addressLastSeen}, function (results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            mapLastSeen.setCenter(results[0].geometry.location);
+                            var marker = new google.maps.Marker({
+                                map:mapLastSeen,
+                                position:results[0].geometry.location
+                            });
+                        } else {
+                            $('#pet-last-seen-map').html('<img src="{{ asset('/images/map-unavailable.gif') }}" alt="Map unavailable" />');
+                        }
+                    });
+                }
+            {% endif %}
+        </script>
     {% endif %}
-    <script type="text/javascript">
-        {% if lostPet.petHomeCity is defined and lostPet.petHomeCity is not empty and lostPet.petHomeState is defined and lostPet.petHomeState is not empty %}
-            if ($("#pet-home-map").length) {
-                var myOptions = {
-                    zoom:15,
-                    mapTypeId:google.maps.MapTypeId.ROADMAP
-                }
-
-                var mapHome = new google.maps.Map(document.getElementById("pet-home-map"), myOptions);
-
-                geocoder = new google.maps.Geocoder();
-
-                var addressHome = '{{ lostPet.petHomeCity }}, {{ lostPet.petHomeState}}';
-
-                geocoder.geocode({ 'address':addressHome}, function (results, status) {
-                    if (status == google.maps.GeocoderStatus.OK) {
-                        mapHome.setCenter(results[0].geometry.location);
-                        var marker = new google.maps.Marker({
-                            map:mapHome,
-                            position:results[0].geometry.location
-                        });
-                    } else {
-                        $('#pet-home-map').html('<img src="{{ asset('/images/map-unavailable.gif') }}" alt="Map unavailable" />');
-                    }
-                });
-            }
-        {% endif %}
-
-        {% if lostPet.petLocationLastSeen is defined and lostPet.petLocationLastSeen is not empty %}
-            if ($("#pet-last-seen-map").length) {
-                var myOptions = {
-                    zoom:15,
-                    mapTypeId:google.maps.MapTypeId.ROADMAP
-                }
-
-                var mapLastSeen = new google.maps.Map(document.getElementById("pet-last-seen-map"), myOptions);
-
-                geocoder = new google.maps.Geocoder();
-
-                var addressLastSeen = '{{ lostPet.petLocationLastSeen }}';
-
-                geocoder.geocode({ 'address':addressLastSeen}, function (results, status) {
-                    if (status == google.maps.GeocoderStatus.OK) {
-                        mapLastSeen.setCenter(results[0].geometry.location);
-                        var marker = new google.maps.Marker({
-                            map:mapLastSeen,
-                            position:results[0].geometry.location
-                        });
-                    } else {
-                        $('#pet-last-seen-map').html('<img src="{{ asset('/images/map-unavailable.gif') }}" alt="Map unavailable" />');
-                    }
-                });
-            }
-        {% endif %}
-    </script>
 {% endblock %}

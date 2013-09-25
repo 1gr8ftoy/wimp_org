@@ -82,44 +82,46 @@
         {% endif %}
     </div>
 
-    {% if app.environment == 'prod' %}
-        <script type="text/javascript"
-                src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAo_Erk_lNDtMsxsvz3YHmsuWsK-G5kjSg&sensor=false">
-        </script>
-    {% else %}
-        <script type="text/javascript"
-                src="http://maps.googleapis.com/maps/api/js?&sensor=false">
+    {% if app.environment != 'test' %}
+        {% if app.environment == 'prod' %}
+            <script type="text/javascript"
+                    src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAo_Erk_lNDtMsxsvz3YHmsuWsK-G5kjSg&sensor=false">
+            </script>
+        {% else %}
+            <script type="text/javascript"
+                    src="http://maps.googleapis.com/maps/api/js?&sensor=false">
+            </script>
+        {% endif %}
+
+        <script type="text/javascript">
+            {% if foundPet.petLocationFoundCity is defined and foundPet.petLocationFoundCity is not empty
+                   and foundPet.petLocationFoundState is defined and foundPet.petLocationFoundState is not empty %}
+
+            if ($("#pet-found-map").length) {
+                var myOptions = {
+                    zoom:15,
+                    mapTypeId:google.maps.MapTypeId.ROADMAP
+                }
+
+                var mapFound = new google.maps.Map(document.getElementById("pet-found-map"), myOptions);
+
+                geocoder = new google.maps.Geocoder();
+
+                var addressFound = '{{ foundPet.petLocationFoundCity }}, {{ foundPet.petLocationFoundState }}'
+
+                geocoder.geocode({ 'address':addressFound}, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        mapFound.setCenter(results[0].geometry.location);
+                        var marker = new google.maps.Marker({
+                            map:mapFound,
+                            position:results[0].geometry.location
+                        });
+                    } else {
+                        $('#pet-home-map').html('<img src="/img/map-unavailable.gif" alt="Map unavailable" />');
+                    }
+                });
+            }
+            {% endif %}
         </script>
     {% endif %}
-
-    <script type="text/javascript">
-        {% if foundPet.petLocationFoundCity is defined and foundPet.petLocationFoundCity is not empty
-               and foundPet.petLocationFoundState is defined and foundPet.petLocationFoundState is not empty %}
-
-        if ($("#pet-found-map").length) {
-            var myOptions = {
-                zoom:15,
-                mapTypeId:google.maps.MapTypeId.ROADMAP
-            }
-
-            var mapFound = new google.maps.Map(document.getElementById("pet-found-map"), myOptions);
-
-            geocoder = new google.maps.Geocoder();
-
-            var addressFound = '{{ foundPet.petLocationFoundCity }}, {{ foundPet.petLocationFoundState }}'
-
-            geocoder.geocode({ 'address':addressFound}, function (results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    mapFound.setCenter(results[0].geometry.location);
-                    var marker = new google.maps.Marker({
-                        map:mapFound,
-                        position:results[0].geometry.location
-                    });
-                } else {
-                    $('#pet-home-map').html('<img src="/img/map-unavailable.gif" alt="Map unavailable" />');
-                }
-            });
-        }
-        {% endif %}
-    </script>
 {% endblock %}
