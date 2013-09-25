@@ -5,13 +5,18 @@
     <div style="lost-reports">
         <h4 class="fsPetDetails" style="margin-bottom: 2em; text-align: center; padding: 10px !important;">Browsing lost pet reports</h4>
 
-        <button id="search_button" style="top: -23px;">Search/Filter</button>
+        {% if lostPets | length > 0 %}
+            <button id="search_button" style="top: -23px;">Search/Filter</button>
+        {% endif %}
 
         {% if params.form is defined %}
         <button id="reset_search" style="top: -23px;" onclick="parent.location='{{ path('b_conway_website_browse_lost_pets') }}'">Reset Search/Filter</button>
         {% endif %}
 
         <div class="reports-grid">
+            {% if lostPets | length == 0 %}
+                <h6>No pets have been reported lost yet</h6>
+            {% endif %}
             {% for pet in lostPets %}
                 {% if (loop.index - 1) is divisibleby(3) %}
                     <div class="reports-grid-row">
@@ -83,67 +88,69 @@
             {% endfor %}
         </div>
 
-        <div class="digg_pagination">
-            {% set paginationQuery = app.request.query.all() %}
+        {% if totalPages > 1 %}
+            <div class="digg_pagination">
+                {% set paginationQuery = app.request.query.all() %}
 
-            {% set postsStart = ((currentPage - 1) * perPage) + 1 %}
-            {% set postsEnd = currentPage * perPage %}
-            {% if postsEnd > totalPosts %}
-                {% set postsEnd = totalPosts %}
-            {% endif %}
-            {% if totalPages < 10 or currentPage <= 5 %}
-                {% set paginationStart = 1 %}
-
-                {% if totalPages < 10 %}
-                    {% set paginationEnd = totalPages %}
-                {% else %}
-                    {% set paginationEnd = 9 %}
+                {% set postsStart = ((currentPage - 1) * perPage) + 1 %}
+                {% set postsEnd = currentPage * perPage %}
+                {% if postsEnd > totalPosts %}
+                    {% set postsEnd = totalPosts %}
                 {% endif %}
-            {% elseif (totalPages - currentPage) < 5 %}
-                {% if currentPage %}
-                    {% set paginationStart = totalPages - 9 %}
-                    {% set paginationEnd = totalPages %}
-                {% endif %}
-            {% else %}
-                {% set paginationStart = currentPage - 4 %}
-                {% set paginationEnd = currentPage + 4 %}
-            {% endif %}
-            <div class="page_info">
-                Displaying <b class="range">{{ postsStart }} - {{ postsEnd }}</b> of <b class="total">{{ totalPosts }}</b> total items
-            </div>
-            <div class="pagination">
-                {% if currentPage > 1 %}
+                {% if totalPages < 10 or currentPage <= 5 %}
+                    {% set paginationStart = 1 %}
 
-                    {% set paginationQuery = paginationQuery | merge({ 'page': (currentPage - 1) }) %}
-                    {% set paginationURL = path(app.request.attributes.get('_route'), paginationQuery) %}
-                    <a rel="prev" href="{{ paginationURL }}" class="prev_page">&larr; Previous</a>
-                {% else %}
-                    <span class="previous_page disabled">&larr; Previous</span>
-                {% endif %}
-
-                {% for page in paginationStart..paginationEnd %}
-                    {% set paginationQuery = paginationQuery | merge({ 'page': loop.index }) %}
-                    {% set paginationURL = path(app.request.attributes.get('_route'), paginationQuery) %}
-                    {% if loop.index == currentPage - 1 %}
-                        <a rel="prev" href="{{ paginationURL }}">{{ loop.index }}</a>
-                    {% elseif loop.index == currentPage + 1 %}
-                        <a rel="next" href="{{ paginationURL }}">{{ loop.index }}</a>
-                    {% elseif loop.index == currentPage %}
-                        <em class="current">{{ loop.index }}</em>
+                    {% if totalPages < 10 %}
+                        {% set paginationEnd = totalPages %}
                     {% else %}
-                        <a href="{{ paginationURL }}">{{ loop.index }}</a>
+                        {% set paginationEnd = 9 %}
                     {% endif %}
-                {% endfor %}
-
-                {% if currentPage < totalPages %}
-                    {% set paginationQuery = paginationQuery | merge({ 'page': (currentPage + 1) }) %}
-                    {% set paginationURL = path(app.request.attributes.get('_route'), paginationQuery) %}
-                    <a rel="next" href="{{ paginationURL }}" class="next_page">Next &rarr;</a>
+                {% elseif (totalPages - currentPage) < 5 %}
+                    {% if currentPage %}
+                        {% set paginationStart = totalPages - 9 %}
+                        {% set paginationEnd = totalPages %}
+                    {% endif %}
                 {% else %}
-                    <span class="next_page disabled">Next &rarr;</span>
+                    {% set paginationStart = currentPage - 4 %}
+                    {% set paginationEnd = currentPage + 4 %}
                 {% endif %}
+                <div class="page_info">
+                    Displaying <b class="range">{{ postsStart }} - {{ postsEnd }}</b> of <b class="total">{{ totalPosts }}</b> total items
+                </div>
+                <div class="pagination">
+                    {% if currentPage > 1 %}
+
+                        {% set paginationQuery = paginationQuery | merge({ 'page': (currentPage - 1) }) %}
+                        {% set paginationURL = path(app.request.attributes.get('_route'), paginationQuery) %}
+                        <a rel="prev" href="{{ paginationURL }}" class="prev_page">&larr; Previous</a>
+                    {% else %}
+                        <span class="previous_page disabled">&larr; Previous</span>
+                    {% endif %}
+
+                    {% for page in paginationStart..paginationEnd %}
+                        {% set paginationQuery = paginationQuery | merge({ 'page': loop.index }) %}
+                        {% set paginationURL = path(app.request.attributes.get('_route'), paginationQuery) %}
+                        {% if loop.index == currentPage - 1 %}
+                            <a rel="prev" href="{{ paginationURL }}">{{ loop.index }}</a>
+                        {% elseif loop.index == currentPage + 1 %}
+                            <a rel="next" href="{{ paginationURL }}">{{ loop.index }}</a>
+                        {% elseif loop.index == currentPage %}
+                            <em class="current">{{ loop.index }}</em>
+                        {% else %}
+                            <a href="{{ paginationURL }}">{{ loop.index }}</a>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if currentPage < totalPages %}
+                        {% set paginationQuery = paginationQuery | merge({ 'page': (currentPage + 1) }) %}
+                        {% set paginationURL = path(app.request.attributes.get('_route'), paginationQuery) %}
+                        <a rel="next" href="{{ paginationURL }}" class="next_page">Next &rarr;</a>
+                    {% else %}
+                        <span class="next_page disabled">Next &rarr;</span>
+                    {% endif %}
+                </div>
             </div>
-        </div>
+        {% endif %}
 
         <div id="search_dialog" title="Search lost pets" style="display: none;">
             {{ form_start(searchForm) }}
