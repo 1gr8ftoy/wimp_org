@@ -32,7 +32,9 @@ class ContactType extends AbstractType
                 ),
                 'label' => 'Message'
             ))
-            ->add('send', 'submit');
+            ->add('send', 'submit', array(
+                'label' => 'Send message'
+            ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
