@@ -19,6 +19,7 @@ class LostPetType extends AbstractType
             'expanded' => true,
             'multiple' => false,
             'label'    => 'Type'
+
         ))
         ->add('petName', 'text', array(
             'label' => 'Name (optional)'
@@ -30,7 +31,7 @@ class LostPetType extends AbstractType
             ),
             'expanded' => true,
             'multiple' => false,
-            'label'    => 'Comes when called'
+            'label'    => 'Comes when called (optional)'
         ))
         ->add('petColors', 'text', array(
             'label' => 'Color(s)'
