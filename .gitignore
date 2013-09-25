@@ -31,3 +31,4 @@ Symfony/test_report.html
 
 # Assets used for test scenarios
 test_assets/*
+/Symfony/features/behat_rerun
