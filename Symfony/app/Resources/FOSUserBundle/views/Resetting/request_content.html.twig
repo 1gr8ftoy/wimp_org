@@ -2,10 +2,6 @@
 
 <h2>Forgot your password?</h2>
 
-{% if error %}
-    <h6>{{ error|trans }}</h6>
-{% endif %}
-
 <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
     {% if invalid_username is defined %}
         <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</p>
