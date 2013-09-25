@@ -117,8 +117,9 @@ class ImageCacher
                 $fileMode = self::BCONWAY_IMAGE_CACHER_PERSISTED_FILE;
 
                 $filePath = $this->kernel->getRootDir() . '/../web' . $changeset['petImage'][0];
+                $pathinfo = pathinfo($filePath);
                 $finfo = finfo_open(FILEINFO_MIME_TYPE);
-                $uploadedFile = new UploadedFile($filePath, pathinfo($filePath)['basename'], finfo_file($finfo, $filePath), filesize($filePath));
+                $uploadedFile = new UploadedFile($filePath, $pathinfo['basename'], finfo_file($finfo, $filePath), filesize($filePath));
                 finfo_close($finfo);
 
                 /* @var integer */
