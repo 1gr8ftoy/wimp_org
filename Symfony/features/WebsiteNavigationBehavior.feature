@@ -83,27 +83,60 @@ Feature: A user needs to be able to successfully navigate throughout the website
   Scenario: User needs to be able to view all reported lost pets
     Given I am on the homepage
       And I follow "View lost pets"
+      And I wait until "h4" is visible
      Then I should see "Browsing lost pet reports"
       And I wait until ".reports-grid-tile" is visible
-      And I should see 24 ".reports-grid-tile" elements
+      And I should see 9 ".reports-grid-tile" elements
+      And I should see "Displaying 1 - 9 of 24 total items"
+     When I follow "Next →"
+      And I wait until ".reports-grid-tile" is visible
+     Then I should see "Displaying 10 - 18 of 24 total items"
+     When I follow "Next →"
+      And I wait until ".reports-grid-tile" is visible
+     Then I should see "Displaying 19 - 24 of 24 total items"
+     When I follow "← Previous"
+      And I wait until ".reports-grid-tile" is visible
+     Then I should see "Displaying 10 - 18 of 24 total items"
 
   @ClearDatabase @SetupWebsiteBehavior
   Scenario: User needs to be able to view all reported found pets
     Given I am on the homepage
       And I follow "View found pets"
+      And I wait until "h4" is visible
      Then I should see "Browsing found pet reports"
       And I wait until ".reports-grid-tile" is visible
-      And I should see 24 ".reports-grid-tile" elements
+      And I should see 9 ".reports-grid-tile" elements
+      And I should see "Displaying 1 - 9 of 24 total items"
+     When I follow "Next →"
+      And I wait until ".reports-grid-tile" is visible
+     Then I should see "Displaying 10 - 18 of 24 total items"
+     When I follow "Next →"
+      And I wait until ".reports-grid-tile" is visible
+     Then I should see "Displaying 19 - 24 of 24 total items"
+     When I follow "← Previous"
+      And I wait until ".reports-grid-tile" is visible
+     Then I should see "Displaying 10 - 18 of 24 total items"
 
   @ClearDatabase @SetupWebsiteBehavior
   Scenario: User needs to be able to filter visible lost pets
     Given I am on the homepage
       And I follow "View lost pets"
-     When I press "search_button"
+     When I wait until ".reports-grid-tile" is visible
+      And I press "search_button"
       And I select "All/Any" from "form[searchPetType]"
       And I press "submit_search_form"
       And I wait until ".reports-grid-tile" is visible
-     Then I should see 48 ".reports-grid-tile" elements
+     Then I should see 9 ".reports-grid-tile" elements
+      And I should see "Displaying 1 - 9 of 24 total items"
+     When I follow "Next →"
+      And I wait until ".reports-grid-tile" is visible
+     Then I should see "Displaying 10 - 18 of 24 total items"
+     When I follow "Next →"
+      And I wait until ".reports-grid-tile" is visible
+     Then I should see "Displaying 19 - 24 of 24 total items"
+     When I follow "← Previous"
+      And I wait until ".reports-grid-tile" is visible
+     Then I should see "Displaying 10 - 18 of 24 total items"
      When I press "search_button"
       And I select "Dog" from "form[searchPetType]"
       And I press "submit_search_form"
@@ -130,17 +163,29 @@ Feature: A user needs to be able to successfully navigate throughout the website
       And I should see "Lost!"
      When I press "reset_search"
       And I wait until ".reports-grid-tile" is visible
-     Then I should see 48 ".reports-grid-tile" elements
+     Then I should see 9 ".reports-grid-tile" elements
+      And I should see "Displaying 1 - 9 of 24 total items"
 
-  @ClearDatabase
+  @ClearDatabase @SetupWebsiteBehavior
   Scenario: User needs to be able to filter visible found pets
     Given I am on the homepage
       And I follow "View found pets"
-     When I press "search_button"
+     When I wait until ".reports-grid-tile" is visible
+      And I press "Search/Filter"
       And I select "All/Any" from "form[searchPetType]"
       And I press "submit_search_form"
       And I wait until ".reports-grid-tile" is visible
-     Then I should see 48 ".reports-grid-tile" elements
+     Then I should see 9 ".reports-grid-tile" elements
+      And I should see "Displaying 1 - 9 of 24 total items"
+     When I follow "Next →"
+      And I wait until ".reports-grid-tile" is visible
+     Then I should see "Displaying 10 - 18 of 24 total items"
+     When I follow "Next →"
+      And I wait until ".reports-grid-tile" is visible
+     Then I should see "Displaying 19 - 24 of 24 total items"
+     When I follow "← Previous"
+      And I wait until ".reports-grid-tile" is visible
+     Then I should see "Displaying 10 - 18 of 24 total items"
      When I press "search_button"
       And I select "Dog" from "form[searchPetType]"
       And I press "submit_search_form"
@@ -167,7 +212,8 @@ Feature: A user needs to be able to successfully navigate throughout the website
       And I should see "Found!"
      When I press "reset_search"
       And I wait until ".reports-grid-tile" is visible
-     Then I should see 48 ".reports-grid-tile" elements
+     Then I should see 9 ".reports-grid-tile" elements
+      And I should see "Displaying 1 - 9 of 24 total items"
 
   Scenario: User needs to be able to send us a message via the contact page
     Given I am on the homepage
