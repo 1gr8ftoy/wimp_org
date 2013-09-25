@@ -237,12 +237,11 @@ img.thumbnail {
 }
 
 .field_with_errors {
-  display: inline !important;
-
-  label {
-    padding: 5px;
-    border: 1px solid red;
-  }
+  border: 1px solid red;
+  display: block !important;
+  margin: -5px;
+  max-width: 250px;
+  padding: 5px;
 }
 
 .field_with_errors_error_list {
