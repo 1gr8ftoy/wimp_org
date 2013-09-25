@@ -1020,12 +1020,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "85ef11b6d68e640d306574b87302c9f335b80ef2"
+                "reference": "b4840d8b3293386dba685d91169559eb20f2d767"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/85ef11b6d68e640d306574b87302c9f335b80ef2",
-                "reference": "85ef11b6d68e640d306574b87302c9f335b80ef2",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/b4840d8b3293386dba685d91169559eb20f2d767",
+                "reference": "b4840d8b3293386dba685d91169559eb20f2d767",
                 "shasum": ""
             },
             "require": {
@@ -1080,7 +1080,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2013-09-19 10:03:47"
+            "time": "2013-09-23 12:09:51"
         },
         {
             "name": "imagine/imagine",
@@ -1661,12 +1661,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/LiipImagineBundle.git",
-                "reference": "5f0794821a27468870e6f4a93657fa95ea2986ae"
+                "reference": "51e28873a5a831cead026181faa898f8091f813e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/5f0794821a27468870e6f4a93657fa95ea2986ae",
-                "reference": "5f0794821a27468870e6f4a93657fa95ea2986ae",
+                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/51e28873a5a831cead026181faa898f8091f813e",
+                "reference": "51e28873a5a831cead026181faa898f8091f813e",
                 "shasum": ""
             },
             "require": {
@@ -1706,7 +1706,7 @@
                 "image",
                 "imagine"
             ],
-            "time": "2013-09-18 09:51:58"
+            "time": "2013-09-20 12:51:11"
         },
         {
             "name": "monolog/monolog",
