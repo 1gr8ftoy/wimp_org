@@ -16,6 +16,7 @@ class FoundPetRepository extends EntityRepository
     {
         $page = (array_key_exists('page', $filters) && is_numeric($filters['page'])) ? $filters['page'] : 1;
         $items_per_page = (array_key_exists('perpage', $filters) && is_numeric($filters['perpage'])) ? $filters['perpage'] : 9;
+        $get_total_items_count = (array_key_exists('gettotalcount', $filters) && is_bool($filters['gettotalcount'])) ? $filters['gettotalcount'] : false;
 
         $builder = $this
             ->getEntityManager()
@@ -23,9 +24,15 @@ class FoundPetRepository extends EntityRepository
 
         $builder
             ->select('fp')
-            ->from('BConwayWebsiteBundle:FoundPet', 'fp')
-            ->setMaxResults($items_per_page)
-            ->setFirstResult(($page - 1) * $items_per_page)
+            ->from('BConwayWebsiteBundle:FoundPet', 'fp');
+
+        if(!$get_total_items_count) {
+            $builder
+                ->setMaxResults($items_per_page)
+                ->setFirstResult(($page - 1) * $items_per_page);
+        }
+
+        $builder
             ->orderBy('fp.updatedAt', 'DESC')
             ->where('fp.active = TRUE');
 
@@ -69,7 +76,11 @@ class FoundPetRepository extends EntityRepository
         $query = $builder->getQuery();
 
         try {
-            return $query->getArrayResult();
+            if($get_total_items_count) {
+                return count($query->getArrayResult());
+            } else {
+                return $query->getArrayResult();
+            }
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }

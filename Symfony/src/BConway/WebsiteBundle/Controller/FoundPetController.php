@@ -14,9 +14,22 @@ class FoundPetController extends Controller
 {
     public function browseAction(Request $request)
     {
+        // Setup pagination
+
+        // Get page from query variable, if it exists
+        $page = $this->getRequest()->query->get('page');
+
+        // Set default current page
+        if (is_null($page) || !is_numeric($page)) {
+            $page = 1;
+        }
+
+        // Show 9 posts per page
         $search_filters = array(
             'perpage' => 9
         );
+
+        // end - Setup pagination
 
         // Get all GET query parameters
         $query_params = $this->getRequest()->query->all();
@@ -138,9 +151,18 @@ class FoundPetController extends Controller
 
         $foundPets = $em->findPets($search_filters);
 
+        // Add filter that causes total count to be returned
+        $search_filters['gettotalcount'] = true;
+
+        $foundPetsCount = $em->findPets($search_filters);
+
         return $this->render('BConwayWebsiteBundle:FoundPet:browse.html.twig', array(
             'foundPets'   => $foundPets,
-            'searchForm' => $searchForm->createView()
+            'searchForm'  => $searchForm->createView(),
+            'currentPage' => $page,
+            'totalPages'  => ceil($foundPetsCount / 9),
+            'totalPosts'  => $foundPetsCount,
+            'perPage'     => 9,
         ));
     }
 
@@ -262,8 +284,9 @@ class FoundPetController extends Controller
 
         /* @var \BConway\WebsiteBundle\Service\ImageCacher */
         $imageCacher = $this->get('b_conway.website_bundle.image_cacher');
-
+        $logger = $this->container->get('logger');
         if ($form->get('deletePetImage')->getData()) {
+            $logger->warn('1');
             // Delete file that was previously persisted for the post
             $imageCacher->deletePersistedImage($foundPet);
 
@@ -284,11 +307,20 @@ class FoundPetController extends Controller
                 );
 
             if (!$form->get('deletePetImage')->getData()
-                && !is_null($form->get('deletePetImage')->getData())) {
+                && (!is_null($form->get('petImage')->getData())
+                    && $form->get('petImage')->getData()
+                )
+            ) {
+                $logger->warn('2');
+
                 // Handle attaching and moving uploaded or cached file
                 $imageCacher->uploadPetImage(false, $foundPet);
             } elseif (isset($previousPetImage) && strlen($previousPetImage) > 0) {
+                $logger->warn('3');
+
                 $foundPet->setPetImage($previousPetImage);
+            } else {
+                $foundPet->setPetImage(null);
             }
 
             // Save changes to the DB
@@ -345,6 +377,16 @@ class FoundPetController extends Controller
             if ($foundPet->getUser()->getId() === $this->getUser()->getId()) {
                 $em->remove($foundPet);
                 $em->flush();
+
+                $session = $this->getRequest()->getSession();
+
+                // Set message to user
+                $session
+                    ->getFlashBag()
+                    ->add('notice',
+                        'Post deleted successfully'
+                    );
+
                 return $this->redirect($this->generateUrl('b_conway_website_browse_found_pets'));
             } else {
                 throw new AccessDeniedHttpException();

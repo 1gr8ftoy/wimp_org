@@ -14,9 +14,22 @@ class LostPetController extends Controller
 {
     public function browseAction(Request $request)
     {
+        // Setup pagination
+
+        // Get page from query variable, if it exists
+        $page = $this->getRequest()->query->get('page');
+
+        // Set default current page
+        if (is_null($page) || !is_numeric($page)) {
+            $page = 1;
+        }
+
+        // Show 9 posts per page
         $search_filters = array(
             'perpage' => 9
         );
+
+        // end - Setup pagination
 
         // Get all GET query parameters
         $query_params = $this->getRequest()->query->all();
@@ -138,9 +151,18 @@ class LostPetController extends Controller
 
         $lostPets = $em->findPets($search_filters);
 
+        // Add filter that causes total count to be returned
+        $search_filters['gettotalcount'] = true;
+
+        $lostPetsCount = $em->findPets($search_filters);
+
         return $this->render('BConwayWebsiteBundle:LostPet:browse.html.twig', array(
-            'lostPets'   => $lostPets,
-            'searchForm' => $searchForm->createView()
+            'lostPets'    => $lostPets,
+            'searchForm'  => $searchForm->createView(),
+            'currentPage' => $page,
+            'totalPages'  => ceil($lostPetsCount / 9),
+            'totalPosts'  => $lostPetsCount,
+            'perPage'     => 9,
         ));
     }
 
@@ -284,11 +306,16 @@ class LostPetController extends Controller
                 );
 
             if (!$form->get('deletePetImage')->getData()
-                    && !is_null($form->get('deletePetImage')->getData())) {
+                && (!is_null($form->get('petImage')->getData())
+                    && $form->get('petImage')->getData()
+                )
+            ) {
                 // Handle attaching and moving uploaded or cached file
                 $imageCacher->uploadPetImage(false, $lostPet);
             } elseif (isset($previousPetImage) && strlen($previousPetImage) > 0) {
                 $lostPet->setPetImage($previousPetImage);
+            } else {
+                $lostPet->setPetImage(null);
             }
 
             // Save changes to the DB
@@ -345,6 +372,16 @@ class LostPetController extends Controller
             if ($lostPet->getUser()->getId() === $this->getUser()->getId()) {
                 $em->remove($lostPet);
                 $em->flush();
+
+                $session = $this->getRequest()->getSession();
+
+                // Set message to user
+                $session
+                    ->getFlashBag()
+                    ->add('notice',
+                        'Post deleted successfully'
+                    );
+
                 return $this->redirect($this->generateUrl('b_conway_website_browse_lost_pets'));
             } else {
                 throw new AccessDeniedHttpException();
