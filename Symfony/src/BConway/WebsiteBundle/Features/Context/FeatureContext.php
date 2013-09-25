@@ -6,7 +6,10 @@ use BConway\WebsiteBundle\Entity\FoundPet;
 use BConway\WebsiteBundle\Entity\LostPet;
 use BConway\WebsiteBundle\Entity\User;
 use Behat\Behat\Context\Step\Given;
+use Behat\Behat\Context\Step\Then;
+use Behat\Behat\Context\Step\When;
 use Behat\Behat\Event\FeatureEvent;
+use Behat\Behat\Event\ScenarioEvent;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Behat\Symfony2Extension\Context\KernelAwareInterface;
 use Behat\MinkExtension\Context\MinkContext;
@@ -54,14 +57,39 @@ class FeatureContext extends MinkContext //MinkContext if you want to test web
      */
     public function setKernel(KernelInterface $kernel)
     {
+
         $this->kernel = $kernel;
     }
 
-    /** @BeforeFeature */
-    public static function cleanDatabase(FeatureEvent $event)
+    /**
+     * Wait until something is true before proceeding
+     * @param $lambda
+     * @param array $options
+     * @param int $wait
+     * @throws \Exception
+     * @return bool
+     */
+    public function spin ($lambda, $options = array(), $wait = 60)
     {
-        $context = new FeatureContext(array());
-        $context->theDatabaseIsEmpty();
+        for ($i = 0; $i < $wait; $i++)
+        {
+            try {
+                if ($lambda($this, $options)) {
+                    return true;
+                }
+            } catch (Exception $e) {
+                // do nothing
+            }
+
+            sleep(1);
+        }
+
+        $backtrace = debug_backtrace();
+
+        throw new \Exception(
+            "Timeout thrown by " . $backtrace[1]['class'] . "::" . $backtrace[1]['function'] . "()\n" .
+            $backtrace[1]['file'] . ", line " . $backtrace[1]['line']
+        );
     }
 
     /**
@@ -117,6 +145,18 @@ class FeatureContext extends MinkContext //MinkContext if you want to test web
     public function iWaitForTheResponse()
     {
         $this->jqueryWait(20000);
+    }
+
+    /**
+     * @BeforeScenario @ClearDatabase
+     */
+    public function clearDatabaseBeforeScenario(ScenarioEvent $event)
+    {
+        $context = $event->getContext();
+
+        $context->thereAreNoFoundPetsInTheDatabase();
+        $context->thereAreNoLostPetsInTheDatabase();
+        $context->thereAreNoUsersInTheDatabase();
     }
 
     /**
@@ -299,7 +339,9 @@ class FeatureContext extends MinkContext //MinkContext if you want to test web
         $unique_filename = sha1(uniqid(mt_rand(), true)) . '.jpg';
         $srcfile=$this->parameters['base_path'] . '/../test_assets/images/' . $image;
         $dstfile=$this->parameters['base_path'] . '/web/uploads/' . $postType . '_pets/' . $pet->getId() . '/' . $unique_filename;
-        mkdir(dirname($dstfile), 0777, true);
+        if (!file_exists(dirname($dstfile))) {
+            mkdir(dirname($dstfile), 0777, true);
+        }
         if (copy($srcfile, $dstfile)) {
             $pet->setPetImage('/uploads/' . $postType . '_pets/' . $pet->getId() . '/' . $unique_filename);
 
@@ -368,27 +410,145 @@ class FeatureContext extends MinkContext //MinkContext if you want to test web
     }
 
     /**
-     * @Given /^I create an account( as "([^"]*)")?$/
+     * @Given /^I create an account(?: as "([^"]*)")?$/
      */
     public function iCreateAnAccount($arg1 = "TestUser")
     {
-        throw new PendingException();
+        $email = 'test' . md5(uniqid('', true) . uniqid('', true)) . '@email.com';
+
+        return array(
+            new When('I wait until "fos_user_registration_form[username]" is visible'),
+            new When('I fill in "fos_user_registration_form[username]" with "' . $arg1 . '"'),
+            new When('I fill in "fos_user_registration_form[email]" with "' . $email . '"'),
+            new When('I fill in "fos_user_registration_form_plainPassword_first" with "secret"'),
+            new When('I fill in "fos_user_registration_form_plainPassword_second" with "secret"'),
+            new When('I press "Register"'),
+        );
     }
 
     /**
-     * @Given /^I activate my account$/
+     * @Given /^I activate my account(?: for user "([^"]*)")?$/
      */
-    public function iActivateMyAccount()
+    public function iActivateMyAccount($arg1 = "TestUser")
     {
-        throw new PendingException();
+        $user = $this->findUserByName($arg1);
+
+        return array(
+            new When('I go to "/register/confirm/' . $user->getConfirmationToken() . '"'),
+            new Then('I should see "your account is now activated."'),
+        );
     }
 
     /**
-     * @Given /^I post the following lost pets?:$/
+     * @When /^(?:|I )wait until visible then fill in "(?P<field>(?:[^"]|\\")*)" with "(?P<value>(?:[^"]|\\")*)"$/
+     */
+    public function iWaitUntilVisibleThenFillInWith($field, $value)
+    {
+        return array(
+            new When('I wait until "' . $field . '" is visible'),
+            new When('I fill in "' . $field . '" with "' . $value . '"')
+        );
+    }
+
+    /**
+     * @When /^(?:|I )wait until visible then select "(?P<option>(?:[^"]|\\")*)" from "(?P<select>(?:[^"]|\\")*)"$/
+     */
+    public function iWaitUntilVisibleThenSelectFrom($option, $select)
+    {
+        return array(
+            new When('I wait until "' . $select . '" is visible'),
+            new When('I select "' . $option . '" from "' . $select . '"')
+        );
+    }
+
+    /**
+     * @When /^(?:|I )wait until visible then select the "(?P<option>(?:[^"]|\\")*)" radio button$/
+     */
+    public function iWaitUntilVisibleThenSelectTheRadioButton($option)
+    {
+        return array(
+            new When('I wait until "' . $option . '" is visible'),
+            new When('I select the "' . $option . '" radio button')
+        );
+    }
+
+    /**
+     * @When /^(?:|I )wait until "(?P<element>(?:([^"]*)))" is visible$/
+     */
+    public function iWaitUntilIsVisible($element)
+    {
+        $options = array('field' => $element);
+
+        $this->spin(function($context, $options) {
+            $el = $context->getSession()->getPage()->findField($options['field']);
+
+            if (!is_object($el)) {
+                $el = $context->getSession()->getPage()->find('css', $options['field']);
+            }
+//            $el = $context->getSession()->getPage()->find('css', '[name="' . $options['field'] . '"]');
+//
+//            if (!is_object($el)) {
+//                $context->getSession()->getPage()->findById($options['field']);
+//            }
+//
+//            if (!is_object($el)) {
+//                $el = $context->getSession()->getPage()->find('css', $options['field']);
+//            }
+
+            if (is_object($el)) {
+                return $el->isVisible();
+            } else {
+                return false;
+            }
+        }, $options);
+    }
+
+    /**
+     * @param string $radioLabel
+     *
+     * @throws ElementNotFoundException
+     * @return void
+     * @Given /^I select the "([^"]*)" radio button$/
+     */
+    public function iSelectTheRadioButton($radioLabel)
+    {
+        $radioButton = $this->getSession()->getPage()->findField($radioLabel);
+        if (null === $radioButton) {
+            throw new ElementNotFoundException($this->getSession(), 'form field', 'id|name|label|value', $radioLabel);
+        }
+        $value = $radioButton->getAttribute('value');
+        $this->getSession()->getDriver()->click($radioButton->getXPath());
+    }
+
+    /**
+     * @When /^I post the following lost pets?:$/
      */
     public function iPostTheFollowingLostPets(TableNode $table)
     {
-        throw new PendingException();
+        $steps = array();
+
+        // Parse provided data
+        $hash = $table->getHash();
+
+        foreach ($hash as $row) {
+            $steps[] = new When('I follow "Post your lost pet"');
+
+            foreach ($row as $key => $value) {
+                if ($key == 'petType') {
+                    $steps[] = new When('I wait until visible then select the "' . $value . '" radio button');
+                } elseif ($key == 'petComesWhenCalled') {
+                    $steps[] = new When('I wait until visible then select the "' . $value . '" radio button');
+                } elseif($key == 'petImage') {
+                    $steps[] = new When('I attach the file "' . $this->parameters['base_path'] . '/../test_assets/images/' . $row['petImage'] . '" to "lost_pet_petImage"');
+                } else {
+                    $steps[] = new When('I wait until visible then fill in "lost_pet[' . $key . ']" with "' . $value . '"');
+                }
+            }
+
+            $steps[] = new When('I press "Create post"');
+        }
+
+        return $steps;
     }
 
     /**
@@ -396,7 +556,13 @@ class FeatureContext extends MinkContext //MinkContext if you want to test web
      */
     public function iAmLoggedInAs($arg1 = "TestUser")
     {
-        throw new PendingException();
+        return array(
+            new When('I go to "/login"'),
+            new When('I wait until "_username" is visible'),
+            new When('I fill in "_username" with "' . $arg1 . '"'),
+            new When('I fill in "password" with "secret"'),
+            new When('I press "Login"'),
+        );
     }
 
     /**
@@ -404,7 +570,30 @@ class FeatureContext extends MinkContext //MinkContext if you want to test web
      */
     public function iPostTheFollowingFoundPets(TableNode $table)
     {
-        throw new PendingException();
+        $steps = array();
+
+        // Parse provided data
+        $hash = $table->getHash();
+
+        foreach ($hash as $row) {
+            $steps[] = new When('I follow "Post a pet you found"');
+
+            foreach ($row as $key => $value) {
+                if ($key == 'petType') {
+                    $steps[] = new When('I wait until visible then select the "' . $value . '" radio button');
+                } elseif ($key == 'petComesWhenCalled') {
+                    $steps[] = new When('I wait until visible then select the "' . $value . '" radio button');
+                } elseif($key == 'petImage') {
+                    $steps[] = new When('I attach the file "' . $this->parameters['base_path'] . '/../test_assets/images/' . $row['petImage'] . '" to "found_pet_petImage"');
+                } else {
+                    $steps[] = new When('I wait until visible then fill in "found_pet[' . $key . ']" with "' . $value . '"');
+                }
+            }
+
+            $steps[] = new When('I press "Create post"');
+        }
+
+        return $steps;
     }
 
     /** Click on the element with the provided xpath query
@@ -432,7 +621,89 @@ class FeatureContext extends MinkContext //MinkContext if you want to test web
     {
         return array(
             new Given('I follow "Edit my account"'),
-            new Then('the "h2" element should contain "Edit User"')
+            new When('I wait until "h2" is visible'),
+            new Then('the "h2" element should contain "Edit Account"')
         );
+    }
+
+    /**
+     * @BeforeScenario @SetupWebsiteBehavior
+     */
+    public function SetupWebsiteBehavior(ScenarioEvent $event)
+    {
+        $context = $event->getContext();
+
+        // Create "TestUser"
+        $context->iHaveAUserNamed();
+
+        // Create 24 lost pets as "TestUser"
+        $lostTable = new TableNode();
+        $lostTable->setRows(
+            array(
+                array("petType","petBreed","petName","petColors","petDescription","petHomeCity","petHomeState","petLocationLastSeen","petMicrochip","petImage","contactName","contactEmail","contactPhone",),
+                array("Dog","Yorkie","Joe","Black","Spotted, one leg","New York","NY","New York, NY","a4st8728g2","dog.jpg","John Smith","john@smith.com","(555) 511-2522",),
+                array("Cat","Calico","Garfield","Yellow","Tabby","Omaha","NE","Omaha, NE","io7g08gyo97","cat.jpg","Cat Lover","cat@lover.org","(555) 511-6556",),
+                array ("Other","Macaw","Roger","Red/Blue","Macaw","Corona","CA","Corona, CA","2woy28yv927et","bird.jpg","Janet Smith","bird@lover.org","(555) 511-2662",),
+                array("Dog","Yorkie","Joe","Black","Spotted, one leg","New York","NY","New York, NY","a4st8728g2","dog.jpg","John Smith","john@smith.com","(555) 511-2522",),
+                array("Cat","Calico","Garfield","Yellow","Tabby","Omaha","NE","Omaha, NE","io7g08gyo97","cat.jpg","Cat Lover","cat@lover.org","(555) 511-6556",),
+                array ("Other","Macaw","Roger","Red/Blue","Macaw","Corona","CA","Corona, CA","2woy28yv927et","bird.jpg","Janet Smith","bird@lover.org","(555) 511-2662",),
+                array("Dog","Yorkie","Joe","Black","Spotted, one leg","New York","NY","New York, NY","a4st8728g2","dog.jpg","John Smith","john@smith.com","(555) 511-2522",),
+                array("Cat","Calico","Garfield","Yellow","Tabby","Omaha","NE","Omaha, NE","io7g08gyo97","cat.jpg","Cat Lover","cat@lover.org","(555) 511-6556",),
+                array ("Other","Macaw","Roger","Red/Blue","Macaw","Corona","CA","Corona, CA","2woy28yv927et","bird.jpg","Janet Smith","bird@lover.org","(555) 511-2662",),
+                array("Dog","Yorkie","Joe","Black","Spotted, one leg","New York","NY","New York, NY","a4st8728g2","dog.jpg","John Smith","john@smith.com","(555) 511-2522",),
+                array("Cat","Calico","Garfield","Yellow","Tabby","Omaha","NE","Omaha, NE","io7g08gyo97","cat.jpg","Cat Lover","cat@lover.org","(555) 511-6556",),
+                array ("Other","Macaw","Roger","Red/Blue","Macaw","Corona","CA","Corona, CA","2woy28yv927et","bird.jpg","Janet Smith","bird@lover.org","(555) 511-2662",),
+                array("Dog","Yorkie","Joe","Black","Spotted, one leg","New York","NY","New York, NY","a4st8728g2","dog.jpg","John Smith","john@smith.com","(555) 511-2522",),
+                array("Cat","Calico","Garfield","Yellow","Tabby","Omaha","NE","Omaha, NE","io7g08gyo97","cat.jpg","Cat Lover","cat@lover.org","(555) 511-6556",),
+                array ("Other","Macaw","Roger","Red/Blue","Macaw","Corona","CA","Corona, CA","2woy28yv927et","bird.jpg","Janet Smith","bird@lover.org","(555) 511-2662",),
+                array("Dog","Yorkie","Joe","Black","Spotted, one leg","New York","NY","New York, NY","a4st8728g2","dog.jpg","John Smith","john@smith.com","(555) 511-2522",),
+                array("Cat","Calico","Garfield","Yellow","Tabby","Omaha","NE","Omaha, NE","io7g08gyo97","cat.jpg","Cat Lover","cat@lover.org","(555) 511-6556",),
+                array ("Other","Macaw","Roger","Red/Blue","Macaw","Corona","CA","Corona, CA","2woy28yv927et","bird.jpg","Janet Smith","bird@lover.org","(555) 511-2662",),
+                array("Dog","Yorkie","Joe","Black","Spotted, one leg","New York","NY","New York, NY","a4st8728g2","dog.jpg","John Smith","john@smith.com","(555) 511-2522",),
+                array("Cat","Calico","Garfield","Yellow","Tabby","Omaha","NE","Omaha, NE","io7g08gyo97","cat.jpg","Cat Lover","cat@lover.org","(555) 511-6556",),
+                array ("Other","Macaw","Roger","Red/Blue","Macaw","Corona","CA","Corona, CA","2woy28yv927et","bird.jpg","Janet Smith","bird@lover.org","(555) 511-2662",),
+                array("Dog","Yorkie","Joe","Black","Spotted, one leg","New York","NY","New York, NY","a4st8728g2","dog.jpg","John Smith","john@smith.com","(555) 511-2522",),
+                array("Cat","Calico","Garfield","Yellow","Tabby","Omaha","NE","Omaha, NE","io7g08gyo97","cat.jpg","Cat Lover","cat@lover.org","(555) 511-6556",),
+                array ("Other","Macaw","Roger","Red/Blue","Macaw","Corona","CA","Corona, CA","2woy28yv927et","bird.jpg","Janet Smith","bird@lover.org","(555) 511-2662",),
+            )
+        );
+
+        $context->iHaveTheFollowingLostPets($lostTable);
+
+        // Create 24 found pets as "TestUser"
+        $foundTable = new TableNode();
+        $foundTable->setRows(
+            array(
+                array("petType","petName","petColors","petDescription","petLocationFoundCity","petLocationFoundState","petImage","contactName","contactEmail","contactPhone",),
+                array("Dog","Joe","Black","Spotted, one leg","New York","NY","dog.jpg","John Smith","john@smith.com","(555) 511-2687",),
+                array("Cat","Calico","Yellow","Tabby","Omaha","NE","cat.jpg","Cat Lover","cat@lover.org","(555) 511-7653",),
+                array("Other","Macaw","Red/Blue","Macaw","Corona","CA","bird.jpg","Janet Smith","bird@lover.org","(555) 511-9853",),
+                array("Dog","Joe","Black","Spotted, one leg","New York","NY","dog.jpg","John Smith","john@smith.com","(555) 511-2687",),
+                array("Cat","Calico","Yellow","Tabby","Omaha","NE","cat.jpg","Cat Lover","cat@lover.org","(555) 511-7653",),
+                array("Other","Macaw","Red/Blue","Macaw","Corona","CA","bird.jpg","Janet Smith","bird@lover.org","(555) 511-9853",),
+                array("Dog","Joe","Black","Spotted, one leg","New York","NY","dog.jpg","John Smith","john@smith.com","(555) 511-2687",),
+                array("Cat","Calico","Yellow","Tabby","Omaha","NE","cat.jpg","Cat Lover","cat@lover.org","(555) 511-7653",),
+                array("Other","Macaw","Red/Blue","Macaw","Corona","CA","bird.jpg","Janet Smith","bird@lover.org","(555) 511-9853",),
+                array("Dog","Joe","Black","Spotted, one leg","New York","NY","dog.jpg","John Smith","john@smith.com","(555) 511-2687",),
+                array("Cat","Calico","Yellow","Tabby","Omaha","NE","cat.jpg","Cat Lover","cat@lover.org","(555) 511-7653",),
+                array("Other","Macaw","Red/Blue","Macaw","Corona","CA","bird.jpg","Janet Smith","bird@lover.org","(555) 511-9853",),
+                array("Dog","Joe","Black","Spotted, one leg","New York","NY","dog.jpg","John Smith","john@smith.com","(555) 511-2687",),
+                array("Cat","Calico","Yellow","Tabby","Omaha","NE","cat.jpg","Cat Lover","cat@lover.org","(555) 511-7653",),
+                array("Other","Macaw","Red/Blue","Macaw","Corona","CA","bird.jpg","Janet Smith","bird@lover.org","(555) 511-9853",),
+                array("Dog","Joe","Black","Spotted, one leg","New York","NY","dog.jpg","John Smith","john@smith.com","(555) 511-2687",),
+                array("Cat","Calico","Yellow","Tabby","Omaha","NE","cat.jpg","Cat Lover","cat@lover.org","(555) 511-7653",),
+                array("Other","Macaw","Red/Blue","Macaw","Corona","CA","bird.jpg","Janet Smith","bird@lover.org","(555) 511-9853",),
+                array("Dog","Joe","Black","Spotted, one leg","New York","NY","dog.jpg","John Smith","john@smith.com","(555) 511-2687",),
+                array("Cat","Calico","Yellow","Tabby","Omaha","NE","cat.jpg","Cat Lover","cat@lover.org","(555) 511-7653",),
+                array("Other","Macaw","Red/Blue","Macaw","Corona","CA","bird.jpg","Janet Smith","bird@lover.org","(555) 511-9853",),
+                array("Dog","Joe","Black","Spotted, one leg","New York","NY","dog.jpg","John Smith","john@smith.com","(555) 511-2687",),
+                array("Cat","Calico","Yellow","Tabby","Omaha","NE","cat.jpg","Cat Lover","cat@lover.org","(555) 511-7653",),
+                array("Other","Macaw","Red/Blue","Macaw","Corona","CA","bird.jpg","Janet Smith","bird@lover.org","(555) 511-9853",),
+            )
+        );
+
+        $context->iHaveTheFollowingFoundPets($foundTable);
+
+
     }
 }
