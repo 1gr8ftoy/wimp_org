@@ -82,6 +82,7 @@ class User extends BaseUser
      */
     public function setCurrentSignInAt($currentSignInAt)
     {
+        $this->setLastSignInAt($this->getCurrentSignInAt());
         $this->currentSignInAt = $currentSignInAt;
     
         return $this;

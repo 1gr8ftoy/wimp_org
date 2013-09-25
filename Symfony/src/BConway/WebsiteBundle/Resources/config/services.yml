@@ -33,3 +33,9 @@ services:
         arguments: [ @router ]
         tags:
             - { name: kernel.event_subscriber }
+
+    bconway_user.security.authentication_success:
+        class: BConway\WebsiteBundle\EventListener\AuthenticationListener
+        arguments: ['@security.context', '@doctrine']
+        tags:
+            - { name: 'kernel.event_listener', event: 'security.interactive_login' }
