@@ -22,6 +22,9 @@ BConway\WebsiteBundle\Entity\LostPet:
         contactEmail:
             - NotBlank:
                 message: You must specify a contact email address
+            - Email:
+                message: The email "{{ value }}" is not a valid email.
+                checkMX: true
         petName:
         petComesWhenCalled:
         petLocationLastSeen:
@@ -65,4 +68,7 @@ BConway\WebsiteBundle\Entity\FoundPet:
         contactEmail:
             - NotBlank:
                 message: You must specify a contact email address
+            - Email:
+                message: The email "{{ value }}" is not a valid email.
+                checkMX: true
         contactPhone:
