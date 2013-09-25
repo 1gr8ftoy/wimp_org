@@ -12,8 +12,12 @@ $(document).ready ->
     width:350,
     modal:true,
     buttons:
-      "Search": ->
-        $('#search_dialog form').submit()
+      "Search":
+        text: "Search",
+        id: "submit_search_form",
+        click: ->
+          $('#search_dialog form').submit()
+
       ,
       "Reset Fields": ->
         $('#search_dialog form input').val ''

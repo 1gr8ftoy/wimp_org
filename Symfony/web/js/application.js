@@ -13,8 +13,12 @@
       width: 350,
       modal: true,
       buttons: {
-        "Search": function() {
-          return $('#search_dialog form').submit();
+        "Search": {
+          text: "Search",
+          id: "submit_search_form",
+          click: function() {
+            return $('#search_dialog form').submit();
+          }
         },
         "Reset Fields": function() {
           return $('#search_dialog form input').val('');
