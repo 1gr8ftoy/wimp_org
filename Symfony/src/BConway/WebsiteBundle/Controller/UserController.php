@@ -20,6 +20,14 @@ class UserController extends Controller
 
             $request->getSession()->invalidate();
 
+            $session = $this->getRequest()->getSession();
+
+            $session
+                ->getFlashBag()
+                ->add('notice',
+                    'Your account has been deleted successfully'
+                );
+
             return $this->redirect($this->generateUrl('b_conway_website_homepage'));
         }
 
