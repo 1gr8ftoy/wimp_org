@@ -106,10 +106,8 @@
                         {% set paginationEnd = 9 %}
                     {% endif %}
                 {% elseif (totalPages - currentPage) < 5 %}
-                    {% if currentPage %}
-                        {% set paginationStart = totalPages - 8 %}
-                        {% set paginationEnd = totalPages %}
-                    {% endif %}
+                    {% set paginationStart = (totalPages - 8) %}
+                    {% set paginationEnd = totalPages %}
                 {% else %}
                     {% set paginationStart = currentPage - 4 %}
                     {% set paginationEnd = currentPage + 4 %}
@@ -119,7 +117,6 @@
                 </div>
                 <div class="pagination">
                     {% if currentPage > 1 %}
-
                         {% set paginationQuery = paginationQuery | merge({ 'page': (currentPage - 1) }) %}
                         {% set paginationURL = path(app.request.attributes.get('_route'), paginationQuery) %}
                         <a rel="prev" href="{{ paginationURL }}" class="prev_page">&larr; Previous</a>
@@ -128,16 +125,16 @@
                     {% endif %}
 
                     {% for page in paginationStart..paginationEnd %}
-                        {% set paginationQuery = paginationQuery | merge({ 'page': loop.index }) %}
+                        {% set paginationQuery = paginationQuery | merge({ 'page': page }) %}
                         {% set paginationURL = path(app.request.attributes.get('_route'), paginationQuery) %}
-                        {% if loop.index == currentPage - 1 %}
-                            <a rel="prev" href="{{ paginationURL }}">{{ loop.index }}</a>
-                        {% elseif loop.index == currentPage + 1 %}
-                            <a rel="next" href="{{ paginationURL }}">{{ loop.index }}</a>
-                        {% elseif loop.index == currentPage %}
-                            <em class="current">{{ loop.index }}</em>
+                        {% if page == currentPage - 1 %}
+                            <a rel="prev" href="{{ paginationURL }}">{{ page }}</a>
+                        {% elseif page == currentPage + 1 %}
+                            <a rel="next" href="{{ paginationURL }}">{{ page }}</a>
+                        {% elseif page == currentPage %}
+                            <em class="current">{{ page }}</em>
                         {% else %}
-                            <a href="{{ paginationURL }}">{{ loop.index }}</a>
+                            <a href="{{ paginationURL }}">{{ page }}</a>
                         {% endif %}
                     {% endfor %}
 
