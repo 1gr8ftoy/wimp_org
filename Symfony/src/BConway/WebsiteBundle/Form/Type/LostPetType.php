@@ -102,9 +102,7 @@ class LostPetType extends AbstractType
             'label'    => 'Home state'
         ))
         ->add('petLocationLastSeen', 'text', array(
-            'label' => 'Location last seen (optional)<br/>
-                        (e.g. "Mongomery Ave, Cleveland, Ohio" or<br/>
-                        "Montgomery Ave & Main St in Cleveland, Ohio")'
+            'label' => 'Location last seen (optional)'
         ))
         ->add('petMicrochip', 'text', array(
             'label' => 'License / Microchip details (optional)'

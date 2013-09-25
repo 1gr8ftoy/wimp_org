@@ -120,7 +120,10 @@
             {% if form.petLocationFoundCity.vars.errors | length %}
                 <div class="field_with_errors">
             {% endif %}
-            {{ form_label(form.petLocationFoundCity) }}
+                    <label class="required" for="found_pet_petLocationFoundCity">Location found (Street/City)<br />
+                        (e.g. "Mongomery Ave, Cleveland" or<br />
+                        "Montgomery Ave &amp; Main St in Cleveland")
+                    </label>
             {% if form.petLocationFoundCity.vars.errors | length %}
                 </div>
             {% endif %}
