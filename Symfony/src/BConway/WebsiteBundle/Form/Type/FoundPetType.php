@@ -30,7 +30,7 @@ class FoundPetType extends AbstractType
             'label' => 'Description / What happened (optional)'
         ))
         ->add('petBreed', 'text', array(
-            'label' => 'Breed (used for searching)'
+            'label' => 'Breed (optional, used for searching)'
         ))
         ->add('petLocationFoundCity', 'text', array(
             'label' => 'Location found (Street/City)<br />
