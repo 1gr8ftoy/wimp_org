@@ -13,14 +13,14 @@ parameters:
     mailer_user:                    ~
     mailer_password:                ~
 
-    fos_user_mailer_sendername:     ~
-    fos_user_mailer_fromaddress:    ~
+    fos_user_mailer_sendername:     WhereIsMyPet.org
+    fos_user_mailer_fromaddress:    contact@whereismypet.org
 
     locale:                         en
     secret:                         ThisTokenIsNotSoSecretChangeIt
 
-    assetic.ruby.bin:        ~
+    assetic.ruby.bin:               ~
     assetic.filter.compass.bin:     ~
 
-    ayahPublisherKey: ~
-    ayahScoringKey:  ~
+    ayahPublisherKey:               ~
+    ayahScoringKey:                 ~
