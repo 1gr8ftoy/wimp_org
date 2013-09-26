@@ -485,15 +485,6 @@ class FeatureContext extends MinkContext //MinkContext if you want to test web
             if (!is_object($el)) {
                 $el = $context->getSession()->getPage()->find('css', $options['field']);
             }
-//            $el = $context->getSession()->getPage()->find('css', '[name="' . $options['field'] . '"]');
-//
-//            if (!is_object($el)) {
-//                $context->getSession()->getPage()->findById($options['field']);
-//            }
-//
-//            if (!is_object($el)) {
-//                $el = $context->getSession()->getPage()->find('css', $options['field']);
-//            }
 
             if (is_object($el)) {
                 return $el->isVisible();
