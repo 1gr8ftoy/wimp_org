@@ -25,7 +25,7 @@ default:
             show_auto: true
             show_cmd: firefox %s
             base_url: 'http://whereismypet.dev/app_test.php/'
-            default_session: goutte
+            default_session: selenium2
             zombie: ~
             goutte: ~
             selenium2:
