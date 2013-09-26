@@ -29,6 +29,5 @@ app/config/parameters.yml
 # HTML test report
 test_report.html
 
-# Assets used for test scenarios
-test_assets/*
+# Test rerun script
 /features/behat_rerun
