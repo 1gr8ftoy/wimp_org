@@ -87,8 +87,7 @@ class FeatureContext extends MinkContext //MinkContext if you want to test web
         $backtrace = \debug_backtrace();
 
         throw new \Exception(
-            "Timeout thrown by " . $backtrace[1]['class'] . "::" . $backtrace[1]['function'] . "()\n" .
-            ", line " . $backtrace[1]['line']
+            var_dump($backtrace)
         );
     }
 
