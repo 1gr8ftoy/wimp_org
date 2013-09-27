@@ -35,9 +35,9 @@ before_script:
     # Configure DB
     - app/console -n doctrine:database:create -e=test > /dev/null
     - app/console -n doctrine:migrations:migrate -e=test > /dev/null
-    - chmod -R 777 app/cache app/logs
+    - chmod -R 777 app/cache app/logs web
     - app/console --env=test cache:warmup
-    - chmod -R 777 app/cache app/logs
+    - chmod -R 777 app/cache app/logs web
 
     # Setup selenium
     - "sh -e /etc/init.d/xvfb start"
