@@ -205,6 +205,8 @@ class ImageCacher
         }
 
         if ($moved_status) {
+            chmod($newFilePath . $unique_filename, 0777);
+
             if ($cacheImage) {
                 // Cache image and save it to the session
 
