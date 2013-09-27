@@ -68,7 +68,7 @@ class ImageRemoverSubscriber implements EventSubscriber
         $entity = $args->getEntity();
         $entityManager = $args->getEntityManager();
 
-        if ($entity instanceof LostPet || $entity instanceof FoundPet) {
+        if ($this->get('kernel')->getEnvironment() != 'test' && ($entity instanceof LostPet || $entity instanceof FoundPet)) {
             if ($entity->getPetImage() && strlen($entity->getPetImage()) > 0) {
                 $dir = dirname($this->container->get('kernel')->getRootDir() . '/../web' . $entity->getPetImage());
 
