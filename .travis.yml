@@ -35,16 +35,9 @@ before_script:
     # Configure DB
     - app/console -n doctrine:database:create -e=test > /dev/null
     - app/console -n doctrine:migrations:migrate -e=test > /dev/null
-    - chmod -R 777 app/cache app/logs
+    - chmod -R 777 app/cache app/logs web
     - app/console --env=test cache:warmup
-    - chmod -R 777 app/cache app/logs
-
-    # Configure directories for image uploads
-    - chmod -R 777 web
-    - mkdir web/uploads
-    - mkdir web/uploads/lost_pets
-    - mkdir web/uploads/found_pets
-    - chmod -R 777 web
+    - chmod -R 777 app/cache app/logs web
 
     # Setup selenium
     - "sh -e /etc/init.d/xvfb start"
