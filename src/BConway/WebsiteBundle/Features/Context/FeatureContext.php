@@ -522,7 +522,6 @@ class FeatureContext extends MinkContext //MinkContext if you want to test web
         $hash = $table->getHash();
 
         foreach ($hash as $row) {
-            $steps[] = new Then('print last response');
             $steps[] = new When('I wait until "div#content ul li.ui-icon-pawprint" is visible');
             $steps[] = new When('I follow "Post your lost pet"');
 
