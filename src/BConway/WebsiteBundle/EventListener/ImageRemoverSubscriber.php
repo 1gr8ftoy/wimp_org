@@ -40,7 +40,8 @@ class ImageRemoverSubscriber implements EventSubscriber
             }
 
             if ($db_entity->getPetImage() && strlen($db_entity->getPetImage()) && $db_entity->getPetImage() != $entity->getPetImage()) {
-                if (file_exists($this->container->get('kernel')->getRootDir() . '/../web' . $entity->getPetImage())) {
+                if (file_exists($this->container->get('kernel')->getRootDir() . '/../web' . $entity->getPetImage())
+                    && is_file($this->container->get('kernel')->getRootDir() . '/../web' . $entity->getPetImage())) {
                     // Remove cached versions
                     $liipCacheManager = $this->container->get('liip_imagine.cache.manager');
                     $liipCacheManager->remove($entity->getPetImage(), 'thumbnail');
