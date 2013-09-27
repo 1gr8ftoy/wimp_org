@@ -337,7 +337,7 @@ class FeatureContext extends MinkContext //MinkContext if you want to test web
     public function attachFileToManualPost($entityManager, $pet, $postType, $image)
     {
         $unique_filename = sha1(uniqid(mt_rand(), true)) . '.jpg';
-        $srcfile=$this->parameters['base_path'] . '/../test_assets/images/' . $image;
+        $srcfile=$this->parameters['base_path'] . '/test_assets/images/' . $image;
         $dstfile=$this->parameters['base_path'] . '/web/uploads/' . $postType . '_pets/' . $pet->getId() . '/' . $unique_filename;
         if (!file_exists(dirname($dstfile))) {
             mkdir(dirname($dstfile), 0777, true);
@@ -530,7 +530,7 @@ class FeatureContext extends MinkContext //MinkContext if you want to test web
                 } elseif ($key == 'petComesWhenCalled') {
                     $steps[] = new When('I wait until visible then select the "' . $value . '" radio button');
                 } elseif($key == 'petImage') {
-                    $steps[] = new When('I attach the file "' . $this->parameters['base_path'] . '/../test_assets/images/' . $row['petImage'] . '" to "lost_pet_petImage"');
+                    $steps[] = new When('I attach the file "' . $this->parameters['base_path'] . '/test_assets/images/' . $row['petImage'] . '" to "lost_pet_petImage"');
                 } else {
                     $steps[] = new When('I wait until visible then fill in "lost_pet[' . $key . ']" with "' . $value . '"');
                 }
@@ -575,7 +575,7 @@ class FeatureContext extends MinkContext //MinkContext if you want to test web
                 } elseif ($key == 'petComesWhenCalled') {
                     $steps[] = new When('I wait until visible then select the "' . $value . '" radio button');
                 } elseif($key == 'petImage') {
-                    $steps[] = new When('I attach the file "' . $this->parameters['base_path'] . '/../test_assets/images/' . $row['petImage'] . '" to "found_pet_petImage"');
+                    $steps[] = new When('I attach the file "' . $this->parameters['base_path'] . '/test_assets/images/' . $row['petImage'] . '" to "found_pet_petImage"');
                 } else {
                     $steps[] = new When('I wait until visible then fill in "found_pet[' . $key . ']" with "' . $value . '"');
                 }
