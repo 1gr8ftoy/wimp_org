@@ -2,32 +2,32 @@
 Feature: A user needs to be able to successfully navigate throughout the website
 
   Scenario: User needs to be able to view the home page
-    Given I am on the homepage
+    Given I navigate to the homepage
      Then I should see "Have you lost your best friend?"
 
   @ClearDatabase
   Scenario: User needs to be able to sign up on the website
-    Given I am on the homepage
+    Given I navigate to the homepage
       And I follow "Sign up"
       And I create an account
       And I activate my account
-      And I am on the homepage
+      And I navigate to the homepage
      Then I should see "Edit my account"
 
   @ClearDatabase @SetupWebsiteBehavior
   Scenario: A second user needs to be able to sign up on the website
-    Given I am on the homepage
+    Given I navigate to the homepage
       And I follow "Sign up"
       And I create an account as "TestUser2"
       And I activate my account for user "TestUser2"
-      And I am on the homepage
+      And I navigate to the homepage
      Then I should see "Edit my account"
 
   @ClearDatabase
   Scenario: User should be able to post lost pets
     Given I have a user
       And I am logged in
-      And I am on the homepage
+      And I navigate to the homepage
      When I post the following lost pets:
         | petType | petBreed | petName  | petColors | petDescription   | petHomeCity | petHomeState | petLocationLastSeen | petMicrochip  | petImage | contactName | contactEmail   | contactPhone   |
         | Dog     | Yorkie   | Joe      | Black     | Spotted, one leg | New York    | NY           | New York, NY        | a4st8728g2    | dog.jpg  | John Smith  | john@smith.com | (555) 511-2522 |
@@ -41,7 +41,7 @@ Feature: A user needs to be able to successfully navigate throughout the website
   Scenario: A second user should be able to post lost pets
     Given I have a user named "TestUser2"
       And I am logged in as "TestUser2"
-      And I am on the homepage
+      And I navigate to the homepage
      When I post the following lost pets:
        | petType | petBreed | petName  | petColors | petDescription   | petHomeCity | petHomeState | petLocationLastSeen | petMicrochip  | petImage | contactName | contactEmail   | contactPhone   |
        | Dog     | Yorkie   | Joe      | Black     | Spotted, one leg | New York    | NY           | New York, NY        | a4st8728g2    | dog.jpg  | John Smith  | john@smith.com | (555) 511-2522 |
@@ -55,7 +55,7 @@ Feature: A user needs to be able to successfully navigate throughout the website
   Scenario: User should be able to post found pets
     Given I have a user
       And I am logged in
-      And I am on the homepage
+      And I navigate to the homepage
       And I post the following found pets:
         | petType | petName | petColors | petDescription   | petLocationFoundCity | petLocationFoundState | petImage | contactName | contactEmail   | contactPhone   |
         | Dog     | Joe     | Black     | Spotted, one leg | New York             | NY                    | dog.jpg  | John Smith  | john@smith.com | (555) 511-2687 |
@@ -69,7 +69,7 @@ Feature: A user needs to be able to successfully navigate throughout the website
   Scenario: A second user should be able to post found pets
     Given I have a user named "TestUser2"
       And I am logged in as "TestUser2"
-      And I am on the homepage
+      And I navigate to the homepage
       And I post the following found pets:
         | petType | petName | petColors | petDescription   | petLocationFoundCity | petLocationFoundState | petImage | contactName | contactEmail   | contactPhone   |
         | Dog     | Joe     | Black     | Spotted, one leg | New York             | NY                    | dog.jpg  | John Smith  | john@smith.com | (555) 511-2687 |
@@ -81,7 +81,7 @@ Feature: A user needs to be able to successfully navigate throughout the website
 
   @ClearDatabase @SetupWebsiteBehavior
   Scenario: User needs to be able to view all reported lost pets
-    Given I am on the homepage
+    Given I navigate to the homepage
       And I follow "View lost pets"
       And I wait until "h4" is visible
      Then I should see "Browsing lost pet reports"
@@ -100,7 +100,7 @@ Feature: A user needs to be able to successfully navigate throughout the website
 
   @ClearDatabase @SetupWebsiteBehavior
   Scenario: User needs to be able to view all reported found pets
-    Given I am on the homepage
+    Given I navigate to the homepage
       And I follow "View found pets"
       And I wait until "h4" is visible
      Then I should see "Browsing found pet reports"
@@ -119,7 +119,7 @@ Feature: A user needs to be able to successfully navigate throughout the website
 
   @ClearDatabase @SetupWebsiteBehavior
   Scenario: User needs to be able to filter visible lost pets
-    Given I am on the homepage
+    Given I navigate to the homepage
       And I follow "View lost pets"
      When I wait until ".reports-grid-tile" is visible
       And I press "search_button"
@@ -168,7 +168,7 @@ Feature: A user needs to be able to successfully navigate throughout the website
 
   @ClearDatabase @SetupWebsiteBehavior
   Scenario: User needs to be able to filter visible found pets
-    Given I am on the homepage
+    Given I navigate to the homepage
       And I follow "View found pets"
      When I wait until ".reports-grid-tile" is visible
       And I press "Search/Filter"
@@ -216,7 +216,7 @@ Feature: A user needs to be able to successfully navigate throughout the website
       And I should see "Displaying 1 - 9 of 24 total items"
 
   Scenario: User needs to be able to send us a message via the contact page
-    Given I am on the homepage
+    Given I navigate to the homepage
       And I follow "Contact us"
       And I wait until "contact[name]" is visible
      When I fill in "contact[name]" with "Website user"

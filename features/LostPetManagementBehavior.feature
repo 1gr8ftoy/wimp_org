@@ -4,17 +4,17 @@ Feature: LostPet management
 
   Background: User adds a lost pet
     Given The database is empty
-      And I am on the homepage
+      And I navigate to the homepage
       And I follow "Sign up"
       And I create an account
       And I activate my account
-      And I am on the homepage
+      And I navigate to the homepage
       And I post the following lost pet:
         | petType | petBreed | petName  | petComesWhenCalled | petColors | petDescription   | petHomeCity | petHomeState | petLocationLastSeen | petMicrochip  | petImage | contactName | contactEmail   | contactPhone   |
         | Dog     | Yorkie   | Joe      | Yes                | Black     | Spotted, one leg | New York    | NY           | New York, NY        | a4st8728g2    | dog.jpg  | John Smith  | john@smith.com | (555) 511-2522 |
 
   Scenario: User views lost pet post via edit page
-    Given I am on the homepage
+    Given I navigate to the homepage
       And I follow "Edit my posts"
      When I wait until ".reports-grid-tile" is visible
       And I click on the ".reports-grid-tile" element
@@ -24,7 +24,7 @@ Feature: LostPet management
       And I should see "Yorkie"
 
   Scenario: User changes a lost pet's contact name
-    Given I am on the homepage
+    Given I navigate to the homepage
       And I follow "View lost pets"
      When I wait until ".reports-grid-tile" is visible
      Then I should see 1 ".reports-grid-tile" element
@@ -39,7 +39,7 @@ Feature: LostPet management
       And I should not see "John Smith"
 
   Scenario: User deletes a lost pet post
-    Given I am on the homepage
+    Given I navigate to the homepage
       And I follow "View lost pets"
      When I wait until ".reports-grid-tile" is visible
      Then I should see 1 ".reports-grid-tile" element

@@ -4,17 +4,17 @@ Feature: FoundPet management
 
   Background: User adds a found pet
     Given The database is empty
-      And I am on the homepage
+      And I navigate to the homepage
       And I follow "Sign up"
       And I create an account
       And I activate my account
-      And I am on the homepage
+      And I navigate to the homepage
       And I post the following found pet:
         | petType | petName | petColors | petDescription   | petLocationFoundCity | petLocationFoundState | petImage | contactName | contactEmail   | contactPhone   |
         | Dog     | Joe     | Black     | Spotted, one leg | New York             | NY                    | dog.jpg  | John Smith  | john@smith.com | (555) 511-2687 |
 
   Scenario: User views found pet post via edit page
-    Given I am on the homepage
+    Given I navigate to the homepage
       And I follow "Edit my posts"
      When I wait until ".reports-grid-tile" is visible
       And I click on the ".reports-grid-tile" element
@@ -24,7 +24,7 @@ Feature: FoundPet management
       And I should see "Joe"
 
   Scenario: User changes a found pet's contact name
-    Given I am on the homepage
+    Given I navigate to the homepage
       And I follow "View found pets"
      When I wait until ".reports-grid-tile" is visible
       And I click on the ".reports-grid-tile" element
@@ -38,7 +38,7 @@ Feature: FoundPet management
       And I should not see "John Smith"
 
   Scenario: User deletes a found pet post
-    Given I am on the homepage
+    Given I navigate to the homepage
       And I follow "View found pets"
      When I wait until ".reports-grid-tile" is visible
       And I click on the ".reports-grid-tile" element

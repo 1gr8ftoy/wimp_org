@@ -620,6 +620,17 @@ class FeatureContext extends MinkContext //MinkContext if you want to test web
     }
 
     /**
+     * @Given /^I navigate to the homepage$/
+     */
+    public function iNavigateToTheHomepage()
+    {
+        return array(
+            new Given('I am on the homepage'),
+            new When('I wait until "div#content ul li.ui-icon-pawprint" is visible'),
+        );
+    }
+
+    /**
      * @BeforeScenario @SetupWebsiteBehavior
      */
     public function SetupWebsiteBehavior(ScenarioEvent $event)
