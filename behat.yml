@@ -22,6 +22,7 @@ default:
                 env: test
                 debug: true
         Behat\MinkExtension\Extension:
+            base_url: 'http://whereismypet.dev/app_test.php/'
             default_session: selenium2
             selenium2: ~
 
