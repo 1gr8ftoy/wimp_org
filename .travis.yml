@@ -46,4 +46,4 @@ before_script:
     - "java -jar selenium-server-standalone-2.35.0.jar > /dev/null &"
     - sleep 5
 
-script: bin/behat "features/WebsiteNavigationBehavior.feature:27"
+script: bin/behat
