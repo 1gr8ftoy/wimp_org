@@ -22,8 +22,8 @@ before_script:
     - cp app/config/parameters.yml.dist app/config/parameters.yml
 
     # Update with proper binaries
-    - sed -i -e "s,.*assetic.ruby.bin.*,    assetic.ruby.bin`echo ':'` $(which ruby | sed 's,/,\/,g'),g" app/config/parameters.yml
-    - sed -i -e "s,.*assetic.filter.compass.bin.*,    assetic.filter.compass.bin`echo ':'` $(which compass | sed 's,/,\/,g'),g" app/config/parameters.yml
+    - sed -i -e "s,.*assetic.ruby.bin.*,    assetic.ruby.bin`echo ':'` $(which ruby),g" app/config/parameters.yml
+    - sed -i -e "s,.*assetic.filter.compass.bin.*,    assetic.filter.compass.bin`echo ':'` $(which compass),g" app/config/parameters.yml
 
     # Update composer
     - composer self-update
