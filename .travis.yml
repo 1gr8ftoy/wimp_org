@@ -9,8 +9,8 @@ before_script:
     - sudo apt-get install -y --force-yes apache2 libapache2-mod-php5 php5-curl php5-mysql php5-intl
 
     # Install needed gems
-    - sudo gem install compass --no-ri --no-rdoc -y
-    - sudo gem install sass --no-ri --no-rdoc -y
+    - rvmsudo gem install compass --no-ri --no-rdoc > /dev/null
+    - rvmsudo gem install sass --no-ri --no-rdoc > /dev/null
 
     # Create VirtualHost
     - sudo sed -i -e "s,/var/www,$(pwd)/web,g" /etc/apache2/sites-available/default
@@ -22,8 +22,8 @@ before_script:
     - cp app/config/parameters.yml.dist app/config/parameters.yml
 
     # Update with proper binaries
-    - sed -i -e 's/.*assetic.ruby.bin.*/    assetic.ruby.bin: '"$(which ruby | sed 's/\//\\\//g')"'/' app/config/parameters.yml
-    - sed -i -e 's/.*assetic.filter.compass.bin.*/    assetic.filter.compass.bin: '"$(which compass | sed 's/\//\\\//g')"'/' app/config/parameters.yml
+    - sed -i -e "s,.*assetic.ruby.bin.*,    assetic.ruby.bin`echo ':'` $(which ruby | sed 's,/,\/,g'),g" app/config/parameters.yml
+    - sed -i -e "s,.*assetic.filter.compass.bin.*,    assetic.filter.compass.bin`echo ':'` $(which compass | sed 's,/,\/,g'),g" app/config/parameters.yml
 
     # Update composer
     - composer self-update
