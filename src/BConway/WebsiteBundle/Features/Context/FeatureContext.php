@@ -87,7 +87,8 @@ class FeatureContext extends MinkContext //MinkContext if you want to test web
         $backtrace = \debug_backtrace();
 
         throw new \Exception(
-            var_dump($backtrace)
+            "Timeout thrown by " . $backtrace[0]['class'] . "::" . $backtrace[0]['function'] . "()\n" .
+            ", line " . $backtrace[0]['file'] . ":" . $backtrace[0]['line']
         );
     }
 
@@ -536,7 +537,7 @@ class FeatureContext extends MinkContext //MinkContext if you want to test web
             }
 
             $steps[] = new When('I press "Create post"');
-            $steps[] = new When('I wait until "div.flash-notice" is visible');
+//            $steps[] = new When('I wait until "div.flash-notice" is visible');
         }
 
         return $steps;
@@ -582,7 +583,7 @@ class FeatureContext extends MinkContext //MinkContext if you want to test web
             }
 
             $steps[] = new When('I press "Create post"');
-            $steps[] = new When('I wait until "div.flash-notice" is visible');
+//            $steps[] = new When('I wait until "div.flash-notice" is visible');
         }
 
         return $steps;
