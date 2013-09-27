@@ -537,7 +537,7 @@ class FeatureContext extends MinkContext //MinkContext if you want to test web
             }
 
             $steps[] = new When('I press "Create post"');
-//            $steps[] = new When('I wait until "div.flash-notice" is visible');
+            $steps[] = new When('I wait until "div.flash-notice" is visible');
         }
 
         return $steps;
@@ -583,7 +583,7 @@ class FeatureContext extends MinkContext //MinkContext if you want to test web
             }
 
             $steps[] = new When('I press "Create post"');
-//            $steps[] = new When('I wait until "div.flash-notice" is visible');
+            $steps[] = new When('I wait until "div.flash-notice" is visible');
         }
 
         return $steps;
