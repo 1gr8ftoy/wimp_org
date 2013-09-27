@@ -35,9 +35,16 @@ before_script:
     # Configure DB
     - app/console -n doctrine:database:create -e=test > /dev/null
     - app/console -n doctrine:migrations:migrate -e=test > /dev/null
-    - chmod -R 777 app/cache app/logs web
+    - chmod -R 777 app/cache app/logs
     - app/console --env=test cache:warmup
-    - chmod -R 777 app/cache app/logs web
+    - chmod -R 777 app/cache app/logs
+
+    # Configure directories for image uploads
+    - chmod -R 777 web
+    - mkdir web/uploads
+    - mkdir web/uploads/lost_pets
+    - mkdir web/uploads/found_pets
+    - chmod -R 777 web
 
     # Setup selenium
     - "sh -e /etc/init.d/xvfb start"
@@ -46,4 +53,4 @@ before_script:
     - "java -jar selenium-server-standalone-2.35.0.jar > /dev/null &"
     - sleep 5
 
-script: bin/behat "features/WebsiteNavigationBehavior.feature:27"
+script: bin/behat "features/TestTravis.feature"

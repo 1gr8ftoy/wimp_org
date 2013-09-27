@@ -148,6 +148,7 @@ class FeatureContext extends MinkContext //MinkContext if you want to test web
     }
 
     /**
+     * @AfterScenario @ClearDatabase
      * @BeforeScenario @ClearDatabase
      */
     public function clearDatabaseBeforeScenario(ScenarioEvent $event)

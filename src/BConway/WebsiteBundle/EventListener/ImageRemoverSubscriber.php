@@ -88,6 +88,7 @@ class ImageRemoverSubscriber implements EventSubscriber
                         if ($file->isDir()){
                             rmdir($file->getRealPath());
                         } else {
+                            chmod($file->getRealPath(), 0777);
                             unlink($file->getRealPath());
                         }
                     }
